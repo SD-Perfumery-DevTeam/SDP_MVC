@@ -1,0 +1,19 @@
+﻿.side-bar {
+    background-color: #fcc9ff;
+    width: 100%;
+}
+
+.side-bar-list{
+    display: inline-block;
+}
+
+ li{
+    float:left;
+    clear: left;
+    width: 100%;
+}
+
+    li:hover {
+        background-color: #f885ff;
+        
+    }

@@ -1,0 +1,93 @@
+body{
+    background-color: white
+}
+
+.navbar{
+    background-color: #b7dde3;
+}
+
+.navbar-dark .navbar-nav .nav-link{
+    color:black;
+}
+
+.navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .show > .nav-link{
+    color: black;
+}
+
+.flex-box {
+    display:inline;
+    display: flex;
+    flex-wrap:wrap;
+    background-color: white;
+}
+
+.flex-box > * {
+    flex: 0 1 10em;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 1%;
+    margin-top: 1%;
+
+}
+
+.card > img{
+    height: 300px;
+}
+
+.container-fluid{
+    
+    position: relative;
+}
+.footer{
+    background-color: #7e989c;
+    bottom: 0px;
+}
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li{
+    float: left;
+}
+
+li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.account{
+    position: absolute;
+    left: 70%;
+}
+
+.account-item{
+    color: white;
+    text-decoration: none;
+    margin-right: 10px;
+}
+.title{
+    background-color: #fff9fb;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+   
+}
+
+h1{
+    color: black;
+}
+
+.row{
+    margin-left: 0px !important;
+    margin-right: 0px !important ;
+}
+.cart{
+    /* margin-left: 100%; */
+    right: 30px;
+}
