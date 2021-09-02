@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SDP.Interfaces;
 using SDP.Models;
+using SDP.Models.DbContext;
 using SDP.Services;
 using System;
 using System.Collections.Generic;
@@ -11,15 +13,25 @@ namespace SDP.Controllers
 {
     public class ProductController : Controller
     {
-        Customer customer = null;
+        List<Product> pList;
+        private ProductDbContext _db;
+
+        ICustomer customer = null;
+
+        public ProductController(ProductDbContext db)
+        {
+            _db = db;
+        }
+
         public string productID { get; set; }
         public IActionResult Index()
         {
+
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
-                string Id = guest.ID.ToString();
+                string Id = guest.userId.ToString();
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -32,7 +44,7 @@ namespace SDP.Controllers
             {
                 Models.GuestCustomer guest = new Models.GuestCustomer();
                 Global.customerList.Add(guest);
-                string Id = guest.ID.ToString();
+                string Id = guest.userId.ToString();
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -56,3 +68,10 @@ namespace SDP.Controllers
         }
     }
 }
+
+//code used for populating db with mock data
+/*foreach (Product p in MockDB.MockProductDB) 
+{
+    _db.product.Add(p);
+    _db.SaveChanges();
+}*/

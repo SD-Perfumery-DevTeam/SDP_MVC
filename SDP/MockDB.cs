@@ -11,12 +11,14 @@ namespace SDP
     //replace data access class when ready
     public static class MockDB
     {
+        static Category mans = new Category("Woman's","Url place holder","this is the womans catagory");
         public static List<Product> MockProductDB = new List<Product>() { 
-        new Product("Bright Crystal", (decimal)4500.54, false, "img5.jpg", Consts.PTypes.EDT, 30, "Versace","test string"),
-        new Product("Light Blue", (decimal)6798.54, false, "img6.jpg", Consts.PTypes.EDP, 50, "Dolce & Gabbana","test string"),
-        new Product("Test-3 ", (decimal)3530.54, false, "img3.jpg", Consts.PTypes.EDT, 30, "CD","test string"),
-        new Product("Test-4", (decimal)8500.54, false, "img4.jpg", Consts.PTypes.EDP, 30, "Gucci","test string"),
+        new Product("Bright Crystal",mans, Consts.Genders.female, (decimal)4500.54, false, "img5.jpg", Consts.PTypes.EDT, 30,Consts.Uom.ml, 100,"10x20x40", "Versace","test string"),
+        new Product("Light Blue",mans, Consts.Genders.female, (decimal)6798.54, false, "img6.jpg", Consts.PTypes.EDP, 50, Consts.Uom.ml, 100,"10x20x40","Dolce & Gabbana","test string"),
+        new Product("Test-3 ",mans,Consts.Genders.female, (decimal)3530.54, false, "img3.jpg", Consts.PTypes.EDT, 30, Consts.Uom.ml, 100,"10x20x40", "CD","test string"),
+        new Product("Test-4", mans, Consts.Genders.female,(decimal)8500.54, false, "img4.jpg", Consts.PTypes.EDP, 30, Consts.Uom.ml, 100,"10x20x40", "Gucci","test string"),
         };
+        
         public static List<IUser> MockUserDB = new List<IUser>();
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
         static List<Tuple<Product, int>> stock;

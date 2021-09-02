@@ -1,4 +1,5 @@
 ﻿using SDP.Interfaces;
+using SDP.Models.Parents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,17 +7,22 @@ using System.Threading.Tasks;
 
 namespace SDP.Models
 {
-    public class RegisteredCustomer :  Customer, IUser
+    public class RegisteredCustomer : User, ICustomer
     {
-        public string name { get; set; }
-        public string email { get; set; }
-        public string password { get; set; }
         
+        public Cart cart { get; set; }
+        public List<Order> orderList { get; set; }
+
         public RegisteredCustomer() 
         {
             this.orderList = new List<Order>();
-            ID = Guid.NewGuid();
+            userId = Guid.NewGuid();
             cart = new Cart(this);
+        }
+
+        public Task payment(string info)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -24,12 +24,16 @@ namespace SDP
             beingDelivered,
             deliveryComplete
         };
-        public enum CateTypes
+       
+        public enum Uom 
         {
-            promotion,
-            product,
-            article
-        };
+            ml,
+            g,
+            L,
+            Kg,
+            Oz,
+        }
+
     }
 }
 

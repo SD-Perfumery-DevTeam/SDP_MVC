@@ -5,9 +5,20 @@ using System.Threading.Tasks;
 
 namespace SDP.Models
 {
-    public abstract class Category
+    public class Category
     {
-        public Guid ID { get; set; }
-        public Consts.CateTypes categoryType { get; set; }
+        public Category( string title, string imgUrl, string text)
+        {
+            this.categoryId = Guid.NewGuid();
+            this.title = title;
+            this.imgUrl = imgUrl;
+            this.text = text;
+        }
+
+        public Guid categoryId { get; set; }
+        public string title{ get; set; }
+        public string imgUrl { get; set; }
+        public string text { get; set; }
+
     }
 }

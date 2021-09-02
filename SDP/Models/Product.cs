@@ -7,49 +7,61 @@ namespace SDP.Models
 {
     //this is the product model.... duh...
     [Serializable]
-    public class Product : Category
+    public class Product 
     {
-        public Product( string name, decimal price, bool onSpecial, 
-            string imgSrc, Consts.PTypes pType,
-            double size, string brand, string discription)
-        {
-            ID  = Guid.NewGuid();
-            this.name = name;
-            this.price = price;
-            this.onSpecial = onSpecial;
-            this.imgSrc = imgSrc;
-            this.pType = pType;
-            this.size = size;
-            this.brand = brand;
-            this.discription = discription;
-            
-        }
-
+        //defualt constructor used for EF
+        public Product() { }
         public Product(Guid id,string name, decimal price, bool onSpecial,
          string imgSrc, Consts.PTypes pType,
          double size, string brand, string discription,int count)
         {
-            this.ID = id;
-            this.name = name;
+            this.productId = id;
+            this.title = name;
             this.price = price;
             this.onSpecial = onSpecial;
-            this.imgSrc = imgSrc;
-            this.pType = pType;
-            this.size = size;
+            this.imgUrl = imgSrc;
+            this.productType = pType;
+            this.packageQty = size;
             this.brand = brand;
-            this.discription = discription;
+            this.description = discription;
             this.count = count;
         }
 
+        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, double packageQty, Consts.Uom packageUmo, int packageWeight, string packageDims, string brand, string discription)
+        {
 
-        public string name { get; set; }
+            this.productId = Guid.NewGuid();
+            this.title = title;
+            this.category = category;
+            this.productGender = productGender;
+            this.price = price;
+            this.onSpecial = onSpecial;
+            this.imgUrl = imgSrc;
+            this.productType = productType;
+            this.packageQty = packageQty;
+            this.packageUom = packageUmo;
+            this.packageWeight = packageWeight;
+            this.packageDims = packageDims;
+            this.brand = brand;
+            this.description = discription;
+        }
+
+        public Guid productId { get; set; }
+        public string title { get; set; }
+        public Category category { get; set; }
+        public Consts.Genders productGender { get; set; }
         public decimal price { get; set; }
-        public bool onSpecial { get; set; }  
-        public string imgSrc { get; set; }
-        public Consts.PTypes pType { get; set; }
-        public double size { get; set; }
-        public string brand { get; set; }
-        public string discription { get; set; }
-        public int count { get; set; } = 1;
+        public string imgUrl { get; set; }
+        public Consts.PTypes productType { get; set; }
+        public double packageQty { get; set; }
+        public Consts.Uom packageUom { get; set; }
+        public int packageWeight { get; set; }
+        public string packageDims { get; set; }
+        public string description { get; set; }
+
+        //prop that are not in the database 
+        public string brand;
+        public bool onSpecial;
+        public int count= 1;
     }
 }

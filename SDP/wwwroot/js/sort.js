@@ -14,7 +14,7 @@ function displayCardFunc(prod) {
     content =
         ` 
         <div class="card" style="width: 18rem;">
-            <img src="../imgs/${prod.imgSrc}" class="card-img-top" alt="...">
+            <img src="../imgs/${prod.imgUrl}" class="card-img-top" alt="...">
             <div class="card-body d-flex flex-column d-flex">
                 <h5>${prod.name} by ${prod.brand} ${prod.type} ${prod.size}ml </h5>
                 <h5>$${prod.price}</h5>
@@ -23,7 +23,7 @@ function displayCardFunc(prod) {
                 some description
                 </h5>
 
-                <button class="btn btn-primary mt-auto card-btn"  type="submit" name= "value"  value = "${prod.id}"  >View Detail</button>
+                <button class="btn btn-primary mt-auto card-btn"  type="submit" name= "value"  value = "${prod.productId}"  >View Detail</button>
             </div>
         </div>
     `;

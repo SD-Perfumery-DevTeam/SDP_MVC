@@ -1,4 +1,5 @@
-﻿using SDP.Models;
+﻿using SDP.Interfaces;
+using SDP.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,14 @@ namespace SDP.Services
 {
     public static class ViewService
     {
-        public static Customer getCustomerFromDB(string id) 
+        public static ICustomer getCustomerFromDB(string id) 
         {
-            Customer customer =null;
-            foreach (Customer c in Global.customerList)
+            ICustomer customer =null;
+            foreach (ICustomer c in Global.customerList)
             {
                 try
                 {
-                    if (c.ID == Guid.Parse(id))
+                    if (c.userId == Guid.Parse(id))
                     {
                         customer = c;
                     }
@@ -35,7 +36,7 @@ namespace SDP.Services
             {
                 try
                 {
-                    if (p.ID == Guid.Parse(id))
+                    if (p.productId == Guid.Parse(id))
                     {
                         product = p;
                     }

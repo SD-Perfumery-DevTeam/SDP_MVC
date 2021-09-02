@@ -1,6 +1,7 @@
 ﻿using SDP.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,9 +9,10 @@ namespace SDP.Models
 {
     public class OrderLine
     {
-        public Guid ID;
-        private Order order;
-        private Product product;
+        [Key]
+        public Guid lineId { get; set; }
+        private Order order { get; set; }
+        private Product product { get; set; }
         public int quantity { get; set; }
         public IPromotion promotion;
 
@@ -18,7 +20,7 @@ namespace SDP.Models
             int quantity, IPromotion promotion)
         {
 
-            ID = Guid.NewGuid();
+            lineId = Guid.NewGuid();
             this.order = order;
             this.product = product;
             this.quantity = quantity;

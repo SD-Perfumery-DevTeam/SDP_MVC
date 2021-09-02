@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SDP.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,10 +9,16 @@ namespace SDP.Models
     
     public class Cart
     {
+        public int cartID { get; set; }
         private List<Product> cartList = new List<Product>();
-        public Customer customer { get; set; }
+        public Cart(ICustomer customer) => this.customer =customer;
 
-        public Cart(Customer c) => this.customer = c;
+        public ICustomer customer;
+
+        
+
+     
+
         private void addOrderToCustomerList(Order order) => order.customer.orderList.Add(order);
         public void addToCart(Product p) => cartList.Add(p);
         public List<Product> getCartList() { return cartList; }
@@ -40,18 +47,26 @@ namespace SDP.Models
             }
             return null;
         }
-        public HashSet<Product> getProductListWithCount() 
+      
+        public async Task checkOut() 
+        {
+            await customer.payment("bank info");
+            /* turnCartToOrder().delivery = new Delivery("DATA BROWSER NEEDED HERE");*/
+        }
+        //used for mock db
+        public HashSet<Product> getProductListWithCount()
         {
             //note that the product list is static so the count of the product would be global... for now
             List<Product> refCartList = new List<Product>();
 
-            refCartList = cartList.ConvertAll(product => new Product(product.ID, product.name,
-                product.price, product.onSpecial, product.imgSrc, product.pType, product.size,
-                product.brand, product.discription, product.count));
-            HashSet<Product> unique = new HashSet<Product>(); 
-            foreach ( Product p in cartList)
+            //deep clone
+            refCartList = cartList.ConvertAll(product => new Product(product.productId, product.title,
+                product.price, product.onSpecial, product.imgUrl, product.productType, product.packageQty,
+                product.brand, product.description, product.count));
+            HashSet<Product> unique = new HashSet<Product>();
+            foreach (Product p in cartList)
             {
-                if (unique.Contains(p)) 
+                if (unique.Contains(p))
                 {
                     p.count++;
                 }
@@ -59,11 +74,7 @@ namespace SDP.Models
             }
             return unique;
         }
-        public async Task checkOut() 
-        {
-            await customer.payment("bank info");
-            /* turnCartToOrder().delivery = new Delivery("DATA BROWSER NEEDED HERE");*/
-        }
+
     }
 }
 

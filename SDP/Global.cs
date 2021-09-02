@@ -1,4 +1,5 @@
-﻿using SDP.Models;
+﻿using SDP.Interfaces;
+using SDP.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace SDP
     public static class Global
     {
         private static List<Product> P_list = new List<Product>();
-        public static List<Customer> customerList = new List<Customer>();
+        public static List<ICustomer> customerList = new List<ICustomer>();
         public static bool addProduct(Product p) 
         {
             foreach (Product existingProduct in P_list) 
