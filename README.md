@@ -1,5 +1,9 @@
 ## Important Info
-```please make sure the database being used is up to date(ask peter for the latest version)```
+```
+please make sure the database being used is up to date(ask peter for the latest version)
+
+do a "git rm -rf --cached ." if there is conflict caused by git ingnore not working as intended
+```
 
 ## Change Overview
 
