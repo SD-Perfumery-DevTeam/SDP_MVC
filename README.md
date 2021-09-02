@@ -1,3 +1,6 @@
+## Important Info
+```please make sure the database being used is up to date(ask peter for the latest version)```
+
 ## Change Overview
 
 ```
