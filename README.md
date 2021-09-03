@@ -14,3 +14,9 @@ Update 02/09/2021
 3. adding a parent class to admin and customer that fits the database model
 4. name changes on prop to fit the database model
 ```
+
+```
+Update 03/09/2021
+1. able adding product too database
+2. code clean up
+```
