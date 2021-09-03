@@ -10,13 +10,22 @@ productDbJson.forEach(displayCardFunc);
 
 
 function displayCardFunc(prod) {
-
+    let type;
+    switch (prod.productType) {
+        case 0:
+            type = "EDP"
+            break;
+        case 1:
+             type = "EDT"
+            break;
+    }
+    
     content =
         ` 
         <div class="card" style="width: 18rem;">
             <img src="../imgs/${prod.imgUrl}" class="card-img-top" alt="...">
             <div class="card-body d-flex flex-column d-flex">
-                <h5>${prod.name} by ${prod.brand} ${prod.type} ${prod.size}ml </h5>
+                <h5>${prod.title} by ${prod.brand} ${type} ${prod.packageQty}ml </h5>
                 <h5>$${prod.price}</h5>
                 <h5></h5>
                 <h5 class="card-title">

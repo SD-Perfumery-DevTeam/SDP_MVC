@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model SDP.Models.Product
+@model SDP.ViewModels.Catalog
 <!--Product Display ===============================================-->
 <div class="container product_con">
     <div class="title">
@@ -30,7 +30,7 @@
 
 </div>
 <script>
-    var productDbJson = @Html.Raw(Json.Serialize(MockDB.MockProductDB));
+    var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
     console.log(productDbJson)
 </script>
 <script src="~/js/product.js" asp-append-version="true"></script>

@@ -1,0 +1,84 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+@model SDP.ViewModels.AddProduct
+
+<h1>Add Product</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="product.title"></label>
+                <input asp-for="product.title" class="form-control" />
+                <span asp-validation-for="product.title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.category"></label>
+
+                <select id="listbox" class="form-control" name="catID">
+                    @foreach (var item in Model.categories)
+                    {
+                        <option value="@item.Value" name="catID">
+                            @item.Text
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.productGender"></label>
+                <div><select asp-for="@Model.product.productGender" asp-items="Html.GetEnumSelectList<Consts.Genders>()" class="form-control"></select></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.price"></label>
+                <input asp-for="product.price" class="form-control" />
+                <span asp-validation-for="product.price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.imgUrl"></label>
+                <input asp-for="product.imgUrl" class="form-control" />
+                <span asp-validation-for="product.imgUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Product Type</label>
+                <div><select asp-for="@Model.product.productType" asp-items="Html.GetEnumSelectList<Consts.PTypes>()" class="form-control"></select></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.packageQty"></label>
+                <input asp-for="product.packageQty" class="form-control" />
+                <span asp-validation-for="product.packageQty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>product Unit of messure</label>
+                <div><select asp-for="@Model.product.packageUom" asp-items="Html.GetEnumSelectList<Consts.Uom>()" class="form-control"></select></div>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.packageWeight"></label>
+                <input asp-for="product.packageWeight" class="form-control" />
+                <span asp-validation-for="product.packageWeight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.packageDims"></label>
+                <input asp-for="product.packageDims" class="form-control" />
+                <span asp-validation-for="product.packageDims" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="product.description"></label>
+                <textarea asp-for="product.description" class="form-control"></textarea>
+                <span asp-validation-for="product.description" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+
+@*things that didn't work for older version of MVC*@
+@* @Html.DropDownListFor(model => model.productId, EnumHelper.GetSelectList(typeof(Consts.Genders)), "Select")*@
+@*<span>@Html.EnumDropDownListFor(model => model.productGender, "Select")</span>*@
+@**@@*@Html.DropDownListFor(m => m.categories, Model.categories.Select(c => new SelectListItem { Text = c.Text, Value = c.Value.ToString() }), "Select Category", new { @class = "form-control", id = "clinic" })*@
+@*            *@

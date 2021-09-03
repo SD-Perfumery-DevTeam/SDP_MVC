@@ -1,13 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SDP.Interfaces;
 using SDP.Models;
 using SDP.Models.DbContext;
 using SDP.Services;
+using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace SDP.Controllers
 {
@@ -36,7 +39,9 @@ namespace SDP.Controllers
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
             customer = ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id"));
-            return View();
+           
+            
+            return View(new Catalog { products = _db.product.ToList() });
         }
         public IActionResult ProductDisplay(string value)
         {
@@ -64,8 +69,33 @@ namespace SDP.Controllers
             {
                 ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id")).cart.addToCart(product);
             }
-            return RedirectToAction("Index", "Product"); ;
+            return RedirectToAction("Index", "Product"); 
         }
+
+        [HttpGet]
+        public IActionResult AddProduct() 
+        {
+            var c = _db.category.ToList();
+            var model = new ViewModels.AddProduct { product = new Product(),
+                categories = c.Select(x => new SelectListItem
+                {
+                    Value = x.categoryId.ToString(),
+                    Text = x.title
+                })};
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct(AddProduct P, string catID)
+        {
+            P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
+            _db.product.Add(P.product);
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Product");
+        }
+
+       
     }
 }
 
