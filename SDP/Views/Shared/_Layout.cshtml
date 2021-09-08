@@ -18,6 +18,7 @@
                     <a href="tel:001 284 227">Call us on 001-284-227</a>
                 </span>
                 <ul>
+                    <li><a asp-area="" asp-controller="Product" asp-action="Index">Shop</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">About Us</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">Contact Us</a></li>
                     <li><a asp-controller="Auth" asp-action="Index">Login</a></li>
@@ -45,10 +46,6 @@
             </div>
         </div>
     </header>
-
-    <!-- Orphaned link from original static page -->
-    <a class="nav-link" asp-controller="Product" asp-action="Index">Catalog</a>
-
     <main>
         @RenderBody()
     </main>
