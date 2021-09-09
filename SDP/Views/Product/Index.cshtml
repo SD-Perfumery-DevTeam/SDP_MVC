@@ -4,34 +4,41 @@
 @{
 }
 @model SDP.ViewModels.Catalog
-<!--Product Display ===============================================-->
-<div class="container product_con">
-    <div class="title">
 
-        <h1>SD Perfumery</h1>
+<!-- Product Display ====================================================== -->
+
+<section id="section-product-list">
+    <div class="container product_con">
+        <h3>Category Title Here</h3>
         <div class="sort">
             <select onchange="sortBy(this);">
-                <option>Sort By</option>
-                <option value="priceH-L">High-Low</option>
-                <option value="priceL-H">Low-High</option>
-                <option value="nameA-Z">A-Z </option>
-                <option value="nameZ-A">Z-A</option>
+                <option>View By</option>
+                <option value="priceH-L">Price: Highest to Lowest</option>
+                <option value="priceL-H">Price: Lowest to Highest</option>
+                <option value="nameA-Z">Product Name: A - Z</option>
+                <option value="nameZ-A">Product Name: Z - A</option>
             </select>
         </div>
+
+        @using (Html.BeginForm("ProductDisplay", "Product"))
+        {
+            <div class="row rowone flex-box" id="rowone"></div>
+        }
+        @* <form method="post" asp-controller="Products" asp-action="Products/" >
+                <div class="row rowone flex-box" id="rowone"></div>
+            </form>*@
+
     </div>
+</section>
+<section id="section-suggested">
+    <div class="container">
+        <h3>Recommended Fragrances</h3>
+    </div>
+</section>
 
-    @using (Html.BeginForm("ProductDisplay", "Product")) 
-    {
-        <div class="row rowone flex-box" id="rowone"></div>
-    }
-   @* <form method="post" asp-controller="Products" asp-action="Products/" >
-        <div class="row rowone flex-box" id="rowone"></div>
-    </form>*@
-
-</div>
 <script>
-    var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
-    console.log(productDbJson)
+var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
+console.log(productDbJson)
 </script>
 <script src="~/js/product.js" asp-append-version="true"></script>
 <script src="~/js/sort.js" asp-append-version="true"></script>

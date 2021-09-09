@@ -1,117 +1,71 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+<!-- Duplicate <head> and search bar removed. -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-            crossorigin="anonymous"></script>
-    <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/home.css" rel="stylesheet">
-</head>
+<!-- Special Message ====================================================== -->
 
+<section id="section-banner">
+    <div class="container">
+        <h2>Have you seen these amazing deals?</h2>
+        <p>Treat yourself to one of these luxurious discounts with unbeatable value.</p>
+    </div>
+</section>
 
-<!--Search Bar ===================================================-->
-<div class="container">
-    <div class="search-content">
-        <div class="sub-title"><h3>SD Perfumery</h3></div>
-        <div class="search-bar">
-            <div class="input-group">
-                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                       aria-describedby="search-addon" />
-                <button type="button" class="btn btn-outline-primary" onclick='setList(JSON.parse())'>search</button>
+<!-- Categories  ========================================================== -->
+
+<section>
+    <div class="container">
+        <div>
+            <h4>Womens</h4>
+            <img src="~/imgs/category-img-4.JPG" alt="...">
+        </div>
+
+        <div>
+            <h4>Mens</h4>
+            <img src="~/imgs/category-img3.JPG" alt="...">
+        </div>
+
+        <div>
+            <h4>All Brands</h4>
+            <img src="~/imgs/category-img3.JPG" alt="...">
+        </div>
+
+        <div>
+            <h4>Best Sellers</h4>
+            <img src="~/imgs/category-img-4.JPG" alt="...">
+        </div>
+    </div>
+</section>
+
+<!-- Recommended ========================================================== -->
+
+<section id="section-suggested">
+    <div class="container">
+        <h3>Recommended Fragrances</h3>
+        <div>
+            <div>
+                <img src="~/imgs/category-img-4.JPG">
+                <p>1 million By Paco Rabanne</p>
+            </div>
+            <div>
+                <img src="~/imgs/category-img-4.JPG">
+                <p>Chrome By Azzaro</p>
+            </div>
+            <div>
+                <img src="~/imgs/category-img-4.JPG">
+                <p>Lolita Lempicka By Lolita Lempicka</p>
+            </div>
+            <div>
+                <img src="~/imgs/category-img-4.JPG">
+                <p>Montblanc Legend By Mont Blanc</p>
             </div>
         </div>
     </div>
-</div>
-
-<!--Special Message ====================================================-->
-
-<div class="container">
-    <div class="message">
-        <h6>Discount 50% Off! Until 10/10</h6>
-    </div>
-</div>
-
-<!--Categories  ==============================================================-->
-<div class="container">
-    <div class="categories">
-        <div class="category-flex">
-
-
-            <div class="item first-item">
-                <div class="item-title">
-                    <h4>Women's</h4>
-                </div>
-                <img src="~/imgs/category-img-4.JPG" alt="...">
-            </div>
-
-            <div class="item">
-                <div class="item-title">
-                    <h4>Men's</h4>
-                </div>
-                <img src="~/imgs/category-img3.JPG" alt="...">
-            </div>
-
-            <div class="item">
-                <div class="item-title">
-                    <h4>All Brands</h4>
-                </div>
-                <img src="~/imgs/category-img3.JPG" alt="...">
-            </div>
-
-            <div class="item">
-                <div class="item-title">
-                    <h4>Best Sellers</h4>
-                </div>
-                <img src="~/imgs/category-img-4.JPG" alt="...">
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Recommeded ==============================================-->
-<div class="container">
-    <div class="recommended">
-        <h2 class="rec-title">Recommeded Fragrances</h2>
-        <div class="flex-box">
-            <div class="rec-item">
-                <img src="~/imgs/category-img-4.JPG">
-                <div class="rec-title">
-                    <h6>1 million By Paco Rabanne</h6>
-                </div>
-            </div>
-
-            <div class="rec-item">
-                <img src="~/imgs/category-img-4.JPG">
-                <div class="rec-title">
-                    <h6>Chrome By Azzaro</h6>
-                </div>
-            </div>
-
-            <div class="rec-item">
-                <img src="~/imgs/category-img-4.JPG">
-                <div class="rec-title">
-                    <h6>Lolita Lempicka By Lolita Lempicka</h6>
-                </div>
-            </div>
-
-            <div class="rec-item">
-                <img src="~/imgs/category-img-4.JPG">
-                <div class="rec-title">
-                    <h6>Montblanc Legend By Mont Blanc</h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
 
 <script>
-    var productDbJson= @Html.Raw(Json.Serialize(MockDB.MockProductDB));
+var productDbJson= @Html.Raw(Json.Serialize(MockDB.MockProductDB));
 </script>
 <script src="~/js/site.js" asp-append-version="true" defer></script>

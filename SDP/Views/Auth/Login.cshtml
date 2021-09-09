@@ -3,27 +3,27 @@
 *@
 @{
 }
-<head>
-    <link href="~/css/login-style.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet">
-</head>
-<!--Login Form ======================================================================-->
-<div class="container">
-    <form>
-        <h2>Login</h2>
-        <table>
-            <tr>
-                <td>Username</td>
-                <td><input type="text" placeholder="Username"></td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><input type="password" placeholder="Password"></td>
-            </tr>
-            <tr>
-                <td><input class="btn-primary" type="submit" value="Login"></td>
-                <td><input class="btn-primary" type="button" value="Sign-up"></td>
-            </tr>
-        </table>
-    </form>
-</div>
+
+<!-- Duplicate <head> removed (redundant) -->
+
+<!-- Login Form =========================================================== -->
+
+<section id="section-banner">
+    <div class="container">
+        <h2>Log in as an existing customer</h2>
+        <p>Please sign in below to continue.</p>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <form class="form-small">
+            <h3>Login</h3>
+            <label for="username">Email</label>
+            <input type="text" id="username">
+            <label for="password">Password</label>
+            <input type="password" id="password">
+            <button class="btn-big">Log In</button>
+            <small><a href="#">I have forgotten my password..</a></small>
+        </form>
+    </div>
+</section>

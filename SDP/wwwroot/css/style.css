@@ -1,93 +1,385 @@
-body{
-    background-color: white
+/* Imports for Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Antic+Didone&family=MonteCarlo&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
+
+/* CSS variables for common colours */
+:root {
+  /* These colours are specified by the client - do not change */
+  --color-client-spec-1: #b7dde3;
+  --color-client-spec-2: #fff9fb;
+  --color-client-spec-3: #f3cabc;
+  --color-client-spec-4: #7e989c;
+  --color-client-spec-5: #985855;
+
+  /* Black and white, but may be changed very subtly to suit palette */
+  /* Note: please ensure correct contrast is maintained */
+  --color-white: #fff;
+  --color-black: #000;
+  
+  /* These are proposed colours - we can adjust these if desired */
+  --color-proposed-purple-90: hsl(270, 5%, 10%);
+  --color-proposed-purple-70: hsl(270, 10%, 30%);
+  --color-proposed-purple-50: hsl(270, 15%, 50%);
+  --color-proposed-purple-45: hsl(270, 20%, 55%);
+  --color-proposed-purple-40: hsl(270, 25%, 60%);
+  --color-proposed-purple-35: hsl(270, 30%, 65%);
+  --color-proposed-purple-30: hsl(270, 35%, 70%);
+  --color-proposed-purple-25: hsl(270, 35%, 75%);
+  --color-proposed-purple-20: hsl(269, 35%, 80%);
+  --color-proposed-purple-15: hsl(270, 40%, 85%);
+  --color-proposed-purple-10: hsl(270, 40%, 90%);
+  --color-proposed-purple-05: hsl(270, 40%, 95%);
+
+  /* Font variables */
+  --font-family-display: 'MonteCarlo', serif;
+  --font-family-display-serif: 'Antic Didone', serif;
+  --font-family-body-sans-serif: 'Open Sans', sans-serif;
 }
 
-.navbar{
-    background-color: #b7dde3;
+/* ***TEMPORARY DIVIDER CLASS*** (remove when separating page content) */
+.temp-divider {
+  height: 50vh;
+  border-bottom: 1px dashed red;
+  margin-bottom: 50vh;
 }
 
-.navbar-dark .navbar-nav .nav-link{
-    color:black;
+/* Media Queries for Responsive Container Width */
+@media only screen and (max-width: 623px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .product, .form-small, .cart-total-box {
+    min-width: calc(100% - 2rem);
+  }
 }
 
-.navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .show > .nav-link{
-    color: black;
+@media only screen and (min-width: 624px) {
+  .container {
+    width: 36rem;
+  }
+
+  .form-small {
+    width: 30rem;
+  }
 }
 
-.flex-box {
-    display:inline;
-    display: flex;
-    flex-wrap:wrap;
-    background-color: white;
+@media only screen and (min-width: 728px) {
+  .container {
+    width: 42.5rem;
+  }
 }
 
-.flex-box > * {
-    flex: 0 1 10em;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-bottom: 1%;
-    margin-top: 1%;
-
+@media only screen and (min-width: 952px) {
+  .container {
+    width: 56.5rem;
+  }
 }
 
-.card > img{
-    height: 300px;
+@media only screen and (min-width: 1201px) {
+  .container {
+    width: 72rem;
+  }
 }
 
-.container-fluid{
-    
-    position: relative;
-}
-.footer{
-    background-color: #7e989c;
-    bottom: 0px;
-}
-ul{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+/* Document-wide CSS */
+html {
+  height: 100%;
 }
 
-li{
-    float: left;
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--font-family-body-sans-serif);
+  font-size: 1.1rem;
+  line-height: 1.1rem;
 }
 
-li a{
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 16px;
-    text-decoration: none;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-display-serif);
+  font-weight: 600;
 }
 
-.account{
-    position: absolute;
-    left: 70%;
+h3 {
+  margin: 1.5rem 0 2rem 1rem;
+  color: var( --color-client-spec-5);
 }
 
-.account-item{
-    color: white;
-    text-decoration: none;
-    margin-right: 10px;
-}
-.title{
-    background-color: #fff9fb;
-    padding-top: 20px;
-    padding-bottom: 40px;
-    padding-left: 20px;
-   
+a {
+  color: var(--color-proposed-purple-70);
 }
 
-h1{
-    color: black;
+button, select {
+  margin: 0;
+  height: 1.75rem;
+  font-size: 0.9rem;
+  color: var(--color-proposed-purple-90);
+  background-image: linear-gradient(var(--color-proposed-purple-15), var(--color-proposed-purple-20));
+  border: 1px solid var(--color-proposed-purple-50);
+  border-radius: 0.3rem;
+  transition: 0.2s;
 }
 
-.row{
-    margin-left: 0px !important;
-    margin-right: 0px !important ;
+.btn-big {
+  height: 2.5rem;
+  font-size: 1rem;
+  color: var(--color-proposed-purple-90);;
 }
-.cart{
-    /* margin-left: 100%; */
-    right: 30px;
+
+button:hover, select:hover {
+  background-image: linear-gradient(var(--color-proposed-purple-10), var(--color-proposed-purple-15));
+  transition: 0.3s;
+}
+
+button:active, select:active {
+  background-image: linear-gradient(var(--color-proposed-purple-05), var(--color-proposed-purple-10));
+  transition: 0.2s;
+}
+
+::selection {
+  color: var(--color-black);
+  background: var(--color-client-spec-1);
+}
+
+/* Layout CSS */
+.container {
+  margin: 0 auto;
+}
+
+header {
+  box-sizing: border-box;
+}
+
+header nav {
+  background-color: var(--color-client-spec-1);
+}
+
+header nav .container {
+  padding: 0.7rem 0 0.5rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1rem;
+  line-height: 1rem;
+}
+
+header nav #header-cta {
+  margin-left: 1rem;
+  font-style: italic;
+}
+
+header nav #header-cta .material-icons {
+  margin-right: 0.25rem;
+}
+
+header nav ul {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+header nav ul li {
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+header nav ul li a {
+  color: var( --color-client-spec-5);
+  text-decoration: none;
+}
+
+.material-icons {
+  padding-bottom: 0.2rem;
+  vertical-align: middle;
+}
+
+header #header-brand {
+  padding: 1.5rem 0 2rem 0;
+  background-color: var(--color-client-spec-2);
+}
+
+header #header-brand .container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+header #header-brand h1 {
+  font-family: var(--font-family-display);
+  font-weight: 400;
+  font-size: 4.5rem;
+  line-height: 4.5rem;
+  color: var(--color-proposed-purple-90);
+  text-shadow: 0.2rem 0.2rem 0.3rem var(--color-client-spec-1);
+  min-width: 380px;
+}
+
+header #header-search {
+  display: inline-block;
+  margin: 1.5rem 0 1rem 0;
+  align-items: middle;
+}
+
+header #header-search input[type=search] {
+  height: 1.6rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--color-client-spec-1);
+  border-radius: 0.3rem;
+}
+
+header #header-search #btnSearch {
+  height: 1.6rem;
+  font-size: 0.9rem;
+  margin-left: 0.3rem;
+}
+
+main section {
+  margin-top: 1rem;;
+}
+
+main #section-banner {
+  margin: 0;
+  padding-bottom: 1.5rem;
+  background-color: var(--color-client-spec-3);
+  min-height: 8rem;
+}
+
+main #section-banner h2 {
+  margin: 0 0 1rem 1rem;
+  padding: 2rem 0 0 0;
+  line-height: 2rem;
+}
+
+main #section-banner p {
+  padding: 0 0 0 1rem;
+}
+
+main #section-product-list .product-wrapper {
+  display: grid;
+}
+
+footer {
+  box-sizing: border-box;
+  margin-top: auto;
+  min-height: 4rem;
+  color: var(--color-white);
+  background-color: var(--color-client-spec-4);
+}
+
+footer .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+footer .container ul {
+  margin: 1rem;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+footer .container ul.ul-links-social li {
+  display: inline-block;
+}
+
+footer .container ul.ul-links-social img {
+  margin-right: 1rem;
+  width: 32px;
+  height: 32px;
+}
+
+footer .container ul li {
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+}
+
+/* Element Specific CSS */
+#product-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.product, .cart-item, .cart-total-box, .form-small {
+  padding: 1rem;
+  border: 1px solid var(--color-client-spec-1);
+  border-radius: 0.3rem;
+}
+
+.product {
+  width: 15rem;
+}
+
+.product img {
+  max-width: 100%;
+  max-height: 13rem;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.product button {
+  width: 100%;
+  height: 2rem;
+}
+
+.cart-contents ul {
+  padding-left: 0;
+}
+
+.cart-contents ul li {
+  list-style: none;
+}
+
+.cart-item {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.cart-item img {
+  max-width: 6rem;
+}
+
+.cart-total, #cart-btn-checkout {
+  width: 15rem;
+}
+
+.cart-total {
+  margin-bottom: 1rem;
+  width: 15rem;
+  float: right;
+  text-align: end;
+}
+
+#cart-btn-checkout {
+  margin: 1rem 0;
+}
+
+.form-small {
+  margin: 6rem auto;
+}
+
+.form-small h3 {
+  margin: 0.5rem 0 2rem 0;
+}
+
+.form-small input, .form-small button {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.form-small input {
+  height: 1.75rem;
+  border: 1px solid var(--color-client-spec-1);
+  border-radius: 0.3rem;
 }

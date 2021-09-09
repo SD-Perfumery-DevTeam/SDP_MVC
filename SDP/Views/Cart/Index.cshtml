@@ -4,63 +4,53 @@
     SDP.Interfaces.ICustomer cutomer = SDP.Services.ViewService.getCustomerFromDB((string)ViewData["Id"]);
     decimal total = 0;
 }
-<head>
-    <link href="~/css/cart-style.css" rel="stylesheet">
-    <link href="~/css/style.css" rel="stylesheet">
-</head>
 
-<div class="container">
-    <div class="title">
-        <h1>SD Perfumery</h1>
+<!-- Duplicate <head> removed (redundant) -->
 
+<section id="section-banner">
+    <div class="container">
+        <h2>Shopping cart</h2>
+        <p>You have selected the following items.</p>
     </div>
-
-    <div class="shopping-cart">
-        <div class="sort">
-            <div>
-                @if (cutomer != null)
-                {
-                    foreach (SDP.Models.Product product in cutomer.cart.getProductListWithCount())
+</section>
+<section>
+    <div class="container">
+        <div class="cart-contents">
+            <div class="sort"> <!-- Left in case required by backend logic? -->
+                <ul>
+                    @if (cutomer != null)
                     {
-                        total = total + (decimal)product.price * (decimal)product.count;
-                        decimal subTotal = product.price * product.count;
-                        <div class="product">
-                            <div class="row">
-                                <div class="col-3"><img src="~/imgs/@product.imgUrl" alt="..." height="100px" width="100px" /></div>
-                                <div class="col-md-8 col-sm-4 col-xs-2">
-                                    <div class="row justify-content-end item">
-                                        <div class="col-md-4">
-                                            <h5 class="desc">@product.title by @product.brand</h5>
-                                            <h5>@product.price LKR</h5>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5 class="desc">Quantity</h5>
-                                            <h5>@product.count</h5>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <h5 class="desc">Total</h5>
-                                            <h5>@subTotal LKR</h5>
-                                        </div>
-                                    </div>
+                        foreach (SDP.Models.Product product in cutomer.cart.getProductListWithCount())
+                        {
+                            total = total + (decimal)product.price * (decimal)product.count;
+                            decimal subTotal = product.price * product.count;
+                            <li class="cart-item">
+                                <img src="~/imgs/@product.imgUrl" alt="@product.title" />
+                                <div class="cart-item-desc">
+                                    <h4 class="desc">@product.title - @product.brand</h4>
+                                    <p>@product.price LKR</p>
                                 </div>
-                            </div>
-
-                        </div>
-
+                                <div class="cart-item-qty">
+                                    <h5 class="desc">Quantity</h5>
+                                    <p>@product.count</p>
+                                </div>
+                                <div class="cart-item-total">
+                                    <h5 class="desc">Item Total</h5>
+                                    <p>Rs. @subTotal</p>
+                                </div>
+                            </li>
+                        }
                     }
-                }
-
-                <div class="row">
-
-                    <div class="col-4">
-                        <span>Total: @total LKR</span>
-                        <button type="button" class="btn-primary">Checkout</button>
+                </ul>
+                <div class="cart-total">
+                    <div class="cart-total-box">
+                        <h4>Order Total</h4>
+                        <p>Rs. @total</p>
                     </div>
+                    <button type="button" id="cart-btn-checkout">Proceed to Checkout</button>
+                    <small><a href="#">Continue Shopping</a></small>
                 </div>
             </div>
-
-
-
         </div>
     </div>
-</div>
+</section>
