@@ -5,8 +5,6 @@
     decimal total = 0;
 }
 
-<!-- Duplicate <head> removed (redundant) -->
-
 <section id="section-banner">
     <div class="container">
         <h2>Shopping cart</h2>
@@ -16,40 +14,38 @@
 <section>
     <div class="container">
         <div class="cart-contents">
-            <div class="sort"> <!-- Left in case required by backend logic? -->
-                <ul>
-                    @if (cutomer != null)
+            <ul>
+                @if (cutomer != null)
+                {
+                    foreach (SDP.Models.Product product in cutomer.cart.getProductListWithCount())
                     {
-                        foreach (SDP.Models.Product product in cutomer.cart.getProductListWithCount())
-                        {
-                            total = total + (decimal)product.price * (decimal)product.count;
-                            decimal subTotal = product.price * product.count;
-                            <li class="cart-item">
-                                <img src="~/imgs/@product.imgUrl" alt="@product.title" />
-                                <div class="cart-item-desc">
-                                    <h4 class="desc">@product.title - @product.brand</h4>
-                                    <p>@product.price LKR</p>
-                                </div>
-                                <div class="cart-item-qty">
-                                    <h5 class="desc">Quantity</h5>
-                                    <p>@product.count</p>
-                                </div>
-                                <div class="cart-item-total">
-                                    <h5 class="desc">Item Total</h5>
-                                    <p>Rs. @subTotal</p>
-                                </div>
-                            </li>
-                        }
+                        total = total + (decimal)product.price * (decimal)product.count;
+                        decimal subTotal = product.price * product.count;
+                        <li class="cart-item">
+                            <img src="~/imgs/@product.imgUrl" alt="@product.title" />
+                            <div class="cart-item-desc">
+                                <h4 class="desc">@product.title - @product.brand</h4>
+                                <p>@product.price LKR</p>
+                            </div>
+                            <div class="cart-item-qty">
+                                <h5 class="desc">Quantity</h5>
+                                <p>@product.count</p>
+                            </div>
+                            <div class="cart-item-total">
+                                <h5 class="desc">Item Total</h5>
+                                <p>Rs. @subTotal</p>
+                            </div>
+                        </li>
                     }
-                </ul>
-                <div class="cart-total">
-                    <div class="cart-total-box">
-                        <h4>Order Total</h4>
-                        <p>Rs. @total</p>
-                    </div>
-                    <button type="button" id="cart-btn-checkout">Proceed to Checkout</button>
-                    <small><a href="#">Continue Shopping</a></small>
+                }
+            </ul>
+            <div class="cart-total">
+                <div class="cart-total-box">
+                    <h4>Order Total</h4>
+                    <p>Rs. @total</p>
                 </div>
+                <button type="button" id="cart-btn-checkout">Proceed to Checkout</button>
+                <small><a href="#">Continue Shopping</a></small>
             </div>
         </div>
     </div>
