@@ -9,7 +9,6 @@ namespace SDP.Models
 {
     public class RegisteredCustomer : User, ICustomer
     {
-        
         public Cart cart { get; set; }
         public List<Order> orderList { get; set; }
 

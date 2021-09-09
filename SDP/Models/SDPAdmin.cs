@@ -11,8 +11,6 @@ namespace SDP.Models
     [Serializable]
     public class SDPAdmin : User
     {
-    
-
         public SDPAdmin() 
         {
             userId = Guid.NewGuid();

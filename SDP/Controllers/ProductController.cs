@@ -71,7 +71,7 @@ namespace SDP.Controllers
             }
             return RedirectToAction("Index", "Product"); 
         }
-
+        //Product CMS
         [HttpGet]
         public IActionResult AddProduct() 
         {
@@ -86,6 +86,7 @@ namespace SDP.Controllers
             return View(model);
         }
 
+        //this deals with the category dropdown list
         [HttpPost]
         public IActionResult AddProduct(AddProduct P, string catID)
         {
@@ -94,8 +95,6 @@ namespace SDP.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index", "Product");
         }
-
-       
     }
 }
 
