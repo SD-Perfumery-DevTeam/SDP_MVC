@@ -26,7 +26,7 @@ namespace SDP.Controllers
             _db = db;
         }
 
-        public string productID { get; set; }
+        
         public IActionResult Index()
         {
 
@@ -54,17 +54,27 @@ namespace SDP.Controllers
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
-            productID = value;
+            Guid productID = Guid.Parse(value);
 
-            ViewData["ProductID"] = productID;
-            HttpContext.Session.SetString("ProductID", productID);
-            return View();
+            Product product = _db.product.Find(productID);
+            
+            HttpContext.Session.SetString("ProductID", productID.ToString());
+            return View(product);
         }
         
         public IActionResult AddToCart(int quantity) 
         {
+            if (HttpContext.Session.GetString("Id") == null)
+            {
+                Models.GuestCustomer guest = new Models.GuestCustomer();
+                Global.customerList.Add(guest);
+                string Id = guest.userId.ToString();
+                HttpContext.Session.SetString("Id", Id);
+            }
+            ViewData["Id"] = HttpContext.Session.GetString("Id");
+
             Product product = null;
-            product = ViewService.getProductFromDB(HttpContext.Session.GetString("ProductID"));
+            product = _db.product.Find(Guid.Parse(HttpContext.Session.GetString("ProductID")));
             for (int i = 0; i < quantity; i++)
             {
                 ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id")).cart.addToCart(product);
