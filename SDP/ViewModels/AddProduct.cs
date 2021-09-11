@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SDP.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace SDP.ViewModels
     {
         public IEnumerable<SelectListItem> categories { get; set; }
         public Product product { get; set; }
+        public IFormFile Image { get; set; }
         public int SelectedCategoryId { get; set; }
     }
 }
