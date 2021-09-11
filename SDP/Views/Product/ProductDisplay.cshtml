@@ -10,15 +10,14 @@
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <img src="~/imgs/@Model.imgUrl" alt="..." style="height: 100%; width: 100%;">
+            <img src="~/imgs/@Model.imgUrl" alt="@Model.title by @Model.brand" />
         </div>
         <div class="col-4">
-            <h3>@Model.title by @Model.brand @Model.packageQty ml </h3>
-            <div class="space"></div>
+            <h2>@Model.title</h2><!-- Add dynamic UoM here -->
+            <span>@Model.brand @Model.packageQty ml</span>
             <span class="price-text">Price</span><span class="price-val">@Model.price LKR</span>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error sit architecto vitae fuga iure enim blanditiis officia doloribus, natus eligendi, impedit eum. Earum, beatae. Beatae, error. Magnam culpa ut ratione.
-                Temporibus error, aliquam inventore aspernatur hic velit placeat harum quod possimus nam labore sit cupiditate corrupti, porro earum incidunt! Expedita veritatis quo reiciendis esse hic vitae rerum temporibus sequi similique.
+                @Model.description
             </p>
             <form method="post" asp-controller="Product" asp-action="AddToCart">
                 <span class="quan-text">Quantity</span><input name="quantity" type="number" value=1>
