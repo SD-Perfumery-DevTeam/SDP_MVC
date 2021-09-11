@@ -323,6 +323,14 @@ footer .container ul li {
   margin: 0 auto 1rem;
 }
 
+.product .product-summary {
+    min-height: 8.75rem;
+}
+
+.product p {
+    margin-bottom: 0.5rem;
+}
+
 .product button {
   width: 100%;
   height: 2rem;
