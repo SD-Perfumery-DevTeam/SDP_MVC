@@ -13,9 +13,10 @@
             <img src="~/imgs/@Model.imgUrl" alt="@Model.title by @Model.brand" />
         </div>
         <div class="col-4">
-            <h2>@Model.title</h2><!-- Add dynamic UoM here -->
-            <span>@Model.brand @Model.packageQty ml</span>
-            <span class="price-text">Price</span><span class="price-val">@Model.price LKR</span>
+            <h2>@Model.title</h2>
+            <p>@Model.brand</p>
+            <p>@Model.packageQty@Model.packageUom</p>
+            <p>Rs. @Model.price</p>
             <p>
                 @Model.description
             </p>
