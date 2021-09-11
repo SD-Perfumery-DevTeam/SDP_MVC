@@ -14,7 +14,7 @@ namespace SDP.Models
         public Product() { }
         public Product(Guid id,string name, decimal price, bool onSpecial,
          string imgSrc, Consts.PTypes pType,
-        decimal size, string brand, string discription,int count)
+        decimal size, string brand, string description,int count)
         {
             this.productId = id;
             this.title = name;
@@ -24,11 +24,11 @@ namespace SDP.Models
             this.productType = pType;
             this.packageQty = size;
             this.brand = brand;
-            this.description = discription;
+            this.description = description;
             this.count = count;
         }
 
-        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUmo, int packageWeight, string packageDims, string brand, string discription)
+        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUom, int packageWeight, string packageDims, string brand, string description)
         {
 
             this.productId = Guid.NewGuid();
@@ -40,11 +40,11 @@ namespace SDP.Models
             this.imgUrl = imgSrc;
             this.productType = productType;
             this.packageQty = packageQty;
-            this.packageUom = packageUmo;
+            this.packageUom = packageUom;
             this.packageWeight = packageWeight;
             this.packageDims = packageDims;
             this.brand = brand;
-            this.description = discription;
+            this.description = description;
         }
 
         public Guid productId { get; set; }
