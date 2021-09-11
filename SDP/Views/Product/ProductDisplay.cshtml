@@ -4,12 +4,8 @@
    @model SDP.Models.Product
 
 }
-<head>
-    <link href="~/css/style.css" rel="stylesheet">
-    <link href="~/css/productpage-style.css" rel="stylesheet">
-</head>
 
-
+<!-- Duplicate <head> removed (redundant) -->
 
 <div class="container">
     <div class="row">
@@ -27,7 +23,7 @@
             <form method="post" asp-controller="Product" asp-action="AddToCart">
                 <span class="quan-text">Quantity</span><input name="quantity" type="number" value=1>
                 <div>
-                    <button type="submit" >Add ToCart</button>
+                    <button type="submit">Add ToCart</button>
                 </div>
             </form>
         </div>

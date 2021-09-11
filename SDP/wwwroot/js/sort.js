@@ -1,7 +1,7 @@
 var content = "";
 
 const productCon = document.querySelectorAll(".product_con");
-const row = document.querySelector("#rowone");
+const row = document.querySelector("#product-list");
 
 
 
@@ -21,23 +21,21 @@ function displayCardFunc(prod) {
     }
     
     content =
-        ` 
-        <div class="card" style="width: 18rem;">
-            <img src="../imgs/${prod.imgUrl}" class="card-img-top" alt="...">
-            <div class="card-body d-flex flex-column d-flex">
-                <h5>${prod.title} by ${prod.brand} ${type} ${prod.packageQty}ml </h5>
-                <h5>$${prod.price}</h5>
-                <h5></h5>
-                <h5 class="card-title">
-                some description
-                </h5>
-
-                <button class="btn btn-primary mt-auto card-btn"  type="submit" name= "value"  value = "${prod.productId}"  >View Detail</button>
+    `
+        <div>
+            <img src="../imgs/${prod.imgUrl}" alt="${prod.title}">
+            <div>
+                <h4>${prod.title} (X)</h4><!-- Need to include (M) or (W) for gender here. -->
+                <p>by ${prod.brand}</p>
+                <p><small>${type}</small></p>
+                <p><small>${prod.packageQty}ml</small></p><!-- Needs dynamic UoM here -->
+                <h5>Rs. ${prod.price}</h5>
+                <button type="submit" name= "value"  value = "${prod.productId}"  >View Detail</button>
             </div>
         </div>
     `;
     let node = document.createElement("div");
-    node.setAttribute("class", "col-sm  d-flex align-items-stretch");
+    node.setAttribute("class", "product");
     row.appendChild(node);
     node.innerHTML = content;
 
@@ -85,6 +83,7 @@ function compareName2(a, b) {
     return 0;
 }
 
+// TODO - The logic for price sort seems to be switched H-L and L-H.
 function sortByPriceHL() {
     productDbJson.sort(comparePrice);
     row.innerHTML = "";
