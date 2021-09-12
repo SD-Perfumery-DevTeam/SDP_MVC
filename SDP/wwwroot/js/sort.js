@@ -6,6 +6,7 @@ const row = document.querySelector("#product-list");
 productDbJson.forEach(displayCardFunc);
 
 function displayCardFunc(prod) {
+    //Switch case to display a different string for EDP / EDT perfumes.
     let type;
     switch (prod.productType) {
         case 0:
@@ -15,13 +16,27 @@ function displayCardFunc(prod) {
              type = "EDT"
             break;
     }
+
+    // Switch case to display a different string for mens / womens productGender.
+    let gender;
+    switch (prod.productGender) {
+        case 0: // mens
+            gender = " (M)"
+            break;
+        case 1: // womens
+            gender = " (W)"
+            break;
+        case 2: // neither
+            gender = ""
+            break;
+    }
     
     content =
     `
         <div>
             <img src="../imgs/${prod.imgUrl}" alt="${prod.title}">
             <div class="product-summary">
-                <h4>${prod.title} (X)</h4><!-- Need to include (M) or (W) for gender here. -->
+                <h4>${prod.title}${gender}</h4>
                 <p>by ${prod.brand.title}</p>
                 <p><small>${type}</small></p>
                 <p><small>${prod.packageQty}ml</small></p><!-- Needs dynamic UoM here -->
