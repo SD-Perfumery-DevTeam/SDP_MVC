@@ -30,6 +30,20 @@
                     }
                 </select>
             </div>
+
+            <div class="form-group">
+                <label asp-for="product.brand"></label>
+
+                <select id="listbox" class="form-control" name="brandID">
+                    @foreach (var item in Model.brands)
+                    {
+                        <option value="@item.Value" name="brandID">
+                            @item.Text
+                        </option>
+                    }
+                </select>
+            </div>
+
             <div class="form-group">
                 <label asp-for="product.productGender"></label>
                 <div><select asp-for="@Model.product.productGender" asp-items="Html.GetEnumSelectList<Consts.Genders>()" class="form-control"></select></div>

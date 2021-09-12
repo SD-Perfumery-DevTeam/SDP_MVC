@@ -17,7 +17,7 @@ namespace SDP.Controllers
     public class ProductController : Controller
     {
         List<Product> pList;
-        private ProductDbContext _db;
+        private static ProductDbContext _db;
 
         ICustomer customer = null;
 
@@ -86,21 +86,30 @@ namespace SDP.Controllers
         public IActionResult AddProduct() 
         {
             var c = _db.category.ToList();
+            var b = _db.brand.ToList();
             var model = new ViewModels.AddProduct { product = new Product(),
                 categories = c.Select(x => new SelectListItem
                 {
                     Value = x.categoryId.ToString(),
                     Text = x.title
-                })};
+                }),
+                brands = b.Select(i => new SelectListItem
+                {
+                    Value = i.brandId.ToString(),
+                    Text = i.title
+                }
+                
+               )};
 
             return View(model);
         }
 
         //this deals with the category dropdown list
         [HttpPost]
-        public IActionResult AddProduct(AddProduct P, string catID)
+        public IActionResult AddProduct(AddProduct P, string catID, string brandID)
         {
             P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
+            P.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
             _db.product.Add(P.product);
             _db.SaveChanges();
             return RedirectToAction("Index", "Product");

@@ -14,7 +14,7 @@ namespace SDP.Models
         public Product() { }
         public Product(Guid id,string name, decimal price, bool onSpecial,
          string imgSrc, Consts.PTypes pType,
-        decimal size, string brand, string discription,int count)
+        decimal size, Brand brand, string discription,int count)
         {
             this.productId = id;
             this.title = name;
@@ -28,7 +28,7 @@ namespace SDP.Models
             this.count = count;
         }
 
-        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUmo, int packageWeight, string packageDims, string brand, string discription)
+        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUmo, int packageWeight, string packageDims, Brand brand, string discription)
         {
 
             this.productId = Guid.NewGuid();
@@ -68,9 +68,10 @@ namespace SDP.Models
         public int packageWeight { get; set; }
         public string packageDims { get; set; }
         public string description { get; set; }
-        
+        [Required]
+        public Brand brand{ get; set; }
+
         //prop that are not in the database 
-        public string brand;
         public bool onSpecial;
         public int count= 1;
     }

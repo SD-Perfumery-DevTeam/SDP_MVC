@@ -12,6 +12,7 @@ namespace SDP.ViewModels
     public class AddProduct
     {
         public IEnumerable<SelectListItem> categories { get; set; }
+        public IEnumerable<SelectListItem> brands { get; set; }
         public Product product { get; set; }
         public IFormFile Image { get; set; }
         public int SelectedCategoryId { get; set; }
