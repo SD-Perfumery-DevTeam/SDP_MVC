@@ -3,13 +3,10 @@ var content = "";
 const productCon = document.querySelectorAll(".product_con");
 const row = document.querySelector("#product-list");
 
-
-
 productDbJson.forEach(displayCardFunc);
 
-
-
 function displayCardFunc(prod) {
+    //Switch case to display a different string for EDP / EDT perfumes.
     let type;
     switch (prod.productType) {
         case 0:
@@ -19,21 +16,56 @@ function displayCardFunc(prod) {
              type = "EDT"
             break;
     }
+
+    // Switch case to display a different string for mens / womens productGender.
+    let gender;
+    switch (prod.productGender) {
+        case 0: // mens
+            gender = " (M)"
+            break;
+        case 1: // womens
+            gender = " (W)"
+            break;
+        case 2: // neither
+            gender = ""
+            break;
+    }
+
+    // Switch case to display the unit of measurement. (ml/g/L/Kg/Oz)
+    let uom;
+    switch (prod.packageUom) {
+        case 0:
+            uom = "ml"
+            break;
+        case 1:
+            uom = "g"
+            break;
+        case 2:
+            uom = "L"
+            break;
+        case 3:
+            uom = "Kg"
+            break;
+        case 4:
+            uom = "Oz"
+            break;
+    }
     
     content =
     `
         <div>
             <img src="../imgs/${prod.imgUrl}" alt="${prod.title}">
             <div class="product-summary">
-                <h4>${prod.title} (X)</h4><!-- Need to include (M) or (W) for gender here. -->
-                <p>by ${prod.brand}</p>
+                <h4>${prod.title}${gender}</h4>
+                <p>by ${prod.brand.title}</p>
                 <p><small>${type}</small></p>
-                <p><small>${prod.packageQty}ml</small></p><!-- Needs dynamic UoM here -->
+                <p><small>${prod.packageQty}${uom}</small></p>
             </div>
             <div>
                 <h5>Rs. ${prod.price}</h5>
-                <button type="submit" name= "value"  value = "${prod.productId}"  >View Detail</button></div>
+                <button type="submit" name="value" value="${prod.productId}">View Details</button>
             </div>
+        </div>
     `;
     let node = document.createElement("div");
     node.setAttribute("class", "product");
@@ -84,7 +116,6 @@ function compareName2(a, b) {
     return 0;
 }
 
-// TODO - The logic for price sort seems to be switched H-L and L-H.
 function sortByPriceHL() {
     productDbJson.sort(comparePrice);
     row.innerHTML = "";
@@ -105,7 +136,6 @@ function sortByNameZA() {
     row.innerHTML = "";
     productDbJson.forEach(displayCardFunc);
 }
-
 
 function sortBy(byWat) {
     var text = byWat.options[byWat.selectedIndex].value;
