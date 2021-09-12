@@ -14,7 +14,7 @@ namespace SDP.Models
         public Product() { }
         public Product(Guid id,string name, decimal price, bool onSpecial,
          string imgSrc, Consts.PTypes pType,
-        decimal size, string brand, string description,int count)
+        decimal size, Brand brand, string description,int count)
         {
             this.productId = id;
             this.title = name;
@@ -28,7 +28,7 @@ namespace SDP.Models
             this.count = count;
         }
 
-        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUom, int packageWeight, string packageDims, string brand, string description)
+        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUom, int packageWeight, string packageDims, Brand brand, string description)
         {
 
             this.productId = Guid.NewGuid();
