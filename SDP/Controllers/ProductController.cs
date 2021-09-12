@@ -54,7 +54,7 @@ namespace SDP.Controllers
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
-            Guid productID = Guid.Parse(value);
+            Guid productID = Guid.Parse(value); // this appears to throw an unhandled exception at times..
 
             Product product = _db.product.Find(productID);
             

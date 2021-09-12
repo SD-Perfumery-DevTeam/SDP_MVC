@@ -24,15 +24,16 @@ function displayCardFunc(prod) {
     `
         <div>
             <img src="../imgs/${prod.imgUrl}" alt="${prod.title}">
-            <div>
+            <div class="product-summary">
                 <h4>${prod.title} (X)</h4><!-- Need to include (M) or (W) for gender here. -->
                 <p>by ${prod.brand}</p>
                 <p><small>${type}</small></p>
                 <p><small>${prod.packageQty}ml</small></p><!-- Needs dynamic UoM here -->
-                <h5>Rs. ${prod.price}</h5>
-                <button type="submit" name= "value"  value = "${prod.productId}"  >View Detail</button>
             </div>
-        </div>
+            <div>
+                <h5>Rs. ${prod.price}</h5>
+                <button type="submit" name= "value"  value = "${prod.productId}"  >View Detail</button></div>
+            </div>
     `;
     let node = document.createElement("div");
     node.setAttribute("class", "product");
