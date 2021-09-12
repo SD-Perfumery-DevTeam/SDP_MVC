@@ -30,6 +30,26 @@ function displayCardFunc(prod) {
             gender = ""
             break;
     }
+
+    // Switch case to display the unit of measurement. (ml/g/L/Kg/Oz)
+    let uom;
+    switch (prod.packageUom) {
+        case 0:
+            uom = "ml"
+            break;
+        case 1:
+            uom = "g"
+            break;
+        case 2:
+            uom = "L"
+            break;
+        case 3:
+            uom = "Kg"
+            break;
+        case 4:
+            uom = "Oz"
+            break;
+    }
     
     content =
     `
@@ -39,7 +59,7 @@ function displayCardFunc(prod) {
                 <h4>${prod.title}${gender}</h4>
                 <p>by ${prod.brand.title}</p>
                 <p><small>${type}</small></p>
-                <p><small>${prod.packageQty}ml</small></p><!-- Needs dynamic UoM here -->
+                <p><small>${prod.packageQty}${uom}</small></p>
             </div>
             <div>
                 <h5>Rs. ${prod.price}</h5>

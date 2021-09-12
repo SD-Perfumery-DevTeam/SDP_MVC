@@ -16,11 +16,11 @@ namespace SDP
         };
         public enum Genders
         {
-            [Display(Name = "Man's")]
+            [Display(Name = "Mens")]
             male,
-            [Display(Name = "Woman's")]
+            [Display(Name = "Womens")]
             female,
-            [Display(Name = "Other")]
+            [Display(Name = "Unisex")]
             other
         };
         public enum Status
