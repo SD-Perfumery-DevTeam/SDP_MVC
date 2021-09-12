@@ -65,19 +65,19 @@ function comparePrice2(a, b) {
 }
 
 function compareName(a, b) {
-    if (a.name < b.name) {
+    if (a.title < b.title) {
         return -1;
     }
-    if (a.name > b.name) {
+    if (a.title > b.title) {
         return 1;
     }
     return 0;
 }
 function compareName2(a, b) {
-    if (a.name > b.name) {
+    if (a.title > b.title) {
         return -1;
     }
-    if (a.name < b.name) {
+    if (a.title < b.title) {
         return 1;
     }
     return 0;
