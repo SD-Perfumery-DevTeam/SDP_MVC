@@ -63,8 +63,9 @@ function displayCardFunc(prod) {
             </div>
             <div>
                 <h5>Rs. ${prod.price}</h5>
-                <button type="submit" name= "value"  value = "${prod.productId}"  >View Detail</button></div>
+                <button type="submit" name="value" value="${prod.productId}">View Details</button>
             </div>
+        </div>
     `;
     let node = document.createElement("div");
     node.setAttribute("class", "product");
@@ -115,7 +116,6 @@ function compareName2(a, b) {
     return 0;
 }
 
-// TODO - The logic for price sort seems to be switched H-L and L-H.
 function sortByPriceHL() {
     productDbJson.sort(comparePrice);
     row.innerHTML = "";
@@ -136,7 +136,6 @@ function sortByNameZA() {
     row.innerHTML = "";
     productDbJson.forEach(displayCardFunc);
 }
-
 
 function sortBy(byWat) {
     var text = byWat.options[byWat.selectedIndex].value;
