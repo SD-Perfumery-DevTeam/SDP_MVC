@@ -20,6 +20,8 @@ Update 03/09/2021
 1. able adding product too database
 2. code clean up
 ```
+
+```
 Update 12/09/2021
 1. adding brand model to fit db
 2. corresponding cms items
