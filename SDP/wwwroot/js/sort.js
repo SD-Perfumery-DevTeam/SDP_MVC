@@ -3,11 +3,7 @@ var content = "";
 const productCon = document.querySelectorAll(".product_con");
 const row = document.querySelector("#product-list");
 
-
-
 productDbJson.forEach(displayCardFunc);
-
-
 
 function displayCardFunc(prod) {
     let type;
@@ -26,7 +22,7 @@ function displayCardFunc(prod) {
             <img src="../imgs/${prod.imgUrl}" alt="${prod.title}">
             <div class="product-summary">
                 <h4>${prod.title} (X)</h4><!-- Need to include (M) or (W) for gender here. -->
-                <p>by ${prod.brand}</p>
+                <p>by ${prod.brand.title}</p>
                 <p><small>${type}</small></p>
                 <p><small>${prod.packageQty}ml</small></p><!-- Needs dynamic UoM here -->
             </div>

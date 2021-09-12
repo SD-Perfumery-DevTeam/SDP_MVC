@@ -26,7 +26,6 @@ namespace SDP.Controllers
             _db = db;
         }
 
-        
         public IActionResult Index()
         {
 
@@ -39,10 +38,14 @@ namespace SDP.Controllers
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
             customer = ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id"));
-           
-            
-            return View(new Catalog { products = _db.product.ToList() });
+
+
+            return View(new Catalog {
+                products = _db.product.ToList(),
+                brands = _db.brand.ToList()
+            });
         }
+
         public IActionResult ProductDisplay(string value)
         {
             if (HttpContext.Session.GetString("Id") == null)
@@ -81,6 +84,7 @@ namespace SDP.Controllers
             }
             return RedirectToAction("Index", "Product"); 
         }
+
         //Product CMS
         [HttpGet]
         public IActionResult AddProduct() 
@@ -104,7 +108,7 @@ namespace SDP.Controllers
             return View(model);
         }
 
-        //this deals with the category dropdown list
+        // This deals with the category dropdown list.
         [HttpPost]
         public IActionResult AddProduct(AddProduct P, string catID, string brandID)
         {
@@ -116,10 +120,3 @@ namespace SDP.Controllers
         }
     }
 }
-
-//code used for populating db with mock data
-/*foreach (Product p in MockDB.MockProductDB) 
-{
-    _db.product.Add(p);
-    _db.SaveChanges();
-}*/

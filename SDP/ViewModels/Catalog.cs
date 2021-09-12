@@ -9,6 +9,7 @@ namespace SDP.ViewModels
     public class Catalog
     {
         public IEnumerable<Product> products { get; set; }
+        public IEnumerable<Brand> brands { get; set; }
         public Product product { get; set; }
     }
 }
