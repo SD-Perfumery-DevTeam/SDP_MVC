@@ -31,6 +31,5 @@ namespace SDP.Models
         }
 
         public void changeStatus(Status s) => status = s;
-        
     }
 }

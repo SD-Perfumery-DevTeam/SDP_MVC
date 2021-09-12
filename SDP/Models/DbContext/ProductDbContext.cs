@@ -11,7 +11,7 @@ namespace SDP.Models.DbContext
     {
         public DbSet<Product> product { get; set; }
         public DbSet<Category> category { get; set; }
-
+        public DbSet<Brand> brand { get; set; }
         /*  public DbSet<SDPAdmin> SDPadmins { get; set; }
          public DbSet<Tag> tag { get; set; }
           public DbSet<Order> orders { get; set; }

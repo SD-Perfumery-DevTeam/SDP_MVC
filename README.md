@@ -20,3 +20,11 @@ Update 03/09/2021
 1. able adding product too database
 2. code clean up
 ```
+
+```
+Update 12/09/2021
+1. adding brand model to fit db
+2. corresponding cms items
+3. MockDb deleted
+4. and coding using mockDB changed over to actual DB
+```

@@ -29,26 +29,6 @@ namespace SDP.Services
             return customer;
         }
 
-        public static Product getProductFromDB(string id) 
-        {
-            Product product = null;
-            foreach (Product p in MockDB.MockProductDB)
-            {
-                try
-                {
-                    if (p.productId == Guid.Parse(id))
-                    {
-                        product = p;
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    //logging it
-                }
-
-            }
-            return product; 
-        }    
+       
     }
 }

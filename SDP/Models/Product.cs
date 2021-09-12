@@ -68,9 +68,10 @@ namespace SDP.Models
         public int packageWeight { get; set; }
         public string packageDims { get; set; }
         public string description { get; set; }
-        
+        [Required]
+        public Brand brand{ get; set; }
+
         //prop that are not in the database 
-        public string brand;
         public bool onSpecial;
         public int count= 1;
     }
