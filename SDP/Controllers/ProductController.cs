@@ -8,6 +8,7 @@ using SDP.Services;
 using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -108,15 +109,28 @@ namespace SDP.Controllers
             return View(model);
         }
 
-        // This deals with the category dropdown list.
+        // This deals with the dropdown lists  and img.
         [HttpPost]
-        public IActionResult AddProduct(AddProduct P, string catID, string brandID)
+        public async Task<IActionResult> AddProduct(AddProduct P, string catID, string brandID, IFormFile ufile)
         {
+            if (ufile != null && ufile.Length > 0)
+            {
+                var fileName = Path.GetFileName(ufile.FileName);
+                P.product.imgUrl = fileName;
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\imgs", fileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ufile.CopyToAsync(fileStream);
+                }
+            }
+
             P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
             P.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
             _db.product.Add(P.product);
             _db.SaveChanges();
             return RedirectToAction("Index", "Product");
         }
+
+       
     }
 }

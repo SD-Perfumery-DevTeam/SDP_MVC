@@ -57,7 +57,7 @@
             <div class="form-group">
                 <label asp-for="product.imgUrl"></label>
                 <div class="custom-file">
-                    <input asp-for="Image" class="form-control custom-file-input" name="custom-file-input" />
+                    <input asp-for="Image" type="file" class="form-control custom-file-input" name="ufile" />
                     <label class="custom-file-label">Choose Image File...</label>
                 </div>
                 <span asp-validation-for="product.imgUrl" class="text-danger"></span>

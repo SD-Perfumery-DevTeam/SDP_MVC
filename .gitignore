@@ -135,6 +135,14 @@ _ReSharper*/
 # TeamCity is a build add-in
 _TeamCity*
 
+
+
+
+#Config Json 
+appsettings.json
+
+
+
 # DotCover is a Code Coverage Tool
 *.dotCover
 
