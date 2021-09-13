@@ -28,3 +28,10 @@ Update 12/09/2021
 3. MockDb deleted
 4. and coding using mockDB changed over to actual DB
 ```
+
+```
+Update 13/09/2021
+1. adding img picker
+2. img storing to db
+3. appsetting.json removed from repo
+```
