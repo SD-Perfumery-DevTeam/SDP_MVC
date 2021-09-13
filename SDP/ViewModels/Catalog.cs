@@ -11,5 +11,6 @@ namespace SDP.ViewModels
         public IEnumerable<Product> products { get; set; }
         public IEnumerable<Brand> brands { get; set; }
         public Product product { get; set; }
+        public Brand brand { get; set; }
     }
 }

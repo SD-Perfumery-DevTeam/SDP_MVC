@@ -39,7 +39,6 @@ namespace SDP.Controllers
             ViewData["Id"] = HttpContext.Session.GetString("Id");
             customer = ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id"));
 
-
             return View(new Catalog {
                 products = _db.product.ToList(),
                 brands = _db.brand.ToList()
@@ -58,11 +57,14 @@ namespace SDP.Controllers
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
             Guid productID = Guid.Parse(value); // this appears to throw an unhandled exception at times..
+            Guid brandID = Guid.Parse("051f6ad7-59bf-4a9c-9d8d-06b485cedbf1");
 
             Product product = _db.product.Find(productID);
-            
+            Brand brand = _db.brand.Find(brandID);
+
             HttpContext.Session.SetString("ProductID", productID.ToString());
-            return View(product);
+
+            return View(new Catalog { product = product, brand = brand });
         }
         
         public IActionResult AddToCart(int quantity) 
