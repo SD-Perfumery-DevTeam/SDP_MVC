@@ -11,7 +11,7 @@ namespace SDP.Models
         public Brand() { }
         public Brand( string title)
         {
-            this.brandId = Guid.NewGuid();
+            this.brandId = brandId;
             this.title = title;
         }
         public Brand(Guid brandID, string title)

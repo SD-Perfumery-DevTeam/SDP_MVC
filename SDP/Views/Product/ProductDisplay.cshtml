@@ -1,24 +1,22 @@
 ﻿
 @{
     string iD = (string)ViewData["ProductID"];
-   @model SDP.Models.Product
+    @model SDP.ViewModels.Catalog
 
 }
-
-<!-- Duplicate <head> removed (redundant) -->
 
 <div class="container">
     <div class="row">
         <div class="col-8">
-            <img src="~/imgs/@Model.imgUrl" alt="@Model.title by @Model.brand" />
+            <img src="~/imgs/@Model.product.imgUrl" alt="@Model.product.title by @Model.brand.title" />
         </div>
         <div class="col-4">
-            <h2>@Model.title</h2>
-            <p>@Model.brand</p>
-            <p>@Model.packageQty@Model.packageUom</p>
-            <p>Rs. @Model.price</p>
+            <h2>@Model.product.title</h2>
+            <p>@Model.brand.title</p>
+            <p>@Model.product.packageQty@Model.product.packageUom</p>
+            <p>Rs. @Model.product.price</p>
             <p>
-                @Model.description
+                @Model.product.description
             </p>
             <form method="post" asp-controller="Product" asp-action="AddToCart">
                 <span class="quan-text">Quantity</span><input name="quantity" type="number" value=1>
