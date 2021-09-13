@@ -100,9 +100,16 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-h3 {
+h2, h3 {
   margin: 1.5rem 0 2rem 1rem;
+}
+
+h3 {
   color: var( --color-client-spec-5);
+}
+
+p {
+    line-height: 1.5rem;
 }
 
 a {
@@ -337,14 +344,17 @@ footer .container ul li {
 }
 
 #section-product-display {
-    background-color: red;
 }
 
 #section-product-display img {
-    width: 13rem;
+  display: block;
+  margin: 0 auto;
+  max-width: 80%;
 }
 
-
+#section-product-display .product-display-cta {
+  background-color: var(--color-client-spec-3);
+}
 
 .cart-contents ul {
   padding-left: 0;
