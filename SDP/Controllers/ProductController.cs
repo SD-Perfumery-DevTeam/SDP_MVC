@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SDP.Interfaces;
 using SDP.Models;
 using SDP.Models.DbContext;
@@ -27,7 +28,7 @@ namespace SDP.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
 
             if (HttpContext.Session.GetString("Id") == null)
@@ -41,8 +42,8 @@ namespace SDP.Controllers
             customer = ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id"));
 
             return View(new Catalog {
-                products = _db.product.ToList(),
-                brands = _db.brand.ToList()
+                products =  _db.product.ToList(),
+                 brands =  _db.brand.ToList()
             });
         }
 
@@ -57,19 +58,24 @@ namespace SDP.Controllers
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
+
+            
+
+          
             // Identify the product based on the string 'value passed in
             Guid productID = Guid.Parse(value); // this appears to throw an unhandled exception at times..
-            Product product = _db.product.Find(productID);
+            Product product = _db.product.Include(x => x.brand).FirstOrDefault(x => x.productId.Equals(productID));
 
+           
             // Determine the brand of the product from the FK in product.brand
-            Guid brandID = Guid.Parse("051f6ad7-59bf-4a9c-9d8d-06b485cedbf1");
-            Brand brand = _db.brand.Find(brandID);
+
+
 
             var lProduct = _db.product.ToList();
 
             HttpContext.Session.SetString("ProductID", productID.ToString());
 
-            return View(new Catalog { product = product, brand = brand });
+            return View(new Catalog { product = product, brand = product.brand });
         }
         
         public IActionResult AddToCart(int quantity) 
