@@ -34,4 +34,6 @@ Update 13/09/2021
 1. adding img picker
 2. img storing to db
 3. appsetting.json removed from repo
+4. product brand added to display page
+5. validation added
 ```
