@@ -1,29 +1,50 @@
-﻿
-@{
+﻿@{
+    ViewData["Title"] = Model.product.title + " by " + Model.brand.title;
     string iD = (string)ViewData["ProductID"];
     @model SDP.ViewModels.Catalog
-
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-8">
-            <img src="~/imgs/@Model.product.imgUrl" alt="@Model.product.title by @Model.brand.title" />
-        </div>
-        <div class="col-4">
-            <h2>@Model.product.title</h2>
-            <p>@Model.brand.title</p>
-            <p>@Model.product.packageQty@Model.product.packageUom</p>
-            <p>Rs. @Model.product.price</p>
-            <p>
-                @Model.product.description
-            </p>
-            <form method="post" asp-controller="Product" asp-action="AddToCart">
-                <span class="quan-text">Quantity</span><input name="quantity" type="number" value=1>
-                <div>
-                    <button type="submit">Add ToCart</button>
+<div id="section-product-display">
+    <div class="container">
+        <h2>@Model.product.title</h2>
+        <h3>@Model.brand.title</h3>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <img src="~/imgs/@Model.product.imgUrl" alt="@Model.product.title by @Model.brand.title" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <h4>Description</h4>
+                <p>@Model.product.description</p>
+                <h4>Buy it now</h4>
+                <div class="product-display-cta">
+                    <p class="product-display-price">Rs. @Model.product.price</p>
+                    <form method="post" asp-controller="Product" asp-action="AddToCart">
+                        <input name="quantity" type="number" value=1><button type="submit">Add To Cart</button>
+                    </form>
                 </div>
-            </form>
+                <h4>The finer details</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Type</th>
+                            <th>Gender</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>@Model.brand.title</td>
+                        <td>@Model.product.productType</td>
+                        <td>@Model.product.productGender</td>
+                        <td>@Model.product.packageQty@Model.product.packageUom</td>
+                    </tr>
+                </table>
+            </div>
         </div>
+    </div>
+</div>
+<div id="section-suggested">
+    <div class="container">
+        <h3>Recommended Fragrances</h3>
     </div>
 </div>

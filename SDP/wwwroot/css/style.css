@@ -18,13 +18,15 @@
   /* These are proposed colours - we can adjust these if desired */
   --color-proposed-purple-90: hsl(270, 5%, 10%);
   --color-proposed-purple-70: hsl(270, 10%, 30%);
+  --color-proposed-purple-60: hsl(270, 10%, 40%);
+  --color-proposed-purple-55: hsl(270, 10%, 45%);
   --color-proposed-purple-50: hsl(270, 15%, 50%);
   --color-proposed-purple-45: hsl(270, 20%, 55%);
   --color-proposed-purple-40: hsl(270, 25%, 60%);
   --color-proposed-purple-35: hsl(270, 30%, 65%);
   --color-proposed-purple-30: hsl(270, 35%, 70%);
   --color-proposed-purple-25: hsl(270, 35%, 75%);
-  --color-proposed-purple-20: hsl(269, 35%, 80%);
+  --color-proposed-purple-20: hsl(270, 35%, 80%);
   --color-proposed-purple-15: hsl(270, 40%, 85%);
   --color-proposed-purple-10: hsl(270, 40%, 90%);
   --color-proposed-purple-05: hsl(270, 40%, 95%);
@@ -100,13 +102,30 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
-h3 {
+h2, h3 {
   margin: 1.5rem 0 2rem 1rem;
+}
+
+/* Select a h3 element only when it occurs after h2 */
+h2 + h3 {
+  margin-top: -1.5rem;
+}
+
+h3 {
   color: var( --color-client-spec-5);
+}
+
+p {
+  line-height: 1.5rem;
 }
 
 a {
   color: var(--color-proposed-purple-70);
+}
+
+a:hover, a:active {
+  text-decoration: none;
+  color: var(--color-proposed-purple-60);
 }
 
 button, select {
@@ -237,7 +256,7 @@ header #header-search #btnSearch {
 }
 
 main section {
-  margin-top: 1rem;;
+  margin-top: 1rem;
 }
 
 main #section-banner {
@@ -324,11 +343,11 @@ footer .container ul li {
 }
 
 .product .product-summary {
-    min-height: 8.75rem;
+  min-height: 11.75rem;
 }
 
 .product p {
-    margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .product button {
@@ -336,8 +355,40 @@ footer .container ul li {
   height: 2rem;
 }
 
-.cart-contents ul {
-  padding-left: 0;
+#section-product-display img {
+  display: block;
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+#section-product-display .product-display-cta {
+  margin: 1rem 0;
+  padding: 2rem;
+  align-items: baseline;
+  background-color: var(--color-client-spec-3);
+  border-radius: 0.3rem;
+}
+
+#section-product-display .product-display-price {
+  font-size: 2rem;
+  font-weight: 700;
+  font-family: var(--font-family-display-serif);
+}
+
+#section-product-display .product-display-cta input[type=number] {
+  margin-right: 0.5rem;
+  padding: 0.6rem;
+  width: 6rem;
+  height: 2.25rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-client-spec-1);
+  border-radius: 0.3rem;
+}
+
+#section-product-display .product-display-cta button {
+  padding: 0 0.6rem;
+  height: 2.25rem;
+  font-size: 1rem;
 }
 
 .cart-contents ul li {

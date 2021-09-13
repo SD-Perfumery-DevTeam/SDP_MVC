@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "All Products";
 }
 @model SDP.ViewModels.Catalog
 
@@ -9,7 +10,7 @@
 
 <section id="section-product-list">
     <div class="container product_con">
-        <h3>Category Title Here</h3>
+        <h2>@ViewData["Title"]</h2>
         <div class="sort">
             <select onchange="sortBy(this);">
                 <option>View By</option>
