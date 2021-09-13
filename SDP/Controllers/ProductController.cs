@@ -62,6 +62,8 @@ namespace SDP.Controllers
 
             Product product = _db.product.Find(productID);
             
+
+
             HttpContext.Session.SetString("ProductID", productID.ToString());
             return View(product);
         }
