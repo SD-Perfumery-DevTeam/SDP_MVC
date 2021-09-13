@@ -7,3 +7,15 @@ $(document).ready(function () {
     });
 });
 
+
+$('textarea.message_area').on('keyup', function () {
+    var maxlen = $(this).attr('maxlength');
+
+    var length = $(this).val().length;
+    if (length > (maxlen - 10)) {
+        $('.textarea_message').text('max length ' + maxlen + ' characters only!')
+    }
+    else {
+        $('.textarea_message').text('');
+    }
+});

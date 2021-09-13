@@ -128,8 +128,6 @@ namespace SDP.Controllers
             _db.product.Add(P.product);
             _db.SaveChanges();
             return RedirectToAction("Index", "Product");
-        }
-
-       
+        }      
     }
 }

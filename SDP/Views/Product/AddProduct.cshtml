@@ -14,7 +14,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="product.title"></label>
-                <input asp-for="product.title" class="form-control" />
+                <input  required="required" asp-for="product.title" class="form-control" maxlength="2048" />
                 <span asp-validation-for="product.title" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,7 +49,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="product.price"></label>
-                <input asp-for="product.price" class="form-control" />
+                <input  required="required" type="number"  min="1"  asp-for="product.price" class="form-control" />
                 <span asp-validation-for="product.price" class="text-danger"></span>
             </div>
             <div id="disp_tmp_path" hidden></div>
@@ -57,7 +57,7 @@
             <div class="form-group">
                 <label asp-for="product.imgUrl"></label>
                 <div class="custom-file">
-                    <input asp-for="Image" type="file" class="form-control custom-file-input" name="ufile" />
+                    <input required="required" asp-for="Image" type="file" class="form-control custom-file-input" name="ufile"  maxlength="2048"/>
                     <label class="custom-file-label">Choose Image File...</label>
                 </div>
                 <span asp-validation-for="product.imgUrl" class="text-danger"></span>
@@ -68,7 +68,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="product.packageQty"></label>
-                <input asp-for="product.packageQty" class="form-control" />
+                <input required="required" type="number" min="1" asp-for="product.packageQty" class="form-control" />
                 <span asp-validation-for="product.packageQty" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -77,17 +77,18 @@
             </div>
             <div class="form-group">
                 <label asp-for="product.packageWeight"></label>
-                <input asp-for="product.packageWeight" class="form-control" />
+                <input type="number" asp-for="product.packageWeight" min="1" class="form-control" />
                 <span asp-validation-for="product.packageWeight" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="product.packageDims"></label>
-                <input asp-for="product.packageDims" class="form-control" />
+                <input  asp-for="product.packageDims" class="form-control" />
                 <span asp-validation-for="product.packageDims" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <span class="hint" id="textarea_message"></span>
                 <label asp-for="product.description"></label>
-                <textarea asp-for="product.description" class="form-control"></textarea>
+                <textarea asp-for="product.description" id="message_area" class="form-control message_area" maxlength="2048"></textarea>
                 <span asp-validation-for="product.description" class="text-danger"></span>
             </div>
             @section Scripts{

@@ -48,26 +48,45 @@ namespace SDP.Models
         }
 
         public Guid productId { get; set; }
+
         [Required]
+        [StringLength(2048)]
         [Display(Name = "Product Name")]
         public string title { get; set; }
+
         [Required]
         [Display(Name = "Product Category")]
         public Category category { get; set; }
+
         [Required]
         [Display(Name = "Target Gender")]
         public Consts.Genders productGender { get; set; }
+
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         public decimal price { get; set; }
+
+        [StringLength(2048)]
         public string imgUrl { get; set; }
+
         [Required]
         public Consts.PTypes productType { get; set; }
+
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         public decimal packageQty { get; set; }
+
         public Consts.Uom packageUom { get; set; }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         public int packageWeight { get; set; }
+
+        [Display(Name = "Package Dimentions( In the format of length x width x height )")]
         public string packageDims { get; set; }
+
+        [StringLength(2048)]
         public string description { get; set; }
+
         [Required]
         public Brand brand{ get; set; }
 
