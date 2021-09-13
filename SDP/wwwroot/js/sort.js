@@ -71,7 +71,6 @@ function displayCardFunc(prod) {
     node.setAttribute("class", "product");
     row.appendChild(node);
     node.innerHTML = content;
-
 }
 
 

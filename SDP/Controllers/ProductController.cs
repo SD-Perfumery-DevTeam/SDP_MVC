@@ -123,7 +123,6 @@ namespace SDP.Controllers
                     await ufile.CopyToAsync(fileStream);
                 }
             }
-
             P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
             P.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
             _db.product.Add(P.product);

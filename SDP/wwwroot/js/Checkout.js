@@ -9,6 +9,4 @@ function performCheckout(_this)
     setTimeout(function () {
         _this.style.backgroundColor = "#06cf27";
     }, 100);
-
-    
 }
