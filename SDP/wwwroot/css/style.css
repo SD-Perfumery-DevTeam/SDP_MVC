@@ -237,7 +237,7 @@ header #header-search #btnSearch {
 }
 
 main section {
-  margin-top: 1rem;;
+  margin-top: 1rem;
 }
 
 main #section-banner {
@@ -335,6 +335,16 @@ footer .container ul li {
   width: 100%;
   height: 2rem;
 }
+
+#section-product-display {
+    background-color: red;
+}
+
+#section-product-display img {
+    width: 13rem;
+}
+
+
 
 .cart-contents ul {
   padding-left: 0;
