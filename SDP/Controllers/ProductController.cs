@@ -59,7 +59,7 @@ namespace SDP.Controllers
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
-                Models.GuestCustomer guest = new Models.GuestCustomer();
+                GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
                 HttpContext.Session.SetString("Id", Id);
@@ -151,6 +151,12 @@ namespace SDP.Controllers
             if (ufile != null && ufile.Length > 0)
             {
                 var fileName = Path.GetFileName(ufile.FileName);
+                string[] fileNameAry = fileName.Split(".");
+
+                if (fileNameAry[fileNameAry.Length - 1] != "png" &&  fileNameAry[fileNameAry.Length - 1] != "jpg") 
+                {
+                    return RedirectToAction("Error", "Home");
+                }
                 P.product.imgUrl = fileName;
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\imgs", fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))

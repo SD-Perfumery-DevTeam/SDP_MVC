@@ -63,10 +63,11 @@ namespace SDP.Models
         public Consts.Genders productGender { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+        
         public decimal price { get; set; }
 
         [StringLength(2048)]
+        [Display(Name = "Product Image (png and jpg files only)")]
         public string imgUrl { get; set; }
 
         [Required]
