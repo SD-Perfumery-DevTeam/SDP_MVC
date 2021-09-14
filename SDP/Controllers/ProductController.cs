@@ -28,7 +28,7 @@ namespace SDP.Controllers
             _db = db;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index() 
         {
 
             if (HttpContext.Session.GetString("Id") == null)
@@ -41,10 +41,18 @@ namespace SDP.Controllers
             ViewData["Id"] = HttpContext.Session.GetString("Id");
             customer = ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id"));
 
-            return View(new Catalog {
-                products =  _db.product.ToList(),
-                 brands =  _db.brand.ToList()
-            });
+            try
+            {
+                return View(new Catalog
+                {
+                    products = _db.product.ToList(),
+                    brands = _db.brand.ToList()
+                });
+            }
+            catch (Exception ex) 
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
 
         public IActionResult ProductDisplay(string value)
@@ -57,25 +65,22 @@ namespace SDP.Controllers
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-
-
-            
-
-          
             // Identify the product based on the string 'value passed in
             Guid productID = Guid.Parse(value); // this appears to throw an unhandled exception at times..
             Product product = _db.product.Include(x => x.brand).FirstOrDefault(x => x.productId.Equals(productID));
-
-           
-            // Determine the brand of the product from the FK in product.brand
-
-
-
             var lProduct = _db.product.ToList();
 
             HttpContext.Session.SetString("ProductID", productID.ToString());
 
-            return View(new Catalog { product = product, brand = product.brand });
+            try
+            {
+                return View(new Catalog { product = product, brand = product.brand });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
         }
         
         public IActionResult AddToCart(int quantity) 
@@ -90,7 +95,15 @@ namespace SDP.Controllers
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
             Product product = null;
-            product = _db.product.Find(Guid.Parse(HttpContext.Session.GetString("ProductID")));
+            try
+            {
+                product = _db.product.Find(Guid.Parse(HttpContext.Session.GetString("ProductID")));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            
             for (int i = 0; i < quantity; i++)
             {
                 ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id")).cart.addToCart(product);
@@ -102,8 +115,18 @@ namespace SDP.Controllers
         [HttpGet]
         public IActionResult AddProduct() 
         {
-            var c = _db.category.ToList();
-            var b = _db.brand.ToList();
+            List<Category> c;
+            List<Brand> b;
+            try
+            {
+                c = _db.category.ToList();
+                b = _db.brand.ToList();
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            
             var model = new ViewModels.AddProduct { product = new Product(),
                 categories = c.Select(x => new SelectListItem
                 {
@@ -135,10 +158,18 @@ namespace SDP.Controllers
                     await ufile.CopyToAsync(fileStream);
                 }
             }
-            P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
-            P.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
-            _db.product.Add(P.product);
-            _db.SaveChanges();
+
+            try
+            {
+                P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
+                P.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
+                _db.product.Add(P.product);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("Index", "Product");
         }      
     }
