@@ -81,7 +81,7 @@ namespace SDP.Models
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
         public int packageWeight { get; set; }
 
-        [Display(Name = "Package Dimentions( In the format of length x width x height in mm )")]
+        [Display(Name = "Package Dimensions in mm, takes the form 'LLLxWWWxHHH'.")]
         public string packageDims { get; set; }
 
         [StringLength(2048)]
