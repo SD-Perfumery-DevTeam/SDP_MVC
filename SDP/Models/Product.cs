@@ -46,7 +46,7 @@ namespace SDP.Models
             this.brand = brand;
             this.description = description;
         }
-
+       
         public Guid productId { get; set; }
 
         [Required]

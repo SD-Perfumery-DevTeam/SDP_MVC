@@ -1,0 +1,31 @@
+﻿
+@model SDP.ViewModels.InventoryView
+
+<div><a asp-controller="Product" asp-action="AddProduct" class="btn btn-dark">Add a product</a></div>
+
+<form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
+    <div>
+        <table class="table-bordered " style="margin:0 auto">
+            <tr>
+                <th>product name</th>
+                <th>product ID</th>
+                <th>stock qty</th>
+                <th>image</th>
+            </tr>
+            <br />
+            @foreach (var item in Model.inventories)
+            {
+                <tr>
+                    <td>@item.product.title</td>
+                    <td>@item.product.productId</td>
+                    <td>@item.stockQty</td>
+                    <td><img src="~/imgs/@item.product.imgUrl" alt="Alternate Text" style="max-width: 100px; max-height: 100px" /></td>
+
+                    <td><button name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
+                </tr>
+            }
+        </table>
+    </div>
+</form>
+
+
