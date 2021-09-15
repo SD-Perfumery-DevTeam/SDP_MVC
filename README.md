@@ -37,3 +37,12 @@ Update 13/09/2021
 4. product brand added to display page
 5. validation added
 ```
+
+```
+Update 15/09/2021
+1. adding inventory
+2. adding edit product functionality and page
+3. adding delete product functionality and page
+4. adding edit inventory functionality and page
+5. adding delete inventory functionality and page
+```
