@@ -4,21 +4,14 @@
 @{
 }
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-2">
-            <div class="side-bar">
-                <ul class="side-bar-list">
-                    <li class="side-bar-item"><a>Manage Products</a></li>
-                    <li class="side-bar-item"><a>Manage User Accounts</a></li>
-                    <li class="side-bar-item"><a>Manage Orders</a></li>
-                    <li class="side-bar-item"><a>Promotions</a></li>
-                    <li class="side-bar-item"><a>Sales Statistics</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-10" id="main-place">
-
-        </div>
-    </div>
+<div class="container">
+    <ul>
+        <li><a asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
+        <li><a asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
+        <li>---</li>
+        <li><a asp-controller="" asp-action="">Manage User Accounts</a></li>
+        <li><a asp-controller="" asp-action="">Manage Orders</a></li>
+        <li><a asp-controller="" asp-action="">Promotions</a></li>
+        <li><a asp-controller="" asp-action="">Sales Statistics</a></li>
+    </ul>
 </div>
