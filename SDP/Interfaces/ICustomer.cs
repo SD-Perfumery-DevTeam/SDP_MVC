@@ -12,6 +12,6 @@ namespace SDP.Interfaces
         Cart cart { get; set; }
         List<Order> orderList { get; set; }
         public Task payment(string info);
-          
+        public Order turnCartToOrder();
     }
 }

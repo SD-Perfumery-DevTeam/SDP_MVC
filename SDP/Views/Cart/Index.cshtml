@@ -1,7 +1,7 @@
 ﻿
 @model SDP.Models.Cart
 @{
-    SDP.Interfaces.ICustomer cutomer = SDP.Services.ViewService.getCustomerFromDB((string)ViewData["Id"]);
+    SDP.Interfaces.ICustomer cutomer = SDP.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
 }
 
@@ -17,19 +17,19 @@
             <ul>
                 @if (cutomer != null)
                 {
-                    foreach (SDP.Models.Product product in cutomer.cart.getProductListWithCount())
+                    foreach (var product in cutomer.cart.getCartList())
                     {
-                        total = total + (decimal)product.price * (decimal)product.count;
-                        decimal subTotal = product.price * product.count;
+                        total = total + (decimal)product.Key.price* (decimal)product.Value;
+                        decimal subTotal = product.Key.price * product.Value;
                         <li class="cart-item">
-                            <img src="~/imgs/@product.imgUrl" alt="@product.title" />
+                            <img src="~/imgs/@product.Key.imgUrl" alt="@product.Key.title" />
                             <div class="cart-item-desc">
-                                <h4 class="desc">@product.title - @product.brand</h4>
-                                <p>@product.price LKR</p>
+                                <h4 class="desc">@product.Key.title - @product.Key.brand</h4>
+                                <p>@product.Key.price LKR</p>
                             </div>
                             <div class="cart-item-qty">
                                 <h5 class="desc">Quantity</h5>
-                                <p>@product.count</p>
+                                <p>@product.Value</p>
                             </div>
                             <div class="cart-item-total">
                                 <h5 class="desc">Item Total</h5>

@@ -9,7 +9,7 @@ namespace SDP.Services
 {
     public static class ViewService
     {
-        public static ICustomer getCustomerFromDB(string id) 
+        public static ICustomer getCustomerFromList(string id) 
         {
             ICustomer customer =null;
             foreach (ICustomer c in Global.customerList)
@@ -28,7 +28,28 @@ namespace SDP.Services
             }
             return customer;
         }
+        public static void DeleteCustomerFromList(string id)
+        {
+            ICustomer customer = null;
+            foreach (ICustomer c in Global.customerList)
+            {
+                try
+                {
+                    if (c.userId == Guid.Parse(id))
+                    {
+                        customer = c;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //logging it
+                }
+            }
+            if (customer != null)
+            {
+                Global.customerList.Remove(customer);
+            }
+        }
 
-       
     }
 }

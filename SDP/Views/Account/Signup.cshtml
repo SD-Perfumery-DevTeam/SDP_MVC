@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SDP.ViewModels.SignupView
+<!-- Sign Up Form ========================================================= -->
+
+<section id="section-banner">
+    <div class="container">
+        <h2>Sign up for exclusive deals</h2>
+        <p>Join us and take advantage of our enhanced experience for regular customers.</p>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <form class="form-small" method="post">
+            @Html.AntiForgeryToken()
+            <h3>Sign Up</h3>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" id="username" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" id="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReenterPassword"></label>
+                <input asp-for="ReenterPassword" class="form-control" />
+                <span asp-validation-for="ReenterPassword" id="confirm-password"></span>
+            </div>
+            <button class="btn-big" type="submit">Sign me up!</button>
+
+            <small><a href="#">I already have an account..</a></small>
+        </form>
+    </div>
+</section>

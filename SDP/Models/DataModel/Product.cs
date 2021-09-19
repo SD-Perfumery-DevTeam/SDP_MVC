@@ -12,22 +12,6 @@ namespace SDP.Models
     {
         //defualt constructor used for EF
         public Product() { }
-        public Product(Guid id,string name, decimal price, bool onSpecial,
-         string imgSrc, Consts.PTypes pType,
-        decimal size, Brand brand, string description,int count)
-        {
-            this.productId = id;
-            this.title = name;
-            this.price = price;
-            this.onSpecial = onSpecial;
-            this.imgUrl = imgSrc;
-            this.productType = pType;
-            this.packageQty = size;
-            this.brand = brand;
-            this.description = description;
-            this.count = count;
-        }
-
         public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUom, int packageWeight, string packageDims, Brand brand, string description)
         {
 
