@@ -128,7 +128,7 @@ a:hover, a:active {
   color: var(--color-proposed-purple-60);
 }
 
-button, select {
+button.sdp-style, select.sdp-style {
   margin: 0;
   height: 1.75rem;
   font-size: 0.9rem;
@@ -145,12 +145,12 @@ button, select {
   color: var(--color-proposed-purple-90);;
 }
 
-button:hover, select:hover {
+button.sdp-style:hover, select.sdp-style:hover {
   background-image: linear-gradient(var(--color-proposed-purple-10), var(--color-proposed-purple-15));
   transition: 0.3s;
 }
 
-button:active, select:active {
+button.sdp-style:active, select.sdp-style:active {
   background-image: linear-gradient(var(--color-proposed-purple-05), var(--color-proposed-purple-10));
   transition: 0.2s;
 }
@@ -350,7 +350,7 @@ footer .container ul li {
   margin-bottom: 0.5rem;
 }
 
-.product button {
+.product button.sdp-style {
   width: 100%;
   height: 2rem;
 }
@@ -385,7 +385,7 @@ footer .container ul li {
   border-radius: 0.3rem;
 }
 
-#section-product-display .product-display-cta button {
+#section-product-display .product-display-cta button.sdp-style {
   padding: 0 0.6rem;
   height: 2.25rem;
   font-size: 1rem;
@@ -430,7 +430,7 @@ footer .container ul li {
   margin: 0.5rem 0 2rem 0;
 }
 
-.form-small input, .form-small button {
+.form-small input, .form-small button.sdp-style {
   display: block;
   box-sizing: border-box;
   width: 100%;
