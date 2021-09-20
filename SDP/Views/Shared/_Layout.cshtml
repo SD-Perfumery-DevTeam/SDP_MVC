@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    string text = "Login";
+    string action = "Login";
+    string status = HttpContextAccessor.HttpContext.Session.GetString("LoggedIN");
+    if (status == "true")
+    {
+        text = "Logout";
+        action = "Logout";
+    }
+
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -21,7 +37,7 @@
                     <li><a asp-area="" asp-controller="Product" asp-action="Index">Shop</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">About Us</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">Contact Us</a></li>
-                    <li><a asp-controller="Auth" asp-action="Index">Login</a></li>
+                    <li><a asp-controller="Account" asp-action=@action>@text</a></li>
                     <li>
                         <a asp-controller="Cart" asp-action="Index">
                             <span class="material-icons">shopping_cart</span>

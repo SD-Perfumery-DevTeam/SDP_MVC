@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SDP.Extensions;
 using SDP.Interfaces;
 using SDP.Models;
 using SDP.Models.DbContext;
@@ -20,33 +22,44 @@ namespace SDP.Controllers
     {
         List<Product> pList;
         private static ProductDbContext _db;
-
+        private IDbRepo _dbRepo;
         ICustomer customer = null;
 
-        public ProductController(ProductDbContext db)
+        public ProductController(ProductDbContext db, IDbRepo dbRepo)
         {
             _db = db;
+            _dbRepo = dbRepo;
         }
 
-        public async Task<IActionResult> Index() 
+        //displays the product catelog
+        [HttpPost]
+        [HttpGet]
+        public async Task<IActionResult> Index(int pageNumber = 0) 
         {
+
+            var products = _db.product
+                          .Skip(pageNumber * 20)
+                          .Take(20);
+            int totalPage = _db.product.Count()/20;
 
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-            customer = ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id"));
+            customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
 
             try
             {
                 return View(new Catalog
                 {
-                    products = _db.product.ToList(),
-                    brands = _db.brand.ToList()
+                    products = products,
+                    brands = _db.brand.ToList(),
+                    totalPage =totalPage
                 });
             }
             catch (Exception ex) 
@@ -63,15 +76,16 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
+
             // Identify the product based on the string 'value passed in
-            Guid productID = Guid.Parse(value); // this appears to throw an unhandled exception at times..
-            Product product = _db.product.Include(x => x.brand).FirstOrDefault(x => x.productId.Equals(productID));
+            Product product = _dbRepo.getProduct(value);
             var lProduct = _db.product.ToList();
 
-            HttpContext.Session.SetString("ProductID", productID.ToString());
+            HttpContext.Session.SetString("ProductID", value);
 
             try
             {
@@ -84,13 +98,15 @@ namespace SDP.Controllers
 
         }
         
+       
         public IActionResult AddToCart(int quantity) 
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
-                Models.GuestCustomer guest = new Models.GuestCustomer();
+                GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -98,22 +114,21 @@ namespace SDP.Controllers
             Product product = null;
             try
             {
-                product = _db.product.Find(Guid.Parse(HttpContext.Session.GetString("ProductID")));
+                product = _dbRepo.getProduct(HttpContext.Session.GetString("ProductID"));
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
             }
-            
-            for (int i = 0; i < quantity; i++)
-            {
-                ViewService.getCustomerFromDB(HttpContext.Session.GetString("Id")).cart.addToCart(product);
-            }
+           
+            ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart.addProductToCart(product, quantity); //add product to guest customer
+          
             return RedirectToAction("Index", "Product"); 
         }
 
         //Product CMS
         [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult AddProduct() 
         {
             List<Category> c;
@@ -147,6 +162,7 @@ namespace SDP.Controllers
 
         // This deals with the dropdown lists  and img.
         [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public async Task<IActionResult> AddProduct(AddProduct P, string catID, string brandID, IFormFile ufile)
         {
             if (ufile != null && ufile.Length > 0)

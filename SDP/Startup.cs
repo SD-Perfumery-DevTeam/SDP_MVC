@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SDP.Interfaces;
 using SDP.Models.DbContext;
+using SDP.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,8 @@ namespace SDP
         {
             services.AddMvc();
             services.AddSession(o => {
-                o.IdleTimeout = TimeSpan.FromMinutes(30);
+                o.IdleTimeout = TimeSpan.FromMinutes(60);
+               
             });
             services.AddMemoryCache();
             services.AddDbContext<ProductDbContext>(options =>
@@ -39,6 +42,19 @@ namespace SDP
             services.AddIdentity<IdentityUser, IdentityRole>()
               .AddEntityFrameworkStores<ProductDbContext>()
               .AddDefaultTokenProviders();
+            
+            services.AddScoped<IDbRepo, DbRepo>();
+            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers for injection
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default User settings.
+                options.User.AllowedUserNameCharacters =
+                        "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ @._-";
+                options.User.RequireUniqueEmail = true;
+                options.SignIn.RequireConfirmedEmail = true;
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +75,7 @@ namespace SDP
             app.UseSession();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

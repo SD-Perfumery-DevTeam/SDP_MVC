@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,8 +16,10 @@ using System.Threading.Tasks;
 
 namespace SDP.Controllers
 {
+    [Authorize(Roles = "Admin, SuperAdmin")]
     public class InventoryController : Controller
     {
+        
         List<Product> pList;
         private static ProductDbContext _db;
 
@@ -25,7 +29,7 @@ namespace SDP.Controllers
         {
             _db = db;
         }
-
+        //Inventory display page
         [HttpGet]
         public IActionResult Index()
         {
@@ -53,7 +57,7 @@ namespace SDP.Controllers
             try
             {
                 product = _db.product.Include(m => m.brand).Include(m => m.category).FirstOrDefault(x => x.productId.Equals(productID));
-                inventory = _db.inventory.Include(m => m.product).ToList().Where(i => i.product.productId == product.productId).FirstOrDefault(x => x.product.productId.Equals(productID));//.....dont ask
+                inventory = _db.inventory.Include(m => m.product).ToList().Where(i => i.product.productId == product.productId).FirstOrDefault(x => x.product.productId.Equals(productID));
             }
             catch (Exception ex)
             {
@@ -131,6 +135,8 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Inventory");
 
         }
+
+        //this deletes the product based on product ID
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(string ProdcutId) 
         {

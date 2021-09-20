@@ -6,7 +6,7 @@
 }
 @model SDP.ViewModels.Catalog
 
-<!-- Product Display ====================================================== -->
+<!-- ============================================== Product Display ====================================================== -->
 
 <section id="section-product-list">
     <div class="container product_con">
@@ -25,10 +25,17 @@
         {
             <div class="row rowone flex-box" id="product-list"></div>
         }
-        @* <form method="post" asp-controller="Products" asp-action="Products/" >
-                <div class="row rowone flex-box" id="rowone"></div>
-            </form>*@
 
+        @using (Html.BeginForm("Index", "Product"))
+        {
+            <div class="page_number">
+                @for (int i = 0; i < Model.totalPage; i++)
+                {
+                    int pageNum = i + 1;
+                    <button type="submit" name="pageNumber" value=@i> @pageNum </button>
+                }
+            </div>
+        }
     </div>
 </section>
 <section id="section-suggested">
@@ -36,7 +43,21 @@
         <h3>Recommended Fragrances</h3>
     </div>
 </section>
+<style>
+    .page_number {
+        margin-top: 10px;
+        display: inline-block;
+    }
 
+    .page_number button {
+        color: black !important;
+        float: left !important;
+        padding: 8px 16px !important;
+        text-decoration: none !important;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+</style>
 <script>
 var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
 console.log(productDbJson)
