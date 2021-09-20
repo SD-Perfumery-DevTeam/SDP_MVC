@@ -8,14 +8,16 @@
 
         <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
             <div>
-                <table class="table-bordered " style="margin:0 auto">
-                    <tr>
-                        <th>product name</th>
-                        <th>product ID</th>
-                        <th>stock qty</th>
-                        <th>image</th>
-                    </tr>
-                    <br />
+                <table class="table-bordered" style="margin:0 auto">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product ID</th>
+                            <th>Stock Qty</th>
+                            <th>Image</th>
+                            <th></th>
+                        </tr>
+                    </thead>
                     @foreach (var item in Model.inventories)
                     {
                         <tr>
