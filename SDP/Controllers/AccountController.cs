@@ -53,12 +53,12 @@ namespace SDP.Controllers
                 if (result.Succeeded)
                 {
                     try
-                    {   ///!!!!!!!!!!!!still pulling from list 
+                    {   
                         var user = _userManager.FindByNameAsync(LM.Email);
-                        RegisteredCustomer rc = new RegisteredCustomer { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email, };// not done, cover db user to registered customer
+                        RegisteredCustomer rc = new RegisteredCustomer { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email, };
                         if (HttpContext.Session.GetString("Id") != null) //transfers the GuestCustomers Cart to registered customer
                         {
-                            rc.cart = HttpContext.Session.GetObject<GuestCustomer>("GuestCustomer").cart;
+                            rc.cart = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart;
                         }
                         else rc.cart = new Cart();
 
@@ -66,6 +66,7 @@ namespace SDP.Controllers
                         HttpContext.Session.SetString("Id", user.Result.Id.ToString());
 
                         Global.customerList.Add(rc);
+
                         HttpContext.Session.SetString("LoggedIN", "true");
                         return RedirectToAction("Index", "Home");
                     }

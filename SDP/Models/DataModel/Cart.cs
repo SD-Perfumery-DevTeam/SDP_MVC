@@ -11,13 +11,20 @@ namespace SDP.Models
     public class Cart
     {
         public int cartID { get; set; }
+      /*  private IDbRepo _dbRepo;
 
-       public Dictionary<Product, int> cartList = new Dictionary<Product, int>();
+        Cart(IDbRepo dbRepo) 
+        {
+            _dbRepo = dbRepo;
+        }*/
 
-       public void addOrderToCustomerList(Order order) => order.customer.orderList.Add(order);
-   
+        public Dictionary<Product, int> cartList = new Dictionary<Product, int>();
+
+        public void addOrderToCustomerList(Order order) => order.customer.orderList.Add(order);
+        
         
         public Dictionary<Product, int> getCartList() { return cartList; }
+
         public void addProductToCart(Product product, int count)  //adding the 
         {
             if (cartList.ContainsKey(product))

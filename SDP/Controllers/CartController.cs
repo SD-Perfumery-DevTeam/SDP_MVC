@@ -21,14 +21,14 @@ namespace SDP.Controllers
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer();
-                //Global.customerList.Add(guest); guest customer added to session data
+                Global.customerList.Add(guest); 
                 string Id = guest.userId.ToString();
-                HttpContext.Session.SetObject("GuestCustomer", guest);
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-            customer = HttpContext.Session.GetObject<GuestCustomer>("GuestCustomer");
+            customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
             return View();
         }
     }

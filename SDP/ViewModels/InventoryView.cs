@@ -10,6 +10,5 @@ namespace SDP.ViewModels
     {
         public IEnumerable<Inventory> inventories { get; set; }
         public Inventory inventory { get; set; }
-       
     }
 }

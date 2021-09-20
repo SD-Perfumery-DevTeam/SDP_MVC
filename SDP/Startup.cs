@@ -43,6 +43,9 @@ namespace SDP
               .AddEntityFrameworkStores<ProductDbContext>()
               .AddDefaultTokenProviders();
             
+            services.AddScoped<IDbRepo, DbRepo>();
+            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers for injection
+
             services.Configure<IdentityOptions>(options =>
             {
                 // Default User settings.

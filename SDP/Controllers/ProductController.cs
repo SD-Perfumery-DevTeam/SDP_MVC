@@ -22,12 +22,13 @@ namespace SDP.Controllers
     {
         List<Product> pList;
         private static ProductDbContext _db;
-
+        private IDbRepo _dbRepo;
         ICustomer customer = null;
 
-        public ProductController(ProductDbContext db)
+        public ProductController(ProductDbContext db, IDbRepo dbRepo)
         {
             _db = db;
+            _dbRepo = dbRepo;
         }
 
         //displays the product catelog
@@ -44,13 +45,13 @@ namespace SDP.Controllers
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer();
-                //Storing guest customer in session data
+                Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                HttpContext.Session.SetObject("GuestCustomer", guest);
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-            customer = HttpContext.Session.GetObject<GuestCustomer>("GuestCustomer");
+            customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
 
             try
             {
@@ -73,18 +74,18 @@ namespace SDP.Controllers
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer();
-                //Global.customerList.Add(guest); guest customer added to session data
+                Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                HttpContext.Session.SetObject("GuestCustomer", guest);
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
+
             // Identify the product based on the string 'value passed in
-            Guid productID = Guid.Parse(value); // this appears to throw an unhandled exception at times..
-            Product product = _db.product.Include(x => x.brand).FirstOrDefault(x => x.productId.Equals(productID));
+            Product product = _dbRepo.getProduct(value);
             var lProduct = _db.product.ToList();
 
-            HttpContext.Session.SetString("ProductID", productID.ToString());
+            HttpContext.Session.SetString("ProductID", value);
 
             try
             {
@@ -103,9 +104,9 @@ namespace SDP.Controllers
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer();
-                //Global.customerList.Add(guest); guest customer added to session data
+                Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                HttpContext.Session.SetObject("GuestCustomer", guest);
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -113,15 +114,15 @@ namespace SDP.Controllers
             Product product = null;
             try
             {
-                product = _db.product.Find(Guid.Parse(HttpContext.Session.GetString("ProductID")));
+                product = _dbRepo.getProduct(HttpContext.Session.GetString("ProductID"));
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
             }
-            GuestCustomer tempCustomer = HttpContext.Session.GetObject<GuestCustomer>("GuestCustomer");
-            tempCustomer.cart.addProductToCart(product, quantity);
-            HttpContext.Session.SetObject("GuestCustomer", tempCustomer);
+           
+            ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart.addProductToCart(product, quantity); //add product to guest customer
+          
             return RedirectToAction("Index", "Product"); 
         }
 
