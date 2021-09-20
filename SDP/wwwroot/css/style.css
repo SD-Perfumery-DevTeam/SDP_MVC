@@ -316,6 +316,27 @@ footer .container ul li {
   line-height: 0.8rem;
 }
 
+.form-small {
+    margin: 6rem auto;
+}
+
+.form-small h3 {
+    margin: 0.5rem 0 2rem 0;
+}
+
+.form-small input, .form-small button.sdp-style {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.form-small input {
+    height: 1.75rem;
+    border: 1px solid var(--color-client-spec-1);
+    border-radius: 0.3rem;
+}
+
 /* Element Specific CSS */
 #product-list {
   margin-top: 1rem;
@@ -392,62 +413,58 @@ footer .container ul li {
 }
 
 .cart-contents ul li {
-  list-style: none;
+    list-style: none;
 }
 
 .cart-item {
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .cart-item img {
-  max-width: 6rem;
+    max-width: 6rem;
 }
 
 .cart-total, #cart-btn-checkout {
-  width: 15rem;
+    width: 15rem;
 }
 
 .cart-total {
-  margin-bottom: 1rem;
-  width: 15rem;
-  float: right;
-  text-align: end;
+    margin-bottom: 1rem;
+    width: 15rem;
+    float: right;
+    text-align: end;
 }
 
 #cart-btn-checkout {
-  margin: 1rem 0;
-}
-
-.form-small {
-  margin: 6rem auto;
-}
-
-.form-small h3 {
-  margin: 0.5rem 0 2rem 0;
-}
-
-.form-small input, .form-small button.sdp-style {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0.5rem 0 1rem 0;
-}
-
-.form-small input {
-  height: 1.75rem;
-  border: 1px solid var(--color-client-spec-1);
-  border-radius: 0.3rem;
+    margin: 1rem 0;
 }
 
 /* CMS Styling */
-p.accordion-header {
-    font-family: var(--font-family-body-sans-serif);
+
+#section-cms .container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0;
 }
 
-#cms-nav-accordion {
+#section-cms .container aside {
+    flex-grow: 1;
     width: 18rem;
+}
+
+#section-cms .container .cms-area {
+    flex-grow: 11;
+    margin: 0 0 3rem;
+    width: 24rem;
+}
+
+p.accordion-header {
+    font-family: var(--font-family-body-sans-serif);
 }

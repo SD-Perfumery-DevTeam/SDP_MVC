@@ -1,27 +1,29 @@
 ﻿<section id="section-cms">
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
-        <h2>Content Management System</h2>
-        <div>
+        <section class="cms-area">
+            <h2>Content Management System</h2>
             <div>
-                <h3>Users</h3>
-                <ul>
-                    <li><a href="#">Manage Roles</a></li>
-                </ul>
+                <div>
+                    <h3>Users</h3>
+                    <ul>
+                        <li><a href="#">Manage Roles</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Home Page</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Home" asp-action="Index">View Homepage</a></li>
+                    </ul>
+                </div>
             </div>
-            <div>
-                <h3>Products</h3>
-                <ul>
-                    <li><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
-                    <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3>Home Page</h3>
-                <ul>
-                    <li><a class="link-dark rounded" asp-controller="Home" asp-action="Index">View Homepage</a></li>
-                </ul>
-            </div>
-        </div>
+        </section>
     </div>
 </section>
