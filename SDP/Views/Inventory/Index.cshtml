@@ -1,31 +1,37 @@
-﻿
-@model SDP.ViewModels.InventoryView
+﻿@model SDP.ViewModels.InventoryView
 
-<div><a asp-controller="Product" asp-action="AddProduct" class="btn btn-dark">Add a product</a></div>
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <div><a asp-controller="Product" asp-action="AddProduct" class="btn btn-dark">Add a product</a></div>
 
-<form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
-    <div>
-        <table class="table-bordered " style="margin:0 auto">
-            <tr>
-                <th>product name</th>
-                <th>product ID</th>
-                <th>stock qty</th>
-                <th>image</th>
-            </tr>
-            <br />
-            @foreach (var item in Model.inventories)
-            {
-                <tr>
-                    <td>@item.product.title</td>
-                    <td>@item.product.productId</td>
-                    <td>@item.stockQty</td>
-                    <td><img src="~/imgs/@item.product.imgUrl" alt="Alternate Text" style="max-width: 100px; max-height: 100px" /></td>
+            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
+                <div>
+                    <table class="table-bordered" style="margin:0 auto">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Product ID</th>
+                                <th>Stock Qty</th>
+                                <th>Image</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.inventories)
+                        {
+                            <tr>
+                                <td>@item.product.title</td>
+                                <td>@item.product.productId</td>
+                                <td>@item.stockQty</td>
+                                <td><img src="~/imgs/@item.product.imgUrl" alt="Alternate Text" style="max-width: 100px; max-height: 100px" /></td>
 
-                    <td><button name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
-                </tr>
-            }
-        </table>
+                                <td><button class="sdp-style" name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </form>
+        </section>
     </div>
-</form>
-
-
+</section>

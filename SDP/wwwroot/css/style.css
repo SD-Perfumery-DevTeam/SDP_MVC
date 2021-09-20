@@ -128,7 +128,7 @@ a:hover, a:active {
   color: var(--color-proposed-purple-60);
 }
 
-button, select {
+button.sdp-style, select.sdp-style {
   margin: 0;
   height: 1.75rem;
   font-size: 0.9rem;
@@ -145,12 +145,12 @@ button, select {
   color: var(--color-proposed-purple-90);;
 }
 
-button:hover, select:hover {
+button.sdp-style:hover, select.sdp-style:hover {
   background-image: linear-gradient(var(--color-proposed-purple-10), var(--color-proposed-purple-15));
   transition: 0.3s;
 }
 
-button:active, select:active {
+button.sdp-style:active, select.sdp-style:active {
   background-image: linear-gradient(var(--color-proposed-purple-05), var(--color-proposed-purple-10));
   transition: 0.2s;
 }
@@ -316,6 +316,27 @@ footer .container ul li {
   line-height: 0.8rem;
 }
 
+.form-small {
+    margin: 6rem auto;
+}
+
+.form-small h3 {
+    margin: 0.5rem 0 2rem 0;
+}
+
+.form-small input, .form-small button.sdp-style {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.form-small input {
+    height: 1.75rem;
+    border: 1px solid var(--color-client-spec-1);
+    border-radius: 0.3rem;
+}
+
 /* Element Specific CSS */
 #product-list {
   margin-top: 1rem;
@@ -350,7 +371,7 @@ footer .container ul li {
   margin-bottom: 0.5rem;
 }
 
-.product button {
+.product button.sdp-style {
   width: 100%;
   height: 2rem;
 }
@@ -385,60 +406,65 @@ footer .container ul li {
   border-radius: 0.3rem;
 }
 
-#section-product-display .product-display-cta button {
+#section-product-display .product-display-cta button.sdp-style {
   padding: 0 0.6rem;
   height: 2.25rem;
   font-size: 1rem;
 }
 
 .cart-contents ul li {
-  list-style: none;
+    list-style: none;
 }
 
 .cart-item {
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .cart-item img {
-  max-width: 6rem;
+    max-width: 6rem;
 }
 
 .cart-total, #cart-btn-checkout {
-  width: 15rem;
+    width: 15rem;
 }
 
 .cart-total {
-  margin-bottom: 1rem;
-  width: 15rem;
-  float: right;
-  text-align: end;
+    margin-bottom: 1rem;
+    width: 15rem;
+    float: right;
+    text-align: end;
 }
 
 #cart-btn-checkout {
-  margin: 1rem 0;
+    margin: 1rem 0;
 }
 
-.form-small {
-  margin: 6rem auto;
+/* CMS Styling */
+
+#section-cms .container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0;
 }
 
-.form-small h3 {
-  margin: 0.5rem 0 2rem 0;
+#section-cms .container aside {
+    flex-grow: 1;
+    width: 18rem;
 }
 
-.form-small input, .form-small button {
-  display: block;
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0.5rem 0 1rem 0;
+#section-cms .container .cms-area {
+    flex-grow: 11;
+    margin: 0 0 3rem;
+    width: 24rem;
 }
 
-.form-small input {
-  height: 1.75rem;
-  border: 1px solid var(--color-client-spec-1);
-  border-radius: 0.3rem;
+p.accordion-header {
+    font-family: var(--font-family-body-sans-serif);
 }
