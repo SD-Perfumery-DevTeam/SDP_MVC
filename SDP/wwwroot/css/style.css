@@ -447,3 +447,7 @@ footer .container ul li {
 p.accordion-header {
     font-family: var(--font-family-body-sans-serif);
 }
+
+#cms-nav-accordion {
+    width: 18rem;
+}
