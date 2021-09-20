@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Microsoft.AspNetCore.Identity.IdentityUser
+    <label>Email:</label>
+    <h4>@Model.Email</h4>
+    <br />
+    <label>ID:</label>
+    <h4>@Model.Id</h4>
+    <br />
+    <form asp-action="DeleteMyAccount" asp-controller="Account" method="post">
+        <Button  name="Id" value="@Model.Id" type="submit"> DELETE MY ACCOUNT</Button>
+    </form>

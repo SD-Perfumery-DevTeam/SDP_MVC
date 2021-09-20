@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SDP.ViewModels.ManageRoleModel
+<form asp-action="RoleManage" asp-controller="Account" method="post">
+    <label>Enter Email of the user</label>
+    <input name="Email" />
+    <button type="submit">search</button>
+</form>
+
+<h3>search result</h3>
+@if (Model.user != null)
+{
+    <form asp-action="RoleManage" asp-controller="Account" method="post">
+        <table class="table table-striped table dark">
+
+            <tr>
+                <th>User ID</th>
+                <th>User Email</th>
+                <th>Select Role</th>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Model.user.Id
+                </td>
+                <td>
+                    @Model.user.Email
+                </td>
+                <td> @Html.DropDownListFor(m => m.roleId, new SelectList(Model.roleList, "Value", "Text"), "Why not give this guy a role", new { @class = "form-control" })  </td>
+            </tr>
+
+        </table>
+        <button type="submit" name="Id" value="@Model.user.Id">Update User Role</button>
+    </form>
+}

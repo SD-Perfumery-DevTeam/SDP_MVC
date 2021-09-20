@@ -14,6 +14,8 @@ using SDP.Models;
 using SDP.Interfaces;
 using SDP.Services;
 using SDP.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SDP.Controllers
 {
@@ -25,7 +27,7 @@ namespace SDP.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private IConfiguration _configuration { get; }
         private string _APIkey; //this is the sendgrid api key grabbed from appsetting.json file, see below constructor
-        
+
         public AccountController(UserManager<IdentityUser> um, SignInManager<IdentityUser> sm,
             RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
@@ -53,7 +55,7 @@ namespace SDP.Controllers
                 if (result.Succeeded)
                 {
                     try
-                    {   
+                    {
                         var user = _userManager.FindByNameAsync(LM.Email);
                         RegisteredCustomer rc = new RegisteredCustomer { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email, };
                         if (HttpContext.Session.GetString("Id") != null) //transfers the GuestCustomers Cart to registered customer
@@ -62,7 +64,7 @@ namespace SDP.Controllers
                         }
                         else rc.cart = new Cart();
 
-                
+
                         HttpContext.Session.SetString("Id", user.Result.Id.ToString());
 
                         Global.customerList.Add(rc);
@@ -70,7 +72,7 @@ namespace SDP.Controllers
                         HttpContext.Session.SetString("LoggedIN", "true");
                         return RedirectToAction("Index", "Home");
                     }
-                    catch (Exception ex) 
+                    catch (Exception ex)
                     {
                         return RedirectToAction("Error", "Home");
                     }
@@ -105,7 +107,7 @@ namespace SDP.Controllers
                     var subject = "Confirm your SDP email";
                     var to = new EmailAddress(user.Email, "Dear Customer");
                     var plainTextContent = "please confirm email: ";
-                    var htmlContent = "<a href="+ confirmationLink + "> click here to confirm email </a> <br>" + " <strong>Regards from the SDP team</strong>";
+                    var htmlContent = "<a href=" + confirmationLink + "> click here to confirm email </a> <br>" + " <strong>Regards from the SDP team</strong>";
                     var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                     var response = await client.SendEmailAsync(msg);
 
@@ -142,7 +144,7 @@ namespace SDP.Controllers
 
 
 
-        public async Task<IActionResult> LogoutAsync() 
+        public async Task<IActionResult> LogoutAsync()
         {
             try
             {
@@ -150,14 +152,96 @@ namespace SDP.Controllers
                 HttpContext.Session.SetString("LoggedIN", "false");
                 GuestCustomer gc = new GuestCustomer();
                 Global.customerList.Add(gc);//register new guest customer
-                ViewService.DeleteCustomerFromList(HttpContext.Session.GetString("Id"));//delete guest customer
+                //ViewService.DeleteCustomerFromList(HttpContext.Session.GetString("Id"));//delete guest customer
                 HttpContext.Session.SetString("Id", gc.userId.ToString());
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("Login");
+        }
+
+        //cms that manages roles 
+        [Authorize(Roles = "SuperAdmin")]
+        public IActionResult RoleManage()
+        {
+
+            return View(new ManageRoleModel());
+        }
+        [HttpPost]
+        [Authorize(Roles = "SuperAdmin")]
+        public async Task<IActionResult> RoleManage(string Email, string Id, ManageRoleModel MRM)
+        {
+            IdentityUser user = new IdentityUser();
+            ManageRoleModel manageRoleModel = new ManageRoleModel();
+
+            //update Role of user
+            if (MRM.roleId != null)
+            {
+                var role = await _roleManager.FindByIdAsync(MRM.roleId);
+                var _user = await _userManager.FindByIdAsync(Id);
+                if (role == null || user == null)
+                {
+                    return View("Not found");
+                }
+
+                if (!(await _userManager.IsInRoleAsync(_user, role.Name)))
+                {
+                    var result = await _userManager.AddToRoleAsync(_user, role.Name);
+                }
+                return View(new ManageRoleModel());
+            }
+
+            //get user by email
+            if (Email != null)
+            {
+                user = await _userManager.FindByEmailAsync(Email);
+            }
+            var roles = _roleManager.Roles;
+
+
+            manageRoleModel.roleList = new List<SelectListItem>();
+            //populate role list
+            foreach (var role in roles)
+            {
+                if (role.Name.ToLower() != "superadmin") //cannot assign super admin 
+                {
+                    manageRoleModel.roleList.Add(new SelectListItem { Text = role.Name, Value = role.Id });
+                }
+            }
+
+            manageRoleModel.user = user;
+
+            return View(manageRoleModel);
+        }
+        //user to manage their account
+        [Authorize]
+        public async Task<IActionResult> MyAccount() 
+        {
+            var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
+            return View(_user);
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteMyAccount( string Id)
+        {
+            try
+            {
+                await _signInManager.SignOutAsync();
+                HttpContext.Session.SetString("LoggedIN", "false");
+                GuestCustomer gc = new GuestCustomer();
+                Global.customerList.Add(gc);//register new guest customer
+
+                HttpContext.Session.SetString("Id", gc.userId.ToString());
+                var result = await _userManager.DeleteAsync(await _userManager.FindByIdAsync(Id));
+                return RedirectToAction("Login");
             }
             catch (Exception ex) 
             {
                 return RedirectToAction("Error", "Home");
             }
-            return RedirectToAction("Login");
+            
         }
     }
 }
