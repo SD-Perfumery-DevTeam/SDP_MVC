@@ -4,7 +4,21 @@
 @{
 }
 
-<ul>
-    <li><a asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
-    <li><a asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
-</ul>
+<div class="flex-shrink-0 p-3 bg-white" style="width: 18rem;">
+    <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#cms-products-collapse"
+                    aria-expanded="true">
+                Products
+            </button>
+            <div class="collapse show" id="cms-products-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
+                    <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
