@@ -113,6 +113,21 @@ namespace SDP.Controllers
                     var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                     var response = await client.SendEmailAsync(msg);
 
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var role = await _roleManager.FindByNameAsync("Customer");
+                        if (role == null || newUser== null)
+                        {
+                            return RedirectToAction("Error", "Home");
+                        }
+
+                        if (!(await _userManager.IsInRoleAsync(newUser, role.Name)))
+                        {
+                            var roleResult = await _userManager.AddToRoleAsync(newUser, role.Name);
+                        }
+                        return View(new SignupView()); // place holder for check email page
+                    }
+
                     return RedirectToAction("Index", "Home");
                 }
                 foreach (var e in result.Errors)
