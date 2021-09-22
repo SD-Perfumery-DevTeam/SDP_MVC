@@ -46,3 +46,17 @@ Update 15/09/2021
 4. adding edit inventory functionality and page
 5. adding delete inventory functionality and page
 ```
+
+```
+Update 22/09/2021
+1. adding User Auth
+2. adding email sending service and confirm email function
+3. adding roles and restrictions based on said roles
+4. adding ability for user to delete their account
+5. adding ablitiy for Super Admin to edit delete roles from users
+6. adding views for above functions 
+7. restricting the product view page to only display 20 items
+8. adding multi page display for product view
+```
+
+
