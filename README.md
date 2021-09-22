@@ -57,6 +57,7 @@ Update 22/09/2021
 6. adding views for above functions 
 7. restricting the product view page to only display 20 items
 8. adding multi page display for product view
+9. adding the role of customer to all newly registered 
 ```
 
 
