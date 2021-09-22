@@ -376,6 +376,10 @@ footer .container ul li {
   height: 2rem;
 }
 
+#section-product-list .page-numbers {
+    margin-top: 1.5rem;
+}
+
 #section-product-display img {
   display: block;
   margin: 0 auto;
