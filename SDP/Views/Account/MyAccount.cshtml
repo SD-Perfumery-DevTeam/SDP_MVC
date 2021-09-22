@@ -4,6 +4,9 @@
 @{
 }
 @model Microsoft.AspNetCore.Identity.IdentityUser
+
+    <h1 style="color : red">@ViewData["Error MSG"]</h1>
+
     <label>Email:</label>
     <h4>@Model.Email</h4>
     <br />

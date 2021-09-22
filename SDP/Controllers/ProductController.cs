@@ -23,12 +23,13 @@ namespace SDP.Controllers
         List<Product> pList;
         private static ProductDbContext _db;
         private IDbRepo _dbRepo;
-        ICustomer customer = null;
+        private ICustomer _customer = null;
 
         public ProductController(ProductDbContext db, IDbRepo dbRepo)
         {
             _db = db;
             _dbRepo = dbRepo;
+            
         }
 
         //displays the product catelog
@@ -48,10 +49,12 @@ namespace SDP.Controllers
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
                 //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
+                //string Id = _customer.userId.ToString();
+                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-            customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
+          
 
             try
             {
@@ -59,7 +62,8 @@ namespace SDP.Controllers
                 {
                     products = products,
                     brands = _db.brand.ToList(),
-                    totalPage =totalPage
+                    totalPage =totalPage,
+                    customer = _customer
                 });
             }
             catch (Exception ex) 
@@ -76,7 +80,7 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
+              
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -106,7 +110,7 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
+              
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");

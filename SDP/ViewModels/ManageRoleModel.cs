@@ -14,5 +14,13 @@ namespace SDP.ViewModels
         public string roleId { get; set; }
         public IdentityUser user{ get; set; }
         public List<SelectListItem> roleList { get; set; }
+        public List<IdentityRole> currentRoleList { get; set; }
     }
+    public partial class UserRolesViewModel
+    {
+        public string roleID { get; set; }
+        public string roleName { get; set; }
+        public bool IsSelected { get; set; }
+    }
+
 }
