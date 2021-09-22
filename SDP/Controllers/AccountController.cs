@@ -112,8 +112,8 @@ namespace SDP.Controllers
                     var htmlContent = "<a href=" + confirmationLink + "> click here to confirm email </a> <br>" + " <strong>Regards from the SDP team</strong>";
                     var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                     var response = await client.SendEmailAsync(msg);
-
-                    if (response.IsSuccessStatusCode)
+                   
+                    if (response.IsSuccessStatusCode)//below code add role to new users
                     {
                         var role = await _roleManager.FindByNameAsync("Customer");
                         if (role == null || newUser== null)
@@ -232,7 +232,12 @@ namespace SDP.Controllers
             manageRoleModel.currentRoleList = new List<IdentityRole>();
             foreach (var role in roles)
             {
-                manageRoleModel.roleList.Add(new SelectListItem { Text = role.Name, Value = role.Id });
+                //excluding super admin
+                if (role.Name != "SuperAdmin")
+                {
+                    manageRoleModel.roleList.Add(new SelectListItem { Text = role.Name, Value = role.Id });
+                }
+               
                 if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     manageRoleModel.currentRoleList.Add(role);

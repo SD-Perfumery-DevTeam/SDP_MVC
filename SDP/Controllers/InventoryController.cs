@@ -29,7 +29,7 @@ namespace SDP.Controllers
         {
             _db = db;
         }
-        //Inventory display page
+        //===================Inventory display page=======================
         [HttpGet]
         public IActionResult Index()
         {
@@ -46,8 +46,8 @@ namespace SDP.Controllers
             return View(new InventoryView { inventories = list });
         }
 
-
-        //this method displays the change page
+        //===================this method displays the change page=======================
+      
         [HttpPost]
         public IActionResult EditProduct(string productId)
         {
@@ -94,7 +94,7 @@ namespace SDP.Controllers
 
             return View(model);
         }
-
+        //===================Update Product=======================
         //this method saves the changes to the database
         [HttpPost]
         public async Task<IActionResult> UpdateProduct(AddProduct AP, string productId, string InvenId, string catID, string brandID, IFormFile ufile, string Url)
@@ -135,7 +135,7 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Inventory");
 
         }
-
+        //===================DeleteProduct=======================
         //this deletes the product based on product ID
         [HttpPost]
         public async Task<IActionResult> DeleteProduct(string ProdcutId) 

@@ -22,8 +22,7 @@ namespace SDP.Controllers
             {
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest); 
-                string Id = guest.userId.ToString();
-                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
+                string Id = guest.userId.ToString(); 
                 HttpContext.Session.SetString("Id", Id);
             }
             
