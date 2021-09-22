@@ -1,7 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = "All Products";
 }
 @model SDP.ViewModels.Catalog
@@ -32,7 +29,7 @@
                 @for (int i = 0; i < Model.totalPage; i++)
                 {
                     int pageNum = i + 1;
-                    <button type="submit" name="pageNumber" value=@i> @pageNum </button>
+                    <button class="sdp-style" type="submit" name="pageNumber" value=@i> @pageNum </button>
                 }
             </div>
         }
@@ -43,21 +40,6 @@
         <h3>Recommended Fragrances</h3>
     </div>
 </section>
-<style>
-    .page_number {
-        margin-top: 10px;
-        display: inline-block;
-    }
-
-    .page_number button {
-        color: black !important;
-        float: left !important;
-        padding: 8px 16px !important;
-        text-decoration: none !important;
-        margin-left: 5px;
-        margin-right: 5px;
-    }
-</style>
 <script>
 var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
 console.log(productDbJson)
