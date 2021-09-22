@@ -260,6 +260,59 @@ namespace SDP.Controllers
             return View(_user);
         }
 
+        //==============change password================
+        public IActionResult PasswordChange()
+        {
+            return View();
+        }
+
+        //==============change password================
+        [HttpPost]
+        public async Task<IActionResult> PasswordChange(string Email)
+        {
+            var result = await _userManager.FindByEmailAsync(Email);
+            if (result!= null)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(result);
+                var changepasswordLink = Url.Action("ActualChangePassword",
+                    "Account", new { Email = Email, token = token }, Request.Scheme);
+                var client = new SendGridClient(_APIkey);
+
+                var from = new EmailAddress("sdp.utils@gmail.com", "SDPAdmin");
+                var subject = "Change of Password";
+                var to = new EmailAddress(Email, "Dear Customer");
+                var plainTextContent = "Please follow the below link: ";
+                var htmlContent = "<a href=" + changepasswordLink + "> click here to change your password</a> <br>" + " <strong>Regards from the SDP team</strong>";
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                var response = await client.SendEmailAsync(msg);
+            }
+            else
+            {
+                ViewData["Msg"] = "user does not exist";
+                return View(); 
+            }
+            ViewData["Msg"] = "Please check your email inbox and spam folder";
+            return View();
+        }
+
+        //==============Page for actual password change================
+        public IActionResult ActualChangePassword(string Email, string token)
+        {
+            return View(new PasswordChange { Email = Email, token = token});
+        }
+        [HttpPost]
+        public async Task<IActionResult> ActualChangePassword(string Email, string Password, string token)
+        {
+            var user = await _userManager.FindByEmailAsync(Email);
+            var result = await _userManager.ResetPasswordAsync(user, token, Password);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Login");
+            }
+            ViewData["Msg"] = "Password not changed try again please";
+            return View();
+        }
 
         //==============Admin Delete  User  Role================
         [HttpPost]
