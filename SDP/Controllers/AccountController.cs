@@ -26,15 +26,17 @@ namespace SDP.Controllers
         private SignInManager<IdentityUser> _signInManager { get; }
         private readonly RoleManager<IdentityRole> _roleManager;
         private IConfiguration _configuration { get; }
+        private IEmailSender _emailSender { get; }
         private string _APIkey; //this is the sendgrid api key grabbed from appsetting.json file, see below constructor
 
         public AccountController(UserManager<IdentityUser> um, SignInManager<IdentityUser> sm,
-            RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender)
         {
             this._userManager = um;
             this._signInManager = sm;
             this._roleManager = roleManager;
             this._configuration = configuration;
+            this._emailSender = emailSender;
             this._APIkey = _configuration.GetValue<string>("APIKeys:SDP-SENDGRID-API");
         }
 
@@ -103,17 +105,9 @@ namespace SDP.Controllers
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
                     var confirmationLink = Url.Action("ConfrimEmail",
                         "Account", new { userId = newUser.Id, token = token }, Request.Scheme);
-                    var client = new SendGridClient(_APIkey);
-
-                    var from = new EmailAddress("sdp.utils@gmail.com", "SDPAdmin");
-                    var subject = "Confirm your SDP email";
-                    var to = new EmailAddress(user.Email, "Dear Customer");
-                    var plainTextContent = "please confirm email: ";
-                    var htmlContent = "<a href=" + confirmationLink + "> click here to confirm email </a> <br>" + " <strong>Regards from the SDP team</strong>";
-                    var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                    var response = await client.SendEmailAsync(msg);
                    
-                    if (response.IsSuccessStatusCode)//below code add role to new users
+                   
+                    if (await _emailSender.sendConfirmationEmailAsyncAsync(user.Email, newUser, confirmationLink))//below code add role to new users
                     {
                         var role = await _roleManager.FindByNameAsync("Customer");
                         if (role == null || newUser== null)
@@ -276,15 +270,7 @@ namespace SDP.Controllers
                 var token = await _userManager.GeneratePasswordResetTokenAsync(result);
                 var changepasswordLink = Url.Action("ActualChangePassword",
                     "Account", new { Email = Email, token = token }, Request.Scheme);
-                var client = new SendGridClient(_APIkey);
-
-                var from = new EmailAddress("sdp.utils@gmail.com", "SDPAdmin");
-                var subject = "Change of Password";
-                var to = new EmailAddress(Email, "Dear Customer");
-                var plainTextContent = "Please follow the below link: ";
-                var htmlContent = "<a href=" + changepasswordLink + "> click here to change your password</a> <br>" + " <strong>Regards from the SDP team</strong>";
-                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-                var response = await client.SendEmailAsync(msg);
+                var response = await _emailSender.sendPasswordChangeEmail(Email, result, changepasswordLink);
             }
             else
             {
@@ -294,6 +280,7 @@ namespace SDP.Controllers
             ViewData["Msg"] = "Please check your email inbox and spam folder";
             return View();
         }
+
 
         //==============Page for actual password change================
         public IActionResult ActualChangePassword(string Email, string token)
