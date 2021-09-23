@@ -7,7 +7,9 @@
                 <div>
                     <h3>Users</h3>
                     <ul>
-                        <li><a href="#">Manage Roles</a></li>
+                        @* The MyAccount link is currently only available to 'Customer' type users. May not be necessary in CMS. *@
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
                     </ul>
                 </div>
                 <div>

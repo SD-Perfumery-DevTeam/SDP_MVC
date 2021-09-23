@@ -1,18 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model Microsoft.AspNetCore.Identity.IdentityUser
+﻿@model Microsoft.AspNetCore.Identity.IdentityUser
 
-    <h1 style="color : red">@ViewData["Error MSG"]</h1>
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>@ViewData["Error MSG"]</h2>
 
-    <label>Email:</label>
-    <h4>@Model.Email</h4>
-    <br />
-    <label>ID:</label>
-    <h4>@Model.Id</h4>
-    <br />
-    <form asp-action="DeleteMyAccount" asp-controller="Account" method="post">
-        <Button  name="Id" value="@Model.Id" type="submit"> DELETE MY ACCOUNT</Button>
-    </form>
+            <label>Email</label>
+            <h4>@Model.Email</h4>
+            <br />
+            <label>ID</label>
+            <h4>@Model.Id</h4>
+            <br />
+            <form asp-action="DeleteMyAccount" asp-controller="Account" method="post">
+                <Button class="btn btn-danger" name="Id" value="@Model.Id" type="submit">Delete Account</Button>
+            </form>
+        </section>
+    </div>
+</section>
