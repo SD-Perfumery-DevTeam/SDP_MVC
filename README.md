@@ -59,3 +59,10 @@ Update 22/09/2021
 8. adding multi page display for product view
 9. adding the role of customer to all newly registered
 ```
+
+```
+Update 23/09/2021
+1. adding reset for forgot password 
+2. adding email service
+3. deleting code that deals with sending email in account controller
+```
