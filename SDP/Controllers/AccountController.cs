@@ -175,9 +175,9 @@ namespace SDP.Controllers
 
         //===================cms that manages roles=======================
         [Authorize(Roles = "SuperAdmin")]
-        public IActionResult RoleManage()
+        public IActionResult RoleManage(string msg)
         {
-
+            ViewData["Error MSG"] = msg;
             return View(new ManageRoleModel());
         }
 
@@ -245,7 +245,7 @@ namespace SDP.Controllers
 
         //==============user to manage their account================
         //[Authorize]
-        [Authorize(Roles = "Customer")]
+        [Authorize]
         public async Task<IActionResult> MyAccount(string msg) 
         {
             var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
@@ -320,10 +320,29 @@ namespace SDP.Controllers
             return RedirectToAction("RoleManage");
         }
 
+        //============== delete User account================
+        [Authorize(Roles = "SuperAdmin")]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            try
+            {
+                var userForDelete = await _userManager.FindByIdAsync(userId);
+                if (!(await _userManager.IsInRoleAsync(userForDelete, "SuperAdmin")))
+                {
+                    var result = await _userManager.DeleteAsync(userForDelete);
+                }
+                else return RedirectToAction("RoleManage", new { msg = "Cannot delete a Super Admin" });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("RoleManage");
+        }
 
         //==============User delete self account================
         [HttpPost]
-        [Authorize(Roles = "Customer")]
+        [Authorize]
         public async Task<IActionResult> DeleteMyAccount(string Id)
         {
             var _user = await _userManager.FindByIdAsync(Id);

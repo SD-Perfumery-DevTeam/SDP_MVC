@@ -66,9 +66,14 @@
                     <input type="hidden" name="searchToken" value="true" />
                     <button class="btn btn-warning" type="submit" name="Id" value="@Model.user.Id">Add Role</button>
                 </form>
+                <br />
+                <form asp-action="DeleteUser" asp-controller="Account" method="post">
+                    <button class="btn btn-danger" type="submit" name="userId" value="@Model.user.Id">Delete User</button>
+                </form>
 
             }
             @* Would be useful to have an alternative display if the user is not found. *@
         </section>
+        
     </div>
 </section>
