@@ -112,7 +112,7 @@ namespace SDP.Controllers
                     return RedirectToAction("Error", "Home");
                 }
                 AP.product.imgUrl = fileName;
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\imgs", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\product", fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await ufile.CopyToAsync(fileStream);
