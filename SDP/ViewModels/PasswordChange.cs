@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace SDP.ViewModels
 {
     public class PasswordChange
-    {
+    { 
+
+        [Required]
         public string token { get; set; }
         [Required]
         [EmailAddress]

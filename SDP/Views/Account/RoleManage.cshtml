@@ -4,7 +4,10 @@
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
+
             <h2>Manage Roles</h2>
+            <h1 style="color:red">@ViewData["Error MSG"]</h1>
+
             <p>Please enter the user email for role change, and press 'Find'.</p>
             <form asp-action="RoleManage" asp-controller="Account" method="post">
                 <label>User Email</label>

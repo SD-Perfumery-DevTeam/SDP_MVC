@@ -288,17 +288,21 @@ namespace SDP.Controllers
             return View(new PasswordChange { Email = Email, token = token});
         }
         [HttpPost]
-        public async Task<IActionResult> ActualChangePassword(string Email, string Password, string token)
+        public async Task<IActionResult> ActualChangePassword(string Email, string Password, string token, PasswordChange pc)
         {
-            var user = await _userManager.FindByEmailAsync(Email);
-            var result = await _userManager.ResetPasswordAsync(user, token, Password);
-
-            if (result.Succeeded)
+            if (ModelState.IsValid) 
             {
-                return RedirectToAction("Login");
+                var user = await _userManager.FindByEmailAsync(Email);
+                var result = await _userManager.ResetPasswordAsync(user, token, Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Login");
+                }
+                ViewData["Msg"] = "Password not changed try again please";
+                
             }
-            ViewData["Msg"] = "Password not changed try again please";
-            return View();
+            return View(pc);
         }
 
         //==============Admin Delete  User  Role================
