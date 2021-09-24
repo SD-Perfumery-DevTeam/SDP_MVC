@@ -66,3 +66,9 @@ Update 23/09/2021
 2. adding email service
 3. deleting code that deals with sending email in account controller
 ```
+
+
+```
+Update 24/09/2021
+1. adding reset for My Account page
+```
