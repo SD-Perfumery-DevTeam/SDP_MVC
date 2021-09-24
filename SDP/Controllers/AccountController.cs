@@ -291,10 +291,7 @@ namespace SDP.Controllers
         [HttpPost]
         public async Task<IActionResult> PasswordChange(string Email)
         {
-            if (Email == "")
-            {
-                return View();
-            }
+          
             var result = await _userManager.FindByEmailAsync(Email);
             if (result!= null)
             {
