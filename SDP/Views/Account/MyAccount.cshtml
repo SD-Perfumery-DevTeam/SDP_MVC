@@ -12,9 +12,18 @@
             <label>ID</label>
             <h4>@Model.Id</h4>
             <br />
+
+            <form method="post">
+                <label>Enter current passord: </label>
+                <input type="password" name="password" /> <br />
+                <Button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</Button>
+            </form>
+            <br />
             <form asp-action="DeleteMyAccount" asp-controller="Account" method="post">
                 <Button class="btn btn-danger" name="Id" value="@Model.Id" type="submit">Delete Account</Button>
             </form>
+
+
         </section>
     </div>
 </section>

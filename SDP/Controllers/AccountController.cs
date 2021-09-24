@@ -254,6 +254,33 @@ namespace SDP.Controllers
             return View(_user);
         }
 
+        //==============user to manage their account password change================
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> MyAccount(string userId, string password)
+        {
+            IdentityUser _user;
+            try
+            {
+                _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
+                if (password != "" && await _userManager.CheckPasswordAsync(_user, password))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(_user);
+                    return RedirectToAction("ActualChangePassword", new {Email = _user.Email, token=  token});
+                }
+                ViewData["Error MSG"] = "password incorrect";
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            
+            
+
+           
+            return View(_user);
+        }
+
         //==============change password================
         public IActionResult PasswordChange()
         {
