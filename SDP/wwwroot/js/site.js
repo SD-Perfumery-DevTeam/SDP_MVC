@@ -5,10 +5,11 @@
 
 
 
-function setList(list) {
-    
-    let string = (list);
-    console.log(string)
-}
 
-console.log(productDbJson);
+$("body").on("submit", "#popup", function () {
+    return confirm("Do you want to Delete?");
+});
+
+   
+
+        

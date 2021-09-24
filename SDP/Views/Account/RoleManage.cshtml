@@ -18,7 +18,7 @@
             @if (Model.user != null)
             {
                 <h3>User Found</h3>
-                <form asp-action="DeleteUserRole" asp-controller="Account" method="post">
+                <form asp-action="DeleteUserRole" asp-controller="Account" method="post" id="popup">
                     <table class="table">
                         <thead>
                             <tr>
@@ -70,7 +70,7 @@
                     <button class="btn btn-warning" type="submit" name="Id" value="@Model.user.Id">Add Role</button>
                 </form>
                 <br />
-                <form asp-action="DeleteUser" asp-controller="Account" method="post">
+                <form asp-action="DeleteUser" asp-controller="Account" method="post" id="popup">
                     <button class="btn btn-danger" type="submit" name="userId" value="@Model.user.Id">Delete User</button>
                 </form>
 

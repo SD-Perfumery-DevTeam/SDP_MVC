@@ -19,11 +19,10 @@
                 <Button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</Button>
             </form>
             <br />
-            <form asp-action="DeleteMyAccount" asp-controller="Account" method="post">
-                <Button class="btn btn-danger" name="Id" value="@Model.Id" type="submit">Delete Account</Button>
+            <form asp-action="DeleteMyAccount" asp-controller="Account" method="post" id="popup">
+                <Button class="btn btn-danger " name="Id" value="@Model.Id" type="submit">Delete Account</Button>
             </form>
-
-
+     
         </section>
     </div>
 </section>
