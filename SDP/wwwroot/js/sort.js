@@ -54,7 +54,7 @@ function displayCardFunc(prod) {
     content =
     `
         <div>
-            <img src="../imgs/${prod.imgUrl}" alt="${prod.title}">
+            <img src="../images/product/${prod.imgUrl}" alt="${prod.title}">
             <div class="product-summary">
                 <h4>${prod.title}${gender}</h4>
                 <p>by ${prod.brand.title}</p>
