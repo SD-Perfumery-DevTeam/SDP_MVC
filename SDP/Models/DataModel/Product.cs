@@ -51,7 +51,7 @@ namespace SDP.Models
         public decimal price { get; set; }
 
         [StringLength(2048)]
-        [Display(Name = "Product Image (png and jpg files only)")]
+        [Display(Name = "Product Image")]
         public string imgUrl { get; set; }
 
         [Required]
@@ -70,7 +70,7 @@ namespace SDP.Models
         [Display(Name = "Package Weight")]
         public int packageWeight { get; set; }
 
-        [Display(Name = "Package Dimensions (in mm, takes the form 'LLLxWWWxHHH'.)")]
+        [Display(Name = "Package Dimensions")]
         public string packageDims { get; set; }
 
         [StringLength(2048)]
