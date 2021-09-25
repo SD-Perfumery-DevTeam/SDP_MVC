@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,6 +20,8 @@ namespace SDP.Models
 
         public Guid inventoryId { get; set; }
         public Product product { get; set; }
+
+        [Display(Name = "Quantity in Stock")]
         public int stockQty { get; set; }
     }
 }
