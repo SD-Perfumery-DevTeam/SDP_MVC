@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Product Type</label>
+                    <label asp-for="product.productType" class="form-label"></label>
                     <div><select asp-for="@Model.product.productType" asp-items="Html.GetEnumSelectList<Consts.PTypes>()" class="form-control"></select></div>
                 </div>
 
@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Unit of Measure</label>
+                    <label asp-for="product.packageUom" class="form-label"></label>
                     <div><select asp-for="@Model.product.packageUom" asp-items="Html.GetEnumSelectList<Consts.Uom>()" class="form-control"></select></div>
                 </div>
 
