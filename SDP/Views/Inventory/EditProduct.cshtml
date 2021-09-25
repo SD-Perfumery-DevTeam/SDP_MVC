@@ -51,14 +51,15 @@
                     <input required="required" type="number" min="1" max="999999.99" step="0.01" asp-for="product.price" class="form-control" />
                     <span asp-validation-for="product.price" class="text-danger"></span>
                 </div>
-                <div id="disp_tmp_path" class="d-none" hidden></div>
 
+                <div id="disp_tmp_path" class="d-none" hidden></div>
                 <div class="mb-3">
                     <label asp-for="product.imgUrl" class="form-label"></label>
                     <div class="custom-file">
+                        <div class="form-text mt-0 mb-2">Upload PNG / JPG image formats.</div>
                         <input type="hidden" name="Url" value="@Model.product.imgUrl" />
                         <input asp-for="Image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
-                        <label class="custom-file-label">@Model.product.imgUrl</label>
+                        <div class="custom-file-label form-text">@Model.product.imgUrl</div>
                     </div>
                     <span asp-validation-for="product.imgUrl" class="text-danger"></span>
                 </div>
@@ -87,6 +88,7 @@
 
                 <div class="mb-3">
                     <label asp-for="product.packageDims" class="form-label"></label>
+                    <div class="form-text mt-0 mb-2">In the format 'LLLxWWWxHHH'.</div>
                     <input asp-for="product.packageDims" class="form-control" pattern="(\d+)x(\d+)x(\d+)" />
                     <span asp-validation-for="product.packageDims" class="text-danger"></span>
                 </div>
