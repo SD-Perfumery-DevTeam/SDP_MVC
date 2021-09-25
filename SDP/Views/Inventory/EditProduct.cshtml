@@ -101,9 +101,9 @@
                 @section Scripts{
                     <script type="text/javascript" src="~/js/addproduct.js"></script>
                 }
-                <button type="submit" class="sdp-style">Edit</button>
-                <button asp-controller="Inventory" asp-action="DeleteProduct" name="ProdcutId"
-                        value="@Model.product.productId" class="sdp-style" style="background :red !important">
+                <button type="submit" class="btn btn-primary">Edit</button>
+                <button asp-controller="Inventory" asp-action="DeleteProduct" name="ProductId"
+                        value="@Model.product.productId" class="btn btn-danger">
                     Delete
                 </button>
             </form>

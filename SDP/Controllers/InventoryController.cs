@@ -142,12 +142,12 @@ namespace SDP.Controllers
         //this deletes the product based on product ID
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public async Task<IActionResult> DeleteProduct(string ProdcutId) 
+        public async Task<IActionResult> DeleteProduct(string ProductId) 
         {
             
             try 
             {
-                Guid productID = Guid.Parse(ProdcutId);
+                Guid productID = Guid.Parse(ProductId);
                 _db.product.Remove(_db.product.Find(productID));
                 _db.inventory.Remove(_db.inventory.Include(m => m.product).ToList().Where(i => i.product.productId == _db.product.Find(productID).productId).FirstOrDefault(x => x.product.productId.Equals(productID)));
                 await _db.SaveChangesAsync();
