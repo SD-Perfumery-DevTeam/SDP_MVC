@@ -14,7 +14,6 @@
                     <input required="required" asp-for="product.title" class="form-control" maxlength="2048" />
                     <span asp-validation-for="product.title" class="text-danger"></span>
                 </div>
-
                 <div class="mb-3">
                     <label asp-for="product.category" class="form-label"></label>
 
@@ -30,7 +29,6 @@
 
                 <div class="mb-3">
                     <label asp-for="product.brand" class="form-label"></label>
-
                     <select id="listbox" class="form-control" name="brandID">
                         @foreach (var item in Model.brands)
                         {
