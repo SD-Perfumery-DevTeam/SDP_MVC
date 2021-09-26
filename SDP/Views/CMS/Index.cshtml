@@ -1,24 +1,31 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-2">
-            <div class="side-bar">
-                <ul class="side-bar-list">
-                    <li class="side-bar-item"><a>Manage Products</a></li>
-                    <li class="side-bar-item"><a>Manage User Accounts</a></li>
-                    <li class="side-bar-item"><a>Manage Orders</a></li>
-                    <li class="side-bar-item"><a>Promotions</a></li>
-                    <li class="side-bar-item"><a>Sales Statistics</a></li>
-                </ul>
+﻿<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>Content Management System</h2>
+            <div>
+                <div>
+                    <h3>Users</h3>
+                    <ul>
+                        @* The MyAccount link is currently only available to 'Customer' type users. May not be necessary in CMS. *@
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Home Page</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Home" asp-action="Index">View Homepage</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-10" id="main-place">
-
-        </div>
+        </section>
     </div>
-</div>
+</section>

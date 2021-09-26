@@ -23,18 +23,18 @@ namespace SDP.Controllers
         List<Product> pList;
         private static ProductDbContext _db;
         private IDbRepo _dbRepo;
-        ICustomer customer = null;
+        private ICustomer _customer = null;
 
         public ProductController(ProductDbContext db, IDbRepo dbRepo)
         {
             _db = db;
             _dbRepo = dbRepo;
+            
         }
-
-        //displays the product catelog
+        //======================Product Catelog=========================
         [HttpPost]
         [HttpGet]
-        public async Task<IActionResult> Index(int pageNumber = 0) 
+        public IActionResult Index(int pageNumber = 0) 
         {
 
             var products = _db.product
@@ -47,11 +47,10 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-            customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
+          
 
             try
             {
@@ -59,7 +58,8 @@ namespace SDP.Controllers
                 {
                     products = products,
                     brands = _db.brand.ToList(),
-                    totalPage =totalPage
+                    totalPage =totalPage,
+                    customer = _customer
                 });
             }
             catch (Exception ex) 
@@ -68,7 +68,7 @@ namespace SDP.Controllers
             }
         }
 
-        //single product display
+        //===============single product display=========================
         public IActionResult ProductDisplay(string value)
         {
             if (HttpContext.Session.GetString("Id") == null)
@@ -76,7 +76,7 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
+              
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -97,8 +97,8 @@ namespace SDP.Controllers
             }
 
         }
-        
-       
+
+        //===============add product to cart=========================
         public IActionResult AddToCart(int quantity) 
         {
             if (HttpContext.Session.GetString("Id") == null)
@@ -106,7 +106,7 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 Global.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-                //ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"))
+              
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -125,8 +125,7 @@ namespace SDP.Controllers
           
             return RedirectToAction("Index", "Product"); 
         }
-
-        //Product CMS
+        //======================Product CMS=========================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult AddProduct() 
@@ -159,7 +158,7 @@ namespace SDP.Controllers
 
             return View(model);
         }
-
+        //======================Product CMS=========================
         // This deals with the dropdown lists  and img.
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -175,7 +174,7 @@ namespace SDP.Controllers
                     return RedirectToAction("Error", "Home");
                 }
                 P.product.imgUrl = fileName;
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\imgs", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\product", fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await ufile.CopyToAsync(fileStream);

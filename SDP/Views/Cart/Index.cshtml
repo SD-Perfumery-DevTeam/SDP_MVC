@@ -22,9 +22,9 @@
                         total = total + (decimal)product.Key.price* (decimal)product.Value;
                         decimal subTotal = product.Key.price * product.Value;
                         <li class="cart-item">
-                            <img src="~/imgs/@product.Key.imgUrl" alt="@product.Key.title" />
+                            <img src="~/images/product/@product.Key.imgUrl" alt="@product.Key.title" />
                             <div class="cart-item-desc">
-                                <h4 class="desc">@product.Key.title - @product.Key.brand</h4>
+                                <h4 class="desc">@product.Key.title - @product.Key.brand.title</h4>
                                 <p>@product.Key.price LKR</p>
                             </div>
                             <div class="cart-item-qty">
@@ -44,7 +44,7 @@
                     <h4>Order Total</h4>
                     <p>Rs. @total</p>
                 </div>
-                <button type="button" id="cart-btn-checkout">Proceed to Checkout</button>
+                <button type="button" id="cart-btn-checkout" class="sdp-style">Proceed to Checkout</button>
                 <small><a href="#">Continue Shopping</a></small>
             </div>
         </div>

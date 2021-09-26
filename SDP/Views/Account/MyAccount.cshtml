@@ -1,0 +1,28 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityUser
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>@ViewData["Error MSG"]</h2>
+
+            <label>Email</label>
+            <h4>@Model.Email</h4>
+            <br />
+            <label>ID</label>
+            <h4>@Model.Id</h4>
+            <br />
+
+            <form method="post">
+                <label>Enter current passord: </label>
+                <input type="password" name="password" /> <br />
+                <Button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</Button>
+            </form>
+            <br />
+            <form asp-action="DeleteMyAccount" asp-controller="Account" method="post" id="popup">
+                <Button class="btn btn-danger " name="Id" value="@Model.Id" type="submit">Delete Account</Button>
+            </form>
+     
+        </section>
+    </div>
+</section>

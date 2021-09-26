@@ -1,0 +1,60 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<aside>
+    <nav class="accordion accordion-flush" id="cms-nav-accordion">
+        <div class="accordion-item">
+            <p class="accordion-header" id="cms-nav-heading-users">
+                <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cms-nav-child-users"
+                        aria-expanded="false"
+                        aria-controls="cms-nav-collapse-users"
+                >
+                    Users
+                </button>
+            </p>
+            <div 
+                    id="cms-nav-child-users"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="cms-nav-heading-users"
+                    data-bs-parent="#cms-nav-accordion"
+            >
+                <ul class="list-unstyled fw-normal pb-1 small">
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <p class="accordion-header" id="cms-nav-heading-products">
+                <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cms-nav-child-products"
+                        aria-expanded="false"
+                        aria-controls="cms-nav-collapse-products"
+                >
+                    Products
+                </button>
+            </p>
+            <div 
+                    id="cms-nav-child-products"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="cms-nav-heading-products"
+                    data-bs-parent="#cms-nav-accordion"
+            >
+                <ul class="list-unstyled fw-normal pb-1 small">
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">View / Edit Products</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</aside>

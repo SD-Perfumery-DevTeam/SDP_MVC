@@ -1,0 +1,82 @@
+﻿@model SDP.ViewModels.ManageRoleModel
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+
+            <h2>Manage Roles</h2>
+            <h1 style="color:red">@ViewData["Error MSG"]</h1>
+
+            <p>Please enter the user email for role change, and press 'Find'.</p>
+            <form asp-action="RoleManage" asp-controller="Account" method="post">
+                <label>User Email</label>
+                <input name="Email" />
+                <button class="btn btn-primary" type="submit">Find</button>
+            </form>
+
+            @if (Model.user != null)
+            {
+                <h3>User Found</h3>
+                <form asp-action="DeleteUserRole" asp-controller="Account" method="post" id="popup">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tr>
+                            <td>
+                                @Model.user.Id
+                            </td>
+                            <td>
+                                @Model.user.Email
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input type="hidden" name="userId" value=@Model.user.Id />
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>User Roles</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var role in Model.currentRoleList)
+                        {
+                            <tr>
+                                <td>
+                                    @role.Name
+                                </td>
+                                <td>
+                                    @if (role.Name == "SuperAdmin")
+                                    {
+                                        <button class="btn btn-sm btn-danger" disabled>Remove Role</button>
+                                    }
+                                    else
+                                    {<button class="btn btn-sm btn-danger" type="submit" name="roleName" value=" @role.Name">Remove Role</button>}
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </form>
+
+                <form asp-action="RoleManage" asp-controller="Account" method="post">
+                    @Html.DropDownListFor(m => m.roleId, new SelectList(Model.roleList, "Value", "Text"), "Add a new role ", new { @class = "form-control" })
+                    <input type="hidden" name="searchToken" value="true" />
+                    <button class="btn btn-warning" type="submit" name="Id" value="@Model.user.Id">Add Role</button>
+                </form>
+                <br />
+                <form asp-action="DeleteUser" asp-controller="Account" method="post" id="popup">
+                    <button class="btn btn-danger" type="submit" name="userId" value="@Model.user.Id">Delete User</button>
+                </form>
+
+            }
+            @* Would be useful to have an alternative display if the user is not found. *@
+        </section>
+        
+    </div>
+</section>

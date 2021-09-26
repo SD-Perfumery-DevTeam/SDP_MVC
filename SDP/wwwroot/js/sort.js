@@ -54,7 +54,7 @@ function displayCardFunc(prod) {
     content =
     `
         <div>
-            <img src="../imgs/${prod.imgUrl}" alt="${prod.title}">
+            <img src="../images/product/${prod.imgUrl}" alt="${prod.title}">
             <div class="product-summary">
                 <h4>${prod.title}${gender}</h4>
                 <p>by ${prod.brand.title}</p>
@@ -63,7 +63,7 @@ function displayCardFunc(prod) {
             </div>
             <div>
                 <h5>Rs. ${prod.price}</h5>
-                <button type="submit" name="value" value="${prod.productId}">View Details</button>
+                <button class="sdp-style" type="submit" name="value" value="${prod.productId}">View Details</button>
             </div>
         </div>
     `;

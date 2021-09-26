@@ -19,7 +19,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" id="username">
+                <input asp-for="Email" id="username" maxlength=100>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,8 +33,8 @@
                 <input asp-for="RememberMe" />
             </div>
 
-            <button class="btn-big" type="submit">Log In</button>
-            <small><a href="#">I have forgotten my password..</a></small>
+            <button class="btn-big sdp-style" type="submit">Log In</button>
+            <small><a asp-action="PasswordChange" asp-controller="Account">I have forgotten my password..</a></small>
         </form>
     </div>
 </section>

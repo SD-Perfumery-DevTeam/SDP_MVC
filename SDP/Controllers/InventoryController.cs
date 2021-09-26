@@ -29,8 +29,9 @@ namespace SDP.Controllers
         {
             _db = db;
         }
-        //Inventory display page
+        //===================Inventory display page=======================
         [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult Index()
         {
             List<Inventory> list;
@@ -46,9 +47,10 @@ namespace SDP.Controllers
             return View(new InventoryView { inventories = list });
         }
 
-
-        //this method displays the change page
+        //===================this method displays the change page=======================
+      
         [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditProduct(string productId)
         {
             Guid productID = Guid.Parse(productId);
@@ -94,9 +96,10 @@ namespace SDP.Controllers
 
             return View(model);
         }
-
+        //===================Update Product=======================
         //this method saves the changes to the database
         [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public async Task<IActionResult> UpdateProduct(AddProduct AP, string productId, string InvenId, string catID, string brandID, IFormFile ufile, string Url)
         {
             if (ufile != null && ufile.Length > 0)
@@ -109,7 +112,7 @@ namespace SDP.Controllers
                     return RedirectToAction("Error", "Home");
                 }
                 AP.product.imgUrl = fileName;
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\imgs", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\product", fileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await ufile.CopyToAsync(fileStream);
@@ -135,9 +138,10 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Inventory");
 
         }
-
+        //===================DeleteProduct=======================
         //this deletes the product based on product ID
         [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public async Task<IActionResult> DeleteProduct(string ProdcutId) 
         {
             

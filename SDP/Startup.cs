@@ -44,6 +44,7 @@ namespace SDP
               .AddDefaultTokenProviders();
             
             services.AddScoped<IDbRepo, DbRepo>();
+            services.AddScoped<IEmailSender, EmailService>();
             services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers for injection
 
             services.Configure<IdentityOptions>(options =>

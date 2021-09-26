@@ -1,19 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model SDP.ViewModels.AddProduct
 
-@model SDP.ViewModels.AddProduct
-
-<div class="container">
-    <h2>Add Product</h2>
-    <div class="row">
-        <div class="col-md-12">
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>Edit Product</h2>
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="UpdateProduct" method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
-               
+
                 <div class="form-group">
                     <input type="hidden" name="productId" value="@Model.product.productId" />
                     <input type="hidden" name="InvenId" value="@Model.inventory.inventoryId" />
@@ -63,7 +58,7 @@
                     <label asp-for="product.imgUrl"></label>
                     <div class="custom-file">
                         <input type="hidden" name="Url" value="@Model.product.imgUrl" />
-                        <input  asp-for="Image" type="file" class="form-control custom-file-input" name="ufile"  maxlength="2048" />
+                        <input asp-for="Image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
                         <label class="custom-file-label">@Model.product.imgUrl</label>
                     </div>
                     <span asp-validation-for="product.imgUrl" class="text-danger"></span>
@@ -106,10 +101,12 @@
                 @section Scripts{
                     <script type="text/javascript" src="~/js/addproduct.js"></script>
                 }
-                <button type="submit">Edit</button>
-                <button asp-controller="Inventory" asp-action="DeleteProduct" name="ProdcutId" 
-                        value="@Model.product.productId" style="background :red !important" >Delete</button>
+                <button type="submit" class="sdp-style">Edit</button>
+                <button asp-controller="Inventory" asp-action="DeleteProduct" name="ProdcutId"
+                        value="@Model.product.productId" class="sdp-style" style="background :red !important">
+                    Delete
+                </button>
             </form>
-        </div>
+        </section>
     </div>
-</div>
+</section>
