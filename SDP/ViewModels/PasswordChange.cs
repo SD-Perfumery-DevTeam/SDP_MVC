@@ -20,7 +20,7 @@ namespace SDP.ViewModels
         [Required]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password and confirm password do not match")]
-        [Display(Name = "Re - type Password")]
+        [Display(Name = "Confirm Password")]
         public string ReenterPassword { get; set; }
     }
 }
