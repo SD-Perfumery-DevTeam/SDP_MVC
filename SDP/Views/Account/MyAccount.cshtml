@@ -15,10 +15,16 @@
             <div class="mb-4">
                 <form method="post">
                     <label class="form-label" for="current-password">Change Password</label>
-                    <div class="form-text mt-0 mb-2">Please input your current password and then select 'Reset Password'.</div>
-                    <div class="input-group">
-                        <input class="form-control" id="current-password" type="password" name="password" />
-                        <button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</button>
+                    <div class="form-text mt-0 mb-2">
+                        Please input your current password and then select 'Reset Password' - you will be given the opportunity to choose your new password in the following step.
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="input-group">
+                                <input class="form-control" id="current-password" type="password" name="password" />
+                                <button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -40,11 +46,11 @@
                          aria-labelledby="delete-ccount-nav-heading"
                          data-bs-parent="#account-delete-accordion">
                         <form asp-action="DeleteMyAccount" asp-controller="Account" method="post" id="popup">
-                            <div class="form-text mt-3 mb-2">
+                            <div class="form-text mt-3 mb-5">
                                 This action is not reversible and will delete the account associated with email address @Model.Email. Please be certain this is what you wish to do before proceeding.
                             </div>
                             <button class="btn btn-danger " name="Id" value="@Model.Id" type="submit">Delete Account</button>
-                            <div class="form-text mt-3 mb-2">Account ID: @Model.Id</div>
+                            <div class="form-text mt-5 mb-2">Account ID: @Model.Id</div>
                         </form>
                     </div>
                 </div>
