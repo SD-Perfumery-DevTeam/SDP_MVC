@@ -3,25 +3,48 @@
 <section id="section-cms">
     <div class="container">
         <section class="cms-area">
-            <h2>@ViewData["Error MSG"]</h2>
+            @*<h2>@ViewData["Error MSG"]</h2>*@ @* Was this used for something?*@
+            <h2>Account Preferences</h2>
 
-            <label>Email</label>
-            <h4>@Model.Email</h4>
-            <br />
-            <label>ID</label>
-            <h4>@Model.Id</h4>
-            <br />
+            <h3>@Model.Email</h3>
 
-            <form method="post">
-                <label>Enter current passord: </label>
-                <input type="password" name="password" /> <br />
-                <Button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</Button>
-            </form>
-            <br />
-            <form asp-action="DeleteMyAccount" asp-controller="Account" method="post" id="popup">
-                <Button class="btn btn-danger " name="Id" value="@Model.Id" type="submit">Delete Account</Button>
-            </form>
-     
+            <div class="mb-4">
+                <form method="post">
+                    <label class="form-label" for="current-password">Change Password</label>
+                    <div class="form-text mt-0 mb-2">Please input your current password and then select 'Reset Password'.</div>
+                    <div class="input-group">
+                        <input class="form-control" id="current-password" type="password" name="password" />
+                        <button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="accordion accordion-flush" id="account-delete-accordion">
+                <div class="accordion-item">
+                    <p class="accordion-header" id="delete-ccount-nav-heading">
+                        <button class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#delete-account-nav-child"
+                                aria-expanded="false"
+                                aria-controls="delete-account-nav-collapse">
+                            Delete Account
+                        </button>
+                    </p>
+                    <div id="delete-account-nav-child"
+                         class="accordion-collapse collapse"
+                         aria-labelledby="delete-ccount-nav-heading"
+                         data-bs-parent="#account-delete-accordion">
+                        <form asp-action="DeleteMyAccount" asp-controller="Account" method="post" id="popup">
+                            <div class="form-text mt-3 mb-2">
+                                This action is not reversible and will delete the account associated with email address @Model.Email. Please be certain this is what you wish to do before proceeding.
+                            </div>
+                            <button class="btn btn-danger " name="Id" value="@Model.Id" type="submit">Delete Account</button>
+                            <div class="form-text mt-3 mb-2">Account ID: @Model.Id</div>
+</form>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 </section>
