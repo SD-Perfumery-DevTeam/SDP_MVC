@@ -8,93 +8,110 @@
             <form enctype="multipart/form-data" method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
-                
-                <div class="mb-3">
-                    <label asp-for="product.title" class="form-label"></label>
-                    <input required="required" asp-for="product.title" class="form-control" maxlength="2048" />
-                    <span asp-validation-for="product.title" class="text-danger"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="product.category" class="form-label"></label>
 
-                    <select id="listbox" class="form-control" name="catID">
-                        @foreach (var item in Model.categories)
-                        {
-                            <option value="@item.Value" name="catID">
-                                @item.Text
-                            </option>
-                        }
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="product.brand" class="form-label"></label>
-                    <select id="listbox" class="form-control" name="brandID">
-                        @foreach (var item in Model.brands)
-                        {
-                            <option value="@item.Value" name="brandID">
-                                @item.Text
-                            </option>
-                        }
-                    </select>
+                @* Fields 'title' and 'brand' grouped in one row. *@
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <label asp-for="product.title" class="form-label"></label>
+                        <input required="required" asp-for="product.title" class="form-control" maxlength="2048" />
+                        <span asp-validation-for="product.title" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="product.brand" class="form-label"></label>
+                        <select id="listbox" class="form-select" name="brandID">
+                            @foreach (var item in Model.brands)
+                            {
+                                <option value="@item.Value" name="brandID">
+                                    @item.Text
+                                </option>
+                            }
+                        </select>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="product.productGender" class="form-label"></label>
-                    <div><select asp-for="@Model.product.productGender" asp-items="Html.GetEnumSelectList<Consts.Genders>()" class="form-control"></select></div>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="product.price" class="form-label"></label>
-                    <input required="required" type="number" min="1" max="999999.99" step="0.01" asp-for="product.price" class="form-control" />
-                    <span asp-validation-for="product.price" class="text-danger"></span>
-                </div>
-
+                @* Field 'imgUrl' in its own row. *@
                 <div id="disp_tmp_path" class="d-none" hidden></div>
-                <div class="mb-3">
+                <div class="mb-4">
                     <label asp-for="product.imgUrl" class="form-label"></label>
                     <div class="custom-file">
-                        <div class="form-text mt-0 mb-2">Upload PNG / JPG image formats.</div>
+                        <div class="form-text mt-0 mb-2">Upload PNG / JPG image format.</div>
                         <input required="required" asp-for="Image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
                         <div class="custom-file-label form-text">Choose Image File...</div>
                     </div>
                     <span asp-validation-for="product.imgUrl" class="text-danger"></span>
                 </div>
 
-                <div class="mb-3">
-                    <label asp-for="product.productType" class="form-label"></label>
-                    <div><select asp-for="@Model.product.productType" asp-items="Html.GetEnumSelectList<Consts.PTypes>()" class="form-control"></select></div>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="product.packageQty" class="form-label"></label>
-                    <input required="required" type="number" min="1" asp-for="product.packageQty" class="form-control" />
-                    <span asp-validation-for="product.packageQty" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="product.packageUom" class="form-label"></label>
-                    <div><select asp-for="@Model.product.packageUom" asp-items="Html.GetEnumSelectList<Consts.Uom>()" class="form-control"></select></div>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="product.packageWeight" class="form-label"></label>
-                    <input type="number" asp-for="product.packageWeight" min="1" class="form-control" />
-                    <span asp-validation-for="product.packageWeight" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="product.packageDims" class="form-label"></label>
-                    <div class="form-text mt-0 mb-2">In the format 'LLLxWWWxHHH'.</div>
-                    <input asp-for="product.packageDims" class="form-control" pattern="(\d+)x(\d+)x(\d+)" />
-                    <span asp-validation-for="product.packageDims" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
+                @* Field 'description' in its own row. *@
+                <div class="mb-4">
                     <span class="hint" id="textarea_message"></span>
                     <label asp-for="product.description" class="form-label"></label>
                     <textarea required="required" asp-for="product.description" id="message_area" class="form-control message_area" maxlength="2048"></textarea>
                     <span asp-validation-for="product.description" class="text-danger"></span>
+                </div>
+
+                @* Fields 'category', 'productType' and 'productGender' grouped in one row. *@
+                <div class="row mb-4">
+                    <div class="col-4">
+                        <label asp-for="product.category" class="form-label"></label>
+                        <select id="listbox" class="form-select" name="catID">
+                            @foreach (var item in Model.categories)
+                            {
+                                <option value="@item.Value" name="catID">
+                                    @item.Text
+                                </option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="product.productType" class="form-label"></label>
+                        <div><select asp-for="@Model.product.productType" asp-items="Html.GetEnumSelectList<Consts.PTypes>()" class="form-select"></select></div>
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="product.productGender" class="form-label"></label>
+                        <div><select asp-for="@Model.product.productGender" asp-items="Html.GetEnumSelectList<Consts.Genders>()" class="form-select"></select></div>
+                    </div>
+                </div>
+
+                @* Fields 'packageQty', 'packageUom' and 'price' grouped in one row. *@
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <label asp-for="product.packageQty" class="form-label"></label>
+                        <div class="input-group">
+                            <input required="required" type="number" min="1" step="10" asp-for="product.packageQty" class="form-control" />
+                            <select asp-for="@Model.product.packageUom" asp-items="Html.GetEnumSelectList<Consts.Uom>()" class="form-select"></select>
+                        </div>
+                        <span asp-validation-for="product.packageQty" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="product.price" class="form-label"></label>
+                        <div class="input-group">
+                            <div class="input-group-text">Rs.</div>
+                            <input required="required" type="number" min="1" max="999999.99" step="100" asp-for="product.price" class="form-control" />
+                        </div>
+                        <span asp-validation-for="product.price" class="text-danger"></span>
+                    </div>
+                </div>
+
+                @* Fields 'packageDims' and 'packageWeight' grouped in one row. *@
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <label asp-for="product.packageDims" class="form-label"></label>
+                        <div class="form-text mt-0 mb-2">Package dimensions (LLLxWWWxHHH).</div>
+                        <div class="input-group">
+                            <input asp-for="product.packageDims" class="form-control" pattern="(\d+)x(\d+)x(\d+)" />
+                            <div class="input-group-text">mm</div>
+                        </div>
+                        <span asp-validation-for="product.packageDims" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="product.packageWeight" class="form-label"></label>
+                        <div class="form-text mt-0 mb-2">Gross package weight in grams.</div>
+                        <div class="input-group">
+                            <input type="number" asp-for="product.packageWeight" min="1" class="form-control" />
+                            <div class="input-group-text">g</div>
+                        </div>
+                        <span asp-validation-for="product.packageWeight" class="text-danger"></span>
+                    </div>
                 </div>
 
                 @section Scripts{
