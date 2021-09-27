@@ -23,9 +23,12 @@
 
             @if (Model.user != null)
             {
-                <h3>User Found</h3>
                 <form asp-action="DeleteUserRole" asp-controller="Account" method="post" id="popup">
-                    <table class="table">
+                    <input type="hidden" name="userId" value=@Model.user.Id />
+
+                    <h3>User Found</h3>
+                    <p class="mb-2">Your search for user @Model.user.Email has returned a result.</p>
+                    <table class="table mb-4">
                         <thead>
                             <tr>
                                 <th>Email</th>
@@ -33,18 +36,14 @@
                             </tr>
                         </thead>
                         <tr>
-                            <td>
-                                @Model.user.Email
-                            </td>
-                            <td>
-                                @Model.user.Id
-                            </td>
+                            <td>@Model.user.Email</td>
+                            <td>@Model.user.Id</td>
                         </tr>
                     </table>
 
-                    <input type="hidden" name="userId" value=@Model.user.Id />
-
-                    <table class="table">
+                    <h3>User Roles</h3>
+                    <p class="mb-2">Roles assigned to @Model.user.Email are listed in the table below. You can remove roles by pressing individual 'Remove Role' butttons, or add a role in the 'Add Role' section below.</p>
+                    <table class="table mb-4">
                         <thead>
                             <tr>
                                 <th>User Roles</th>
@@ -71,15 +70,20 @@
                 </form>
 
                 <form asp-action="RoleManage" asp-controller="Account" method="post">
-                    <div class="input-group">
+                    <h3>Add Role</h3>
+                    <p class="mb-2">Add a new role for @Model.user.Email by selecting a role below and pressing 'Add Role'.</p>
+                    <div class="input-group mb-4">
                         @Html.DropDownListFor(m => m.roleId, new SelectList(Model.roleList, "Value", "Text"), "Add a new role ", new { @class = "form-select" })
                         <input type="hidden" name="searchToken" value="true" />
                         <button class="btn btn-warning" type="submit" name="Id" value="@Model.user.Id">Add Role</button>
                     </div>
                 </form>
-                <br />
+
                 <form asp-action="DeleteUser" asp-controller="Account" method="post" id="popup">
+                    <h3>Delete User</h3>
+                    <p class="mb-5">This action is not reversible and will delete the account associated with email address @Model.user.Email. Please be certain this is what you wish to do before proceeding.</p>
                     <button class="btn btn-danger" type="submit" name="userId" value="@Model.user.Id">Delete User</button>
+                    <div class="form-text mt-5">Account ID: @Model.user.Id</div>
                 </form>
 
             }
