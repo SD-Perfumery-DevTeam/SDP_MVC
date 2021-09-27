@@ -37,11 +37,15 @@
   --font-family-body-sans-serif: 'Open Sans', sans-serif;
 }
 
-/* ***TEMPORARY DIVIDER CLASS*** (remove when separating page content) */
-.temp-divider {
-  height: 50vh;
-  border-bottom: 1px dashed red;
-  margin-bottom: 50vh;
+/* Remove arrows from number spinners */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
 }
 
 /* Media Queries for Responsive Container Width */
