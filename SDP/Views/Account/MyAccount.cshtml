@@ -1,4 +1,8 @@
-﻿@model Microsoft.AspNetCore.Identity.IdentityUser
+﻿@{
+    ViewData["Title"] = "Account Preferences";
+}
+
+@model Microsoft.AspNetCore.Identity.IdentityUser
 
 <section id="section-cms">
     <div class="container">
@@ -41,7 +45,7 @@
                             </div>
                             <button class="btn btn-danger " name="Id" value="@Model.Id" type="submit">Delete Account</button>
                             <div class="form-text mt-3 mb-2">Account ID: @Model.Id</div>
-</form>
+                        </form>
                     </div>
                 </div>
             </div>
