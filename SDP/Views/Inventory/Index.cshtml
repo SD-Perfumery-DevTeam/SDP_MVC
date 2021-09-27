@@ -4,11 +4,12 @@
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
-            <div><a asp-controller="Product" asp-action="AddProduct" class="btn btn-dark">Add a product</a></div>
+            <h2>Inventory Page</h2>
+            <div><a asp-controller="Product" asp-action="AddProduct" class="btn btn-primary">Add Product</a></div>
 
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
                 <div>
-                    <table class="table-bordered" style="margin:0 auto">
+                    <table class="table table-bordered" style="margin:0 auto">
                         <thead>
                             <tr>
                                 <th>Product Name</th>
@@ -26,7 +27,7 @@
                                 <td>@item.stockQty</td>
                                 <td><img src="~/images/product/@item.product.imgUrl" alt="Alternate Text" style="max-width: 100px; max-height: 100px" /></td>
 
-                                <td><button class="sdp-style" name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
+                                <td><button class="btn btn-sm btn-primary" name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
                             </tr>
                         }
                     </table>

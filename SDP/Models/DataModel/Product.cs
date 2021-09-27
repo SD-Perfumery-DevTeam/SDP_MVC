@@ -43,36 +43,42 @@ namespace SDP.Models
         public Category category { get; set; }
 
         [Required]
-        [Display(Name = "Target Gender")]
+        [Display(Name = "Gender")]
         public Consts.Genders productGender { get; set; }
 
         [Required]
-        
+        [Display(Name = "Price")]
         public decimal price { get; set; }
 
         [StringLength(2048)]
-        [Display(Name = "Product Image (png and jpg files only)")]
+        [Display(Name = "Product Image")]
         public string imgUrl { get; set; }
 
         [Required]
+        [Display(Name = "Product Type")]
         public Consts.PTypes productType { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+        [Display(Name = "Package Quantity")]
         public decimal packageQty { get; set; }
 
+        [Display(Name = "Unit of Measure")]
         public Consts.Uom packageUom { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+        [Display(Name = "Package Weight")]
         public int packageWeight { get; set; }
 
-        [Display(Name = "Package Dimensions in mm, takes the form 'LLLxWWWxHHH'.")]
+        [Display(Name = "Package Dimensions")]
         public string packageDims { get; set; }
 
         [StringLength(2048)]
+        [Display(Name = "Description")]
         public string description { get; set; }
 
         [Required]
+        [Display(Name = "Brand")]
         public Brand brand{ get; set; }
 
         //prop that are not in the database 
