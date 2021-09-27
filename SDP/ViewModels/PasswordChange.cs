@@ -16,6 +16,7 @@ namespace SDP.ViewModels
         public string Email { get; set; }
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name = "New Password")]
         public string Password { get; set; }
         [Required]
         [DataType(DataType.Password)]
