@@ -519,3 +519,8 @@ footer .container ul li {
     padding-bottom: 2.1em;
     margin-left: 0;
 }
+
+button.category-button {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
