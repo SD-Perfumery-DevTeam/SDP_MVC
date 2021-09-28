@@ -8,16 +8,18 @@ namespace SDP.Models
 {
     public class Inventory
     {
-        public Inventory() 
-        { }
+        // Default Constructor
+        public Inventory() { }
 
+        // Constructor that provides a new Guid
         public Inventory(Product product, int stockQty)
         {
             this.inventoryId = Guid.NewGuid();
             this.product = product;
             this.stockQty = stockQty;
         }
-        
+
+        // Constructor that takes an existing Guid
         public Inventory(Guid inventoryId, Product product, int stockQty)
         {
             this.inventoryId = inventoryId;

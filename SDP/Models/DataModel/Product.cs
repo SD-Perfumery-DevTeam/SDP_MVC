@@ -10,8 +10,10 @@ namespace SDP.Models
     [Serializable]
     public class Product 
     {
-        //defualt constructor used for EF
+        // Default Constructor
         public Product() { }
+
+        // Constructor that provides a new Guid
         public Product( string title, Category category, Consts.Genders productGender,
             decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType,
             decimal packageQty, Consts.Uom packageUom, int packageWeight,
@@ -34,7 +36,7 @@ namespace SDP.Models
             this.description = description;
             this.isActive = isActive;
         }
-       
+
         public Guid productId { get; set; }
 
         [Required]

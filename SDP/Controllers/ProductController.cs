@@ -31,6 +31,7 @@ namespace SDP.Controllers
             _dbRepo = dbRepo;
             
         }
+
         //======================Product Catelog=========================
         [HttpPost]
         [HttpGet]
@@ -125,6 +126,7 @@ namespace SDP.Controllers
           
             return RedirectToAction("Index", "Product"); 
         }
+
         //======================Product CMS=========================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -158,11 +160,12 @@ namespace SDP.Controllers
 
             return View(model);
         }
+
         //======================Product CMS=========================
-        // This deals with the dropdown lists  and img.
+        // This deals with the dropdown lists and img.
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public async Task<IActionResult> AddProduct(AddProduct P, string catID, string brandID, IFormFile ufile)
+        public async Task<IActionResult> AddProduct(AddProduct P, string catID, string brandID, IFormFile ufile, int stockQty)
         {
             if (ufile != null && ufile.Length > 0)
             {
@@ -186,7 +189,9 @@ namespace SDP.Controllers
                 P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
                 P.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
                 _db.product.Add(P.product);
-               await _db.SaveChangesAsync();
+                _db.inventory.Add(new Inventory(P.product, P.inventory.stockQty));
+
+                await _db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
