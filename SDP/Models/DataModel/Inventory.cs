@@ -10,6 +10,13 @@ namespace SDP.Models
     {
         public Inventory() 
         { }
+
+        public Inventory(Product product, int stockQty)
+        {
+            this.inventoryId = Guid.NewGuid();
+            this.product = product;
+            this.stockQty = stockQty;
+        }
         
         public Inventory(Guid inventoryId, Product product, int stockQty)
         {
