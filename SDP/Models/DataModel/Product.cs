@@ -12,7 +12,10 @@ namespace SDP.Models
     {
         //defualt constructor used for EF
         public Product() { }
-        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUom, int packageWeight, string packageDims, Brand brand, string description)
+        public Product( string title, Category category, Consts.Genders productGender,
+            decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType,
+            decimal packageQty, Consts.Uom packageUom, int packageWeight,
+            string packageDims, Brand brand, string description, bool isActive)
         {
 
             this.productId = Guid.NewGuid();
@@ -29,6 +32,7 @@ namespace SDP.Models
             this.packageDims = packageDims;
             this.brand = brand;
             this.description = description;
+            this.isActive = isActive;
         }
        
         public Guid productId { get; set; }
@@ -80,6 +84,10 @@ namespace SDP.Models
         [Required]
         [Display(Name = "Brand")]
         public Brand brand{ get; set; }
+
+        [Required]
+        [Display(Name = "Active")]
+        public bool isActive { get; set; }
 
         //prop that are not in the database 
         public bool onSpecial;
