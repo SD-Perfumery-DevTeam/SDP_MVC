@@ -68,11 +68,11 @@
                     </div>
                     <div class="col-4">
                         <label asp-for="product.productType" class="form-label"></label>
-                        <div><select asp-for="@Model.product.productType" asp-items="Html.GetEnumSelectList<Consts.PTypes>()" class="form-select"></select></div>
+                        <select asp-for="@Model.product.productType" asp-items="Html.GetEnumSelectList<Consts.PTypes>()" class="form-select"></select>
                     </div>
                     <div class="col-4">
                         <label asp-for="product.productGender" class="form-label"></label>
-                        <div><select asp-for="@Model.product.productGender" asp-items="Html.GetEnumSelectList<Consts.Genders>()" class="form-select"></select></div>
+                        <select asp-for="@Model.product.productGender" asp-items="Html.GetEnumSelectList<Consts.Genders>()" class="form-select"></select>
                     </div>
                 </div>
 
@@ -81,7 +81,7 @@
                     <div class="col-6">
                         <label asp-for="product.packageQty" class="form-label"></label>
                         <div class="input-group">
-                            <input required="required" type="number" min="1" step="10" asp-for="product.packageQty" class="form-control" />
+                            <input required="required" type="number" min="1" asp-for="product.packageQty" class="form-control" />
                             <select asp-for="@Model.product.packageUom" asp-items="Html.GetEnumSelectList<Consts.Uom>()" class="form-select"></select>
                         </div>
                         <span asp-validation-for="product.packageQty" class="text-danger"></span>
@@ -90,7 +90,7 @@
                         <label asp-for="product.price" class="form-label"></label>
                         <div class="input-group">
                             <div class="input-group-text">Rs.</div>
-                            <input required="required" type="number" min="1" max="999999.99" step="100" asp-for="product.price" class="form-control" />
+                            <input required="required" type="number" min="1" max="999999.99" asp-for="product.price" class="form-control" />
                         </div>
                         <span asp-validation-for="product.price" class="text-danger"></span>
                     </div>
@@ -118,11 +118,26 @@
                     </div>
                 </div>
 
-                @* Field 'stockQty' in its own row. *@
-                <div class="mb-4">
-                    <label asp-for="inventory.stockQty" class="form-label"></label>
-                    <input asp-for="inventory.stockQty" type="number" min="0" class="form-control" />
-                    <span asp-validation-for="inventory.stockQty" class="text-danger"></span>
+                @* Fields 'stockQty' and 'isActive' grouped in one row. *@
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <label asp-for="inventory.stockQty" class="form-label"></label>
+                        <input asp-for="inventory.stockQty" type="number" min="0" class="form-control" />
+                        <span asp-validation-for="inventory.stockQty" class="text-danger"></span>
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="product.isActive" class="form-label"></label>
+                        @Html.DropDownListFor(m => m.product.isActive, new SelectList(
+                            new[]
+                            {
+                                new {Value = "True", Text = "Active"},
+                                new {Value = "False", Text = "Inactive"},
+                            },
+                            "Value",
+                            "Text",
+                            Model.product
+                        ))
+                    </div>
                 </div>
 
                 @section Scripts{
