@@ -81,7 +81,7 @@
                     <div class="col-6">
                         <label asp-for="product.packageQty" class="form-label"></label>
                         <div class="input-group">
-                            <input required="required" type="number" min="1" asp-for="product.packageQty" class="form-control" />
+                            <input required="required" type="number" min="0.01" max="999.99" step="0.01" asp-for="product.packageQty" class="form-control" />
                             <select asp-for="@Model.product.packageUom" asp-items="Html.GetEnumSelectList<Consts.Uom>()" class="form-select"></select>
                         </div>
                         <span asp-validation-for="product.packageQty" class="text-danger"></span>
@@ -90,7 +90,7 @@
                         <label asp-for="product.price" class="form-label"></label>
                         <div class="input-group">
                             <div class="input-group-text">Rs.</div>
-                            <input required="required" type="number" min="1" max="999999.99" asp-for="product.price" class="form-control" />
+                            <input required="required" type="number" min="0.01" max="99999999.99" step="0.01" asp-for="product.price" class="form-control" />
                         </div>
                         <span asp-validation-for="product.price" class="text-danger"></span>
                     </div>
@@ -111,7 +111,7 @@
                         <label asp-for="product.packageWeight" class="form-label"></label>
                         <div class="form-text mt-0 mb-2">Gross package weight in grams.</div>
                         <div class="input-group">
-                            <input type="number" asp-for="product.packageWeight" min="1" class="form-control" />
+                            <input type="number" asp-for="product.packageWeight" min="1" max="9999" step="1" class="form-control" />
                             <div class="input-group-text">g</div>
                         </div>
                         <span asp-validation-for="product.packageWeight" class="text-danger"></span>
