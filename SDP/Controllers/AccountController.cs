@@ -103,7 +103,7 @@ namespace SDP.Controllers
                 if (result.Succeeded)//this part sends the confrimation email
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                    var confirmationLink = Url.Action("ConfrimEmail",
+                    var confirmationLink = Url.Action("ConfirmEmail",
                         "Account", new { userId = newUser.Id, token = token }, Request.Scheme);
                    
                    
@@ -133,7 +133,7 @@ namespace SDP.Controllers
         }
 
         //====================user to Confrim Email==========================
-        public async Task<IActionResult> ConfrimEmail(string userId, string token)
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null) return View("Signup");
             var user = await _userManager.FindByIdAsync(userId);
