@@ -14,7 +14,7 @@
   /* Note: please ensure correct contrast is maintained */
   --color-white: #fff;
   --color-black: #000;
-  
+
   /* These are proposed colours - we can adjust these if desired */
   --color-proposed-purple-90: hsl(270, 5%, 10%);
   --color-proposed-purple-70: hsl(270, 10%, 30%);
@@ -246,7 +246,7 @@ header #header-search {
   align-items: middle;
 }
 
-header #header-search input[type=search] {
+header #header-search input[type=search], #confirmEmail {
   height: 1.6rem;
   font-size: 0.9rem;
   border: 1px solid var(--color-client-spec-1);
@@ -473,6 +473,49 @@ footer .container ul li {
     width: 24rem;
 }
 
-p.accordion-header {
-    font-family: var(--font-family-body-sans-serif);
+.form-small input {
+  height: 1.75rem;
+  border: 1px solid var(--color-client-spec-1);
+  border-radius: 0.3rem;
+}
+
+#confirm-email {
+    padding: 0.5em 1em 0.5em 1em;
+    margin-bottom: 10em;
+}
+
+.confirm-email-title{
+    margin-bottom: 1em;
+}
+
+.email-message > p{
+
+    width: 40%;
+    line-height: 1.5em;
+}
+
+.email-container{
+    background: var(--color-proposed-purple-05);
+}
+
+.email-message{
+    margin-bottom: 3%;
+}
+
+.email-contents{
+
+    margin-top: 5%;
+    margin-bottom: 5%;
+    padding-bottom: 4%;
+    padding-top: 4%;
+    background: var(--color-proposed-purple-10);
+
+    border-radius: 10%;
+
+}
+
+.button-confirm-email {
+    padding-top: 1.05em;
+    padding-bottom: 2.1em;
+    margin-left: 0;
 }
