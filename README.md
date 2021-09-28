@@ -26,7 +26,8 @@ Update 12/09/2021
 1. adding brand model to fit db
 2. corresponding cms items
 3. MockDb deleted
-4. and coding using mockDB changed over to actual DB
+4. coding using mockDB changed over to actual DB
+5. product views updated in frontend
 ```
 
 ```
@@ -39,12 +40,29 @@ Update 13/09/2021
 ```
 
 ```
+Update 14/09/2021
+1. add brand to to catalogue view model
+2. dynamic display of product type and gender in product list page
+3. removal of redundant html head elements in views
+4. styling of individual product display view
+5. minor styling improvements
+```
+
+```
 Update 15/09/2021
 1. adding inventory
 2. adding edit product functionality and page
 3. adding delete product functionality and page
 4. adding edit inventory functionality and page
 5. adding delete inventory functionality and page
+```
+
+```
+Update 20/09/2021
+1. create admin links partial view for display in cms pages
+2. create an index page for cms controller with common links
+3. add 'sdp-style' class for customer facing buttons
+4. upgrade bootstrap to 5.1.1, plus now uses libman to manage dependency
 ```
 
 ```
@@ -58,6 +76,7 @@ Update 22/09/2021
 7. restricting the product view page to only display 20 items
 8. adding multi page display for product view
 9. adding the role of customer to all newly registered
+10. styling improvements to cms pages
 ```
 
 ```
@@ -67,8 +86,18 @@ Update 23/09/2021
 3. deleting code that deals with sending email in account controller
 ```
 
-
 ```
 Update 24/09/2021
 1. adding reset for My Account page
+2. images folder re-organised - sub-folders for distinct database objects
+```
+
+```
+Update 26/09/2021
+1. improvements to page layout for add products and edit products
+```
+
+```
+Update 27/09/2021
+1. improvements to page layout for my account and manage role views
 ```
