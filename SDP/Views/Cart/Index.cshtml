@@ -1,7 +1,7 @@
 ﻿
-@model SDP.Models.Cart
+@model Microsoft.SDP.SDPCore.Models.Cart
 @{
-    SDP.Interfaces.ICustomer cutomer = SDP.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
+    Microsoft.SDP.SDPCore.Interface.ICustomer cutomer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
 }
 

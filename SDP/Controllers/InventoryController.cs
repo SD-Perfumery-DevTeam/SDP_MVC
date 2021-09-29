@@ -4,15 +4,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SDP.Interfaces;
-using SDP.Models;
-using SDP.Models.DbContext;
+
+using Microsoft.SDP.SDPCore.Models;
+using Microsoft.SDP.SDPCore.Models.DbContext;
 using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.SDP.SDPCore.Interface;
 
 namespace SDP.Controllers
 {

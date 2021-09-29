@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SDP.Models.AccountModel;
+using Microsoft.SDP.SDPCore.Models.AccountModel;
 using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using SDP.Models;
-using SDP.Interfaces;
-using SDP.Services;
-using SDP.Extensions;
+using Microsoft.SDP.SDPCore.Models;
+using Microsoft.SDP.SDPInfrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.SDP.SDPCore.Interface;
 
 namespace SDP.Controllers
 {
@@ -71,7 +70,7 @@ namespace SDP.Controllers
 
                         HttpContext.Session.SetString("Id", user.Result.Id.ToString());
 
-                        Global.customerList.Add(rc);
+                        GlobalVar.customerList.Add(rc);
 
                         HttpContext.Session.SetString("LoggedIN", "true");
                         return RedirectToAction("Index", "Home");
@@ -162,7 +161,7 @@ namespace SDP.Controllers
                 await _signInManager.SignOutAsync();
                 HttpContext.Session.SetString("LoggedIN", "false");
                 GuestCustomer gc = new GuestCustomer();
-                Global.customerList.Add(gc);//register new guest customer
+                GlobalVar.customerList.Add(gc);//register new guest customer
               
                 HttpContext.Session.SetString("Id", gc.userId.ToString());
             }
@@ -268,7 +267,7 @@ namespace SDP.Controllers
                     var token = await _userManager.GeneratePasswordResetTokenAsync(_user);
                     return RedirectToAction("ActualChangePassword", new {Email = _user.Email, token=  token});
                 }
-                ViewData["Error MSG"] = "password incorrect";
+                ViewData["Error MSG"] = "password incorrect"; //error msg 
             }
             catch (Exception ex)
             {
@@ -386,7 +385,7 @@ namespace SDP.Controllers
                     await _signInManager.SignOutAsync();
                     HttpContext.Session.SetString("LoggedIN", "false");
                     GuestCustomer gc = new GuestCustomer();
-                    Global.customerList.Add(gc);//register new guest customer
+                    GlobalVar.customerList.Add(gc);//register new guest customer
 
                     HttpContext.Session.SetString("Id", gc.userId.ToString());
                     var result = await _userManager.DeleteAsync(await _userManager.FindByIdAsync(Id));

@@ -20,7 +20,7 @@ namespace SDP
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Global.Startup>();
                 });
     }
 }

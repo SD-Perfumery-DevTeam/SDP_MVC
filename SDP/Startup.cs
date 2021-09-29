@@ -6,15 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SDP.Interfaces;
-using SDP.Models.DbContext;
-using SDP.Services;
+using Microsoft.SDP.SDPCore.Interface;
+using Microsoft.SDP.SDPCore.Models.DbContext;
+using Microsoft.SDP.SDPInfrastructure.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace SDP
+namespace Global
 {
     public class Startup
     {
