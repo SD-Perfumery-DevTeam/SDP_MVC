@@ -72,3 +72,10 @@ Update 23/09/2021
 Update 24/09/2021
 1. adding reset for My Account page
 ```
+
+```
+Update 29/09/2021
+1. add field 'isActive' to the product table
+2. add product now also adds a corresponding entry in inventory table
+3. product field 'isActive' can be switched on / off in the cms
+```

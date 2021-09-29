@@ -10,9 +10,14 @@ namespace SDP.Models
     [Serializable]
     public class Product 
     {
-        //defualt constructor used for EF
+        // Default Constructor
         public Product() { }
-        public Product( string title, Category category, Consts.Genders productGender, decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType, decimal packageQty, Consts.Uom packageUom, int packageWeight, string packageDims, Brand brand, string description)
+
+        // Constructor that provides a new Guid
+        public Product( string title, Category category, Consts.Genders productGender,
+            decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType,
+            decimal packageQty, Consts.Uom packageUom, int packageWeight,
+            string packageDims, Brand brand, string description, bool isActive)
         {
 
             this.productId = Guid.NewGuid();
@@ -29,8 +34,9 @@ namespace SDP.Models
             this.packageDims = packageDims;
             this.brand = brand;
             this.description = description;
+            this.isActive = isActive;
         }
-       
+
         public Guid productId { get; set; }
 
         [Required]
@@ -48,6 +54,7 @@ namespace SDP.Models
 
         [Required]
         [Display(Name = "Price")]
+        [Range(0.01, 99999999.99, ErrorMessage = "Please enter a value in the range {0} - {1}")]
         public decimal price { get; set; }
 
         [StringLength(2048)]
@@ -59,14 +66,14 @@ namespace SDP.Models
         public Consts.PTypes productType { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+        [Range(0.01, 999.99, ErrorMessage = "Please enter a value in the range {0} - {1}")]
         [Display(Name = "Package Quantity")]
         public decimal packageQty { get; set; }
 
         [Display(Name = "Unit of Measure")]
         public Consts.Uom packageUom { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
+        [Range(1, 9999, ErrorMessage = "Please enter a value in the range {0} - {1}")]
         [Display(Name = "Package Weight")]
         public int packageWeight { get; set; }
 
@@ -80,6 +87,10 @@ namespace SDP.Models
         [Required]
         [Display(Name = "Brand")]
         public Brand brand{ get; set; }
+
+        [Required]
+        [Display(Name = "Active")]
+        public bool isActive { get; set; }
 
         //prop that are not in the database 
         public bool onSpecial;
