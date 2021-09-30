@@ -43,6 +43,7 @@ namespace Global
             services.AddScoped<IDbRepo, DbRepo>();
             services.AddScoped<IEmailSender, EmailService>();
             services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers for injection
+            services.AddScoped<ImageService, ImageService>();
 
             services.Configure<IdentityOptions>(options =>
             {

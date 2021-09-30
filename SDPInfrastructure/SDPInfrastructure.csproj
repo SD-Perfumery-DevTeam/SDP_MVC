@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.10" />
     <PackageReference Include="SendGrid" Version="9.24.2" />
   </ItemGroup>
 

@@ -23,23 +23,26 @@ namespace SDP.Controllers
         private static ProductDbContext _db;
         private IDbRepo _dbRepo;
         private ICustomer _customer = null;
+        private ImageService _imageService;
 
-        public ProductController(ProductDbContext db, IDbRepo dbRepo)
+
+        public ProductController(ProductDbContext db, IDbRepo dbRepo, ImageService imageService)
         {
             _db = db;
             _dbRepo = dbRepo;
-            
+            _imageService = imageService;
         }
+
         //======================Product Catelog=========================
         [HttpPost]
         [HttpGet]
-        public IActionResult Index(int pageNumber = 0) 
+        public IActionResult Index(int pageNumber = 0)
         {
 
             var products = _db.product
                           .Skip(pageNumber * 20)
                           .Take(20);
-            int totalPage = _db.product.Count()/20;
+            int totalPage = _db.product.Count() / 20;
 
             if (HttpContext.Session.GetString("Id") == null)
             {
@@ -49,7 +52,7 @@ namespace SDP.Controllers
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-          
+
 
             try
             {
@@ -57,11 +60,11 @@ namespace SDP.Controllers
                 {
                     products = products,
                     brands = _db.brand.ToList(),
-                    totalPage =totalPage,
+                    totalPage = totalPage,
                     customer = _customer
                 });
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -75,7 +78,7 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-              
+
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -98,14 +101,14 @@ namespace SDP.Controllers
         }
 
         //===============add product to cart=========================
-        public IActionResult AddToCart(int quantity) 
+        public IActionResult AddToCart(int quantity)
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer();
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
-              
+
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -119,15 +122,16 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-           
+
             ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart.addProductToCart(product, quantity); //add product to guest customer
-          
-            return RedirectToAction("Index", "Product"); 
+
+            return RedirectToAction("Index", "Product");
         }
+
         //======================Product CMS=========================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult AddProduct() 
+        public IActionResult AddProduct()
         {
             List<Category> c;
             List<Brand> b;
@@ -140,8 +144,10 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            
-            var model = new ViewModels.AddProduct { product = new Product(),
+
+            var model = new ViewModels.AddProduct
+            {
+                product = new Product(),
                 categories = c.Select(x => new SelectListItem
                 {
                     Value = x.categoryId.ToString(),
@@ -152,40 +158,32 @@ namespace SDP.Controllers
                     Value = i.brandId.ToString(),
                     Text = i.title
                 }
-                
-               )};
+
+               )
+            };
 
             return View(model);
         }
+
         //======================Product CMS=========================
-        // This deals with the dropdown lists  and img.
+        // This deals with the dropdown lists and img.
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public async Task<IActionResult> AddProduct(AddProduct P, string catID, string brandID, IFormFile ufile)
+        public async Task<IActionResult> AddProduct(AddProduct AP, string catID, string brandID, IFormFile ufile, int stockQty)
         {
             if (ufile != null && ufile.Length > 0)
             {
-                var fileName = Path.GetFileName(ufile.FileName);
-                string[] fileNameAry = fileName.Split(".");
-
-                if (fileNameAry[fileNameAry.Length - 1] != "png" &&  fileNameAry[fileNameAry.Length - 1] != "jpg") 
-                {
-                    return RedirectToAction("Error", "Home");
-                }
-                P.product.imgUrl = fileName;
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\product", fileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ufile.CopyToAsync(fileStream);
-                }
+                if ( await _imageService.addImageToFileAsync(ufile, AP.product, _db.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
             }
 
             try
             {
-                P.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
-                P.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
-                _db.product.Add(P.product);
-               await _db.SaveChangesAsync();
+                AP.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
+                AP.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
+                _db.product.Add(AP.product);
+                _db.inventory.Add(new Inventory(AP.product, AP.inventory.stockQty));
+
+                await _db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -204,6 +202,6 @@ namespace SDP.Controllers
             return View();
         }
 
-       
+
     }
 }
