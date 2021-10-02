@@ -40,10 +40,10 @@ namespace Global
               .AddEntityFrameworkStores<ProductDbContext>()
               .AddDefaultTokenProviders();
             
-            services.AddScoped<IDbRepo, DbRepo>();
-            services.AddScoped<IEmailSender, EmailService>();
-            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers for injection
-            services.AddScoped<ImageService, ImageService>();
+            services.AddScoped<IDbRepo, DbRepo>();//database repo
+            services.AddScoped<IEmailSender, EmailService>();//email sender service
+            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
+            services.AddScoped<ImageService, ImageService>();//image storage service
 
             services.Configure<IdentityOptions>(options =>
             {
