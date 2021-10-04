@@ -2,18 +2,16 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-
 using Microsoft.SDP.SDPCore.Models;
 using Microsoft.SDP.SDPCore.Models.DbContext;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.SDP.SDPCore.Interface;
+using Microsoft.SDP.SDPCore;
 
 namespace SDP.Controllers
 {
@@ -49,6 +47,9 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
+
+                
+
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -78,6 +79,8 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer();
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
+
+               
 
                 HttpContext.Session.SetString("Id", Id);
             }
@@ -122,7 +125,7 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-
+            var list = GlobalVar.customerList;
             ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart.addProductToCart(product, quantity); //add product to guest customer
 
             return RedirectToAction("Index", "Product");

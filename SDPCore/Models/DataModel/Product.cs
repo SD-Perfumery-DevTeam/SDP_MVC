@@ -16,7 +16,7 @@ namespace Microsoft.SDP.SDPCore.Models
 
         // Constructor that provides a new Guid
         public Product(string title, Category category, Consts.Genders productGender,
-            decimal price, bool onSpecial, string imgSrc, Consts.PTypes productType,
+            decimal price, string imgSrc, Consts.PTypes productType,
             decimal packageQty, Consts.Uom packageUom, int packageWeight,
             string packageDims, Brand brand, string description, bool isActive)
         {
@@ -26,7 +26,7 @@ namespace Microsoft.SDP.SDPCore.Models
             this.category = category;
             this.productGender = productGender;
             this.price = price;
-            this.onSpecial = onSpecial;
+           
             this.imgUrl = imgSrc;
             this.productType = productType;
             this.packageQty = packageQty;
@@ -94,7 +94,6 @@ namespace Microsoft.SDP.SDPCore.Models
         public bool isActive { get; set; }
 
         //prop that are not in the database 
-        public bool onSpecial;
-        public int count = 1;
+        
     }
 }

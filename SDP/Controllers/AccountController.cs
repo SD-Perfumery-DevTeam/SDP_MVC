@@ -15,6 +15,7 @@ using Microsoft.SDP.SDPInfrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.SDP.SDPCore.Interface;
+using Microsoft.SDP.SDPCore;
 
 namespace SDP.Controllers
 {
@@ -59,14 +60,11 @@ namespace SDP.Controllers
                 {
                     try
                     {
+                        
                         var user = _userManager.FindByNameAsync(LM.Email);
                         RegisteredCustomer rc = new RegisteredCustomer { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email, };
-                        if (HttpContext.Session.GetString("Id") != null) //transfers the GuestCustomers Cart to registered customer
-                        {
-                            rc.cart = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart;
-                        }
-                        else rc.cart = new Cart();
-
+                   
+                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();//transfers the GuestCustomers Cart to registered customer
 
                         HttpContext.Session.SetString("Id", user.Result.Id.ToString());
 
@@ -243,7 +241,7 @@ namespace SDP.Controllers
         }
 
         //==============user to manage their account================
-        //[Authorize]
+        
         [Authorize]
         public async Task<IActionResult> MyAccount(string msg) 
         {
@@ -252,8 +250,6 @@ namespace SDP.Controllers
             ViewData["Error MSG"] = msg;
             return View(_user);
         }
-
-        //==============user to manage their account password change================
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> MyAccount(string userId, string password)
@@ -273,10 +269,6 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            
-            
-
-           
             return View(_user);
         }
 

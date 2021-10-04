@@ -41,7 +41,7 @@ namespace Global
               .AddDefaultTokenProviders();
             
             services.AddScoped<IDbRepo, DbRepo>();//database repo
-            services.AddScoped<IEmailSender, EmailService>();//email sender service
+            services.AddSingleton<IEmailSender, EmailService>();//email sender service
             services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
             services.AddScoped<ImageService, ImageService>();//image storage service
 

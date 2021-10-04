@@ -13,6 +13,7 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
         public static ICustomer getCustomerFromList(string id) 
         {
             ICustomer customer =null;
+            var list = GlobalVar.customerList;
             foreach (ICustomer c in GlobalVar.customerList)
             {
                 try
