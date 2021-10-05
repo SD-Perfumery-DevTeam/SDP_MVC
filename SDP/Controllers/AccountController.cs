@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using SDP.Models.AccountModel;
+using Microsoft.SDP.SDPCore.Models.AccountModel;
 using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using SDP.Models;
-using SDP.Interfaces;
-using SDP.Services;
-using SDP.Extensions;
+using Microsoft.SDP.SDPCore.Models;
+using Microsoft.SDP.SDPInfrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.SDP.SDPCore.Interface;
+using Microsoft.SDP.SDPCore;
 
 namespace SDP.Controllers
 {
@@ -60,18 +60,15 @@ namespace SDP.Controllers
                 {
                     try
                     {
+                        
                         var user = _userManager.FindByNameAsync(LM.Email);
                         RegisteredCustomer rc = new RegisteredCustomer { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email, };
-                        if (HttpContext.Session.GetString("Id") != null) //transfers the GuestCustomers Cart to registered customer
-                        {
-                            rc.cart = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart;
-                        }
-                        else rc.cart = new Cart();
-
+                   
+                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();//transfers the GuestCustomers Cart to registered customer
 
                         HttpContext.Session.SetString("Id", user.Result.Id.ToString());
 
-                        Global.customerList.Add(rc);
+                        GlobalVar.customerList.Add(rc);
 
                         HttpContext.Session.SetString("LoggedIN", "true");
                         return RedirectToAction("Index", "Home");
@@ -103,7 +100,7 @@ namespace SDP.Controllers
                 if (result.Succeeded)//this part sends the confrimation email
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                    var confirmationLink = Url.Action("ConfrimEmail",
+                    var confirmationLink = Url.Action("ConfirmEmail",
                         "Account", new { userId = newUser.Id, token = token }, Request.Scheme);
                    
                    
@@ -133,7 +130,7 @@ namespace SDP.Controllers
         }
 
         //====================user to Confrim Email==========================
-        public async Task<IActionResult> ConfrimEmail(string userId, string token)
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null) return View("Signup");
             var user = await _userManager.FindByIdAsync(userId);
@@ -162,7 +159,7 @@ namespace SDP.Controllers
                 await _signInManager.SignOutAsync();
                 HttpContext.Session.SetString("LoggedIN", "false");
                 GuestCustomer gc = new GuestCustomer();
-                Global.customerList.Add(gc);//register new guest customer
+                GlobalVar.customerList.Add(gc);//register new guest customer
               
                 HttpContext.Session.SetString("Id", gc.userId.ToString());
             }
@@ -244,7 +241,7 @@ namespace SDP.Controllers
         }
 
         //==============user to manage their account================
-        //[Authorize]
+        
         [Authorize]
         public async Task<IActionResult> MyAccount(string msg) 
         {
@@ -253,8 +250,6 @@ namespace SDP.Controllers
             ViewData["Error MSG"] = msg;
             return View(_user);
         }
-
-        //==============user to manage their account password change================
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> MyAccount(string userId, string password)
@@ -268,16 +263,12 @@ namespace SDP.Controllers
                     var token = await _userManager.GeneratePasswordResetTokenAsync(_user);
                     return RedirectToAction("ActualChangePassword", new {Email = _user.Email, token=  token});
                 }
-                ViewData["Error MSG"] = "password incorrect";
+                ViewData["Error MSG"] = "password incorrect"; //error msg 
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
             }
-            
-            
-
-           
             return View(_user);
         }
 
@@ -386,7 +377,7 @@ namespace SDP.Controllers
                     await _signInManager.SignOutAsync();
                     HttpContext.Session.SetString("LoggedIN", "false");
                     GuestCustomer gc = new GuestCustomer();
-                    Global.customerList.Add(gc);//register new guest customer
+                    GlobalVar.customerList.Add(gc);//register new guest customer
 
                     HttpContext.Session.SetString("Id", gc.userId.ToString());
                     var result = await _userManager.DeleteAsync(await _userManager.FindByIdAsync(Id));

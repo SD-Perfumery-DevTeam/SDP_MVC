@@ -4,15 +4,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SDP.Interfaces;
-using SDP.Models;
-using SDP.Models.DbContext;
+
+using Microsoft.SDP.SDPCore.Models;
+using Microsoft.SDP.SDPCore.Models.DbContext;
 using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.SDP.SDPCore.Interface;
+using Microsoft.SDP.SDPInfrastructure.Services;
 
 namespace SDP.Controllers
 {
@@ -22,12 +24,13 @@ namespace SDP.Controllers
         
         List<Product> pList;
         private static ProductDbContext _db;
-
+        private ImageService _imageService;
         ICustomer customer = null;
 
-        public InventoryController(ProductDbContext db)
+        public InventoryController(ProductDbContext db, ImageService imageService)
         {
             _db = db;
+            _imageService = imageService;
         }
         //===================Inventory display page=======================
         [HttpGet]
@@ -104,19 +107,7 @@ namespace SDP.Controllers
         {
             if (ufile != null && ufile.Length > 0)
             {
-                var fileName = Path.GetFileName(ufile.FileName);
-                string[] fileNameAry = fileName.Split(".");
-
-                if (fileNameAry[fileNameAry.Length - 1] != "png" && fileNameAry[fileNameAry.Length - 1] != "jpg")
-                {
-                    return RedirectToAction("Error", "Home");
-                }
-                AP.product.imgUrl = fileName;
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\product", fileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await ufile.CopyToAsync(fileStream);
-                }
+                if (await _imageService.addImageToFileAsync(ufile, AP.product, _db.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
             }
             else AP.product.imgUrl = Url;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SDP.Models.AccountModel;
+using Microsoft.SDP.SDPCore.Models.AccountModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

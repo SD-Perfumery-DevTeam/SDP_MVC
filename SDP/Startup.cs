@@ -6,15 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SDP.Interfaces;
-using SDP.Models.DbContext;
-using SDP.Services;
+using Microsoft.SDP.SDPCore.Interface;
+using Microsoft.SDP.SDPCore.Models.DbContext;
+using Microsoft.SDP.SDPInfrastructure.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace SDP
+namespace Global
 {
     public class Startup
     {
@@ -43,9 +40,10 @@ namespace SDP
               .AddEntityFrameworkStores<ProductDbContext>()
               .AddDefaultTokenProviders();
             
-            services.AddScoped<IDbRepo, DbRepo>();
-            services.AddScoped<IEmailSender, EmailService>();
-            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers for injection
+            services.AddScoped<IDbRepo, DbRepo>();//database repo
+            services.AddSingleton<IEmailSender, EmailService>();//email sender service
+            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
+            services.AddScoped<ImageService, ImageService>();//image storage service
 
             services.Configure<IdentityOptions>(options =>
             {
