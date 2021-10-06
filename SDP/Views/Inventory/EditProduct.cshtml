@@ -5,6 +5,12 @@
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
             <h2>Edit Product - @Model.product.title @Model.product.productType</h2>
+
+            <form asp-controller="Inventory" asp-action="AddPromotion" method="post">
+                 <button type="submit"  class="btn btn-primary"  name="productId" value="@Model.product.productId">Add a promotion</button>
+            </form>
+
+
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="UpdateProduct" method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -24,10 +30,9 @@
                         <select id="listbox" class="form-select" name="brandID">
                             @foreach (var item in Model.brands)
                             {
-                                <option value="@item.Value" name="brandID">
-                                    @item.Text
-                                </option>
-                            }
+                <option value="@item.Value" name="brandID">
+                    @item.Text
+                </option>}
                         </select>
                     </div>
                 </div>
@@ -60,10 +65,9 @@
                         <select id="listbox" class="form-select" name="catID">
                             @foreach (var item in Model.categories)
                             {
-                                <option value="@item.Value" name="catID">
-                                    @item.Text
-                                </option>
-                            }
+                <option value="@item.Value" name="catID">
+                    @item.Text
+                </option>}
                         </select>
                     </div>
                     <div class="col-4">
@@ -122,21 +126,21 @@
                 <div class="row mb-4">
                     <div class="col-6">
                         <label asp-for="inventory.stockQty" class="form-label"></label>
-                        <input asp-for="inventory.stockQty"  required="required" type="number" min="0" class="form-control" />
+                        <input asp-for="inventory.stockQty" required="required" type="number" min="0" class="form-control" />
                         <span asp-validation-for="inventory.stockQty" class="text-danger"></span>
                     </div>
                     <div class="col-6">
                         <label asp-for="product.isActive" class="form-label"></label>
                         @Html.DropDownListFor(m => m.product.isActive, new SelectList(
-                            new[]
-                            {
+                                 new[]
+                                 {
                                 new {Value = "True", Text = "Active"},
                                 new {Value = "False", Text = "Inactive"},
-                            },
-                            "Value",
-                            "Text",
-                            Model.product
-                        ))
+                     },
+                                 "Value",
+                                 "Text",
+                                 Model.product
+                             ))
                     </div>
                 </div>
 
@@ -146,7 +150,7 @@
                 <button type="submit" class="btn btn-primary">Save Changes</button>
                 <button asp-controller="Inventory" asp-action="DeleteProduct" name="ProductId"
                         value="@Model.product.productId" class="btn btn-danger" id="popup">
-                    Delete Product 
+                    Delete Product
                 </button>
             </form>
         </section>

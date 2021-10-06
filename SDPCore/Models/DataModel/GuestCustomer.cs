@@ -12,17 +12,22 @@ namespace Microsoft.SDP.SDPCore.Models
         public Guid userId { get; set; }
         public Cart cart { get; set; }
         public List<Order> orderList { get; set; }
-        public GuestCustomer()
+        private IDbRepo _dbRepo;
+
+        public GuestCustomer(IDbRepo dbRepo)
         {
             this.orderList = new List<Order>();
             userId = Guid.NewGuid();
-            cart = new Cart();
+            _dbRepo = dbRepo;
+            cart = new Cart(_dbRepo);
             
         }
         public Task payment(string info)
         {
             throw new NotImplementedException();
         }
+
+
         //turns the cartLIst into an Order obj with orderline embeded
         public Order turnCartToOrder()
         {
@@ -38,8 +43,8 @@ namespace Microsoft.SDP.SDPCore.Models
                             ol.quantity++;
                         }
                     }
-                    OrderLine temp = new OrderLine(o, p.Key, 1, null);
-                    o.OLList.Add(temp);
+                    //OrderLine temp = new OrderLine(o, p.Key, 1, null); taken out for now, re-insert once cart serivce is up
+                    //o.OLList.Add(temp);
                 }
                 cart.addOrderToCustomerList(o);
                 return o;

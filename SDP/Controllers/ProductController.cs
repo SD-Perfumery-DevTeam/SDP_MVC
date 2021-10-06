@@ -44,7 +44,7 @@ namespace SDP.Controllers
 
             if (HttpContext.Session.GetString("Id") == null)
             {
-                GuestCustomer guest = new GuestCustomer();
+                GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 
@@ -61,9 +61,10 @@ namespace SDP.Controllers
                 {
                     products = products,
                     brands = _db.brand.ToList(),
+                    categories = _db.category.ToList(),
                     totalPage = totalPage,
                     customer = _customer
-                });
+                }); 
             }
             catch (Exception ex)
             {
@@ -76,7 +77,7 @@ namespace SDP.Controllers
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
-                GuestCustomer guest = new GuestCustomer();
+                GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 
@@ -108,7 +109,7 @@ namespace SDP.Controllers
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
-                GuestCustomer guest = new GuestCustomer();
+                GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 

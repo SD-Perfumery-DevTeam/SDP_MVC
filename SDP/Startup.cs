@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models.DbContext;
 using Microsoft.SDP.SDPInfrastructure.Services;
+using SDPInfrastructure.Services;
 using System;
 
 namespace Global
@@ -35,15 +36,18 @@ namespace Global
             {
                 string conString = Configuration.GetValue<string>("ConnectionStrings:PostConnCtion");
                 options.UseSqlServer(conString);
-            });
+            },ServiceLifetime.Singleton);
+
             services.AddIdentity<IdentityUser, IdentityRole>()
               .AddEntityFrameworkStores<ProductDbContext>()
               .AddDefaultTokenProviders();
             
             services.AddScoped<IDbRepo, DbRepo>();//database repo
-            services.AddSingleton<IEmailSender, EmailService>();//email sender service
-            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
+            services.AddScoped<IEmailSender, EmailService>();//email sender service
+            //services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
             services.AddScoped<ImageService, ImageService>();//image storage service
+            services.AddScoped<IPromotionService, PromotionService>();//promotion service
+
 
             services.Configure<IdentityOptions>(options =>
             {

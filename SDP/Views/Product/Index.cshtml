@@ -2,7 +2,6 @@
     ViewData["Title"] = "All Products";
 }
 @model SDP.ViewModels.Catalog
-
 <!-- ============================================== Product Display ====================================================== -->
 
 <section id="section-product-list">
@@ -36,6 +35,57 @@
         }
     </div>
 </section>
+
+<aside>
+    <div id="filter" style="position:absolute; top :280px; margin-left:50px">
+        <h4> <strong> Add filters</strong></h4>
+        <form action="/" method="post">
+            <strong> Gender</strong>
+            <table>
+                @foreach (var item in Enum.GetValues(typeof(Microsoft.SDP.SDPCore.Consts.Genders)))
+                {
+                    <tr>
+                        <td><label><input type="checkbox" name="" value="@item" /> @item </label></td>
+                    </tr>
+                }
+            </table>
+            <br />
+            <strong> Type </strong>
+            <table>
+
+                @foreach (var item in Enum.GetValues(typeof(Microsoft.SDP.SDPCore.Consts.PTypes)))
+                {
+                    <tr>
+                        <td><label><input type="checkbox" name="" value="@item." /> @item.ToString() </label></td>
+                    </tr>
+                }
+            </table>
+            <br />
+            <strong> Size </strong>
+            <table>
+                <tr>
+                    <td><label><input type="checkbox" name="" value=50 /> 50ml or less </label></td>
+                </tr>
+                <tr>
+                    <td><label><input type="checkbox" name="" value=100 /> 50ml -100ml </label></td>
+                </tr>
+                <tr>
+                    <td><label><input type="checkbox" name="" value=200 /> 100ml -200ml </label></td>
+                </tr>
+                <tr>
+                    <td><label><input type="checkbox" name="" value=400 />200ml - 400ml </label></td>
+                </tr>
+
+                <tr>
+                    <td><label><input type="checkbox" name="" value=1000 />400ml and greater </label></td>
+                </tr>
+            </table>
+            <button class="sdp-style" type="submit" style="margin-top:30px">Apply filter</button>
+        </form>
+    </div>
+
+</aside>
+
 <section id="section-suggested">
     <div class="container">
         <h3>Recommended Fragrances</h3>

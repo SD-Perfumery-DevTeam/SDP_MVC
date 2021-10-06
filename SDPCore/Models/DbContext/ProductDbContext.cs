@@ -14,7 +14,7 @@ namespace Microsoft.SDP.SDPCore.Models.DbContext
         public DbSet<Category> category { get; set; }
         public DbSet<Brand> brand { get; set; }
         public DbSet<Inventory> inventory{ get; set; }
-
+        public DbSet<Promotion> promotion { get; set; }
         /*  
          public DbSet<Tag> tag { get; set; }
           public DbSet<Order> orders { get; set; }

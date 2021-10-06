@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Models.DbContext
 {
-    public class DbRepo : IDbRepo
+    public class DbRepo : IDbRepo 
     {
         
         private  ProductDbContext _db;
@@ -27,7 +27,12 @@ namespace Microsoft.SDP.SDPCore.Models.DbContext
 
         public Product getProduct(string Id) 
         {
-            return  _db.product.Include(m => m.brand).Include(m => m.category).ToList().Find(m => m.productId == Guid.Parse(Id));
+            return !string.IsNullOrWhiteSpace(Id)? _db.product.Include(m => m.brand).Include(m => m.category).ToList().Find(m => m.productId == Guid.Parse(Id)) : null;
+        }
+
+        public Promotion getPromotion(string promoCode)
+        {
+            return !string.IsNullOrWhiteSpace(promoCode) ?  _db.promotion.Include(m => m.product).ToList().Find(m => m.promoCode == promoCode) : null;
         }
 
     }

@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Interface
 {
-    public interface IPromotion
+    public interface IPromotionService
     {
+        public string validatePromoCode(string promoCode);
+        public bool validatePromoDate(string promoCode);
     }
 }

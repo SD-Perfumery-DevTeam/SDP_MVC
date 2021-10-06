@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SDPWeb.ViewModels.AddPromotionView
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>Promotions</h2>
+            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
+                <div>
+                    <table class="table table-bordered" style="margin:0 auto">
+                        <thead>
+                            <tr>
+                                <th>Promotion Title</th>
+                                <th>Promotion ID</th>
+                                <th>Product name</th>
+                                <th>Discount Rate</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.promotionList)
+                        {
+                            <tr>
+                                <td>@item.title</td>
+                                <td>@item.promoId</td>
+                                <td>@item.product.title</td>
+                                <td>@item.discount %</td>
+                                <td>@item.startDate</td>
+                                <td>@item.endDate</td>
+                                <td><button class="btn btn-sm btn-primary" name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </form>
+        </section>
+    </div>
+</section>

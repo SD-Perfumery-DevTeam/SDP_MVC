@@ -1,8 +1,10 @@
-﻿
-@model Microsoft.SDP.SDPCore.Models.Cart
+﻿@model Microsoft.SDP.SDPCore.Models.Cart
 @{
     Microsoft.SDP.SDPCore.Interface.ICustomer cutomer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
+    
+    Product product = null;
+
 }
 
 <section id="section-banner">
@@ -14,27 +16,37 @@
 <section>
     <div class="container">
         <div class="cart-contents">
+            <h2>@ViewData["Msg"]</h2>
+            <h2 style="color:red">@ViewData["Error"]</h2>
             <ul>
                 @if (cutomer != null)
                 {
-                    foreach (var product in cutomer.cart.getCartList())
+                    foreach (var pair in cutomer.cart.getCartList())
                     {
-                        total = total + (decimal)product.Key.price* (decimal)product.Value;
-                        decimal subTotal = product.Key.price * product.Value;
+                        product = Model._dbRepo.getProduct(pair.Key);
+
+                        decimal subTotal = (1-pair.Value.discount * (decimal)0.01)* product.price * pair.Value.quantity;
+                        total = total + subTotal;
                         <li class="cart-item">
-                            <img src="~/images/product/@product.Key.imgUrl" alt="@product.Key.title" />
+                            <img src="~/images/product/@product.imgUrl" alt="@product.title" />
                             <div class="cart-item-desc">
-                                <h4 class="desc">@product.Key.title - @product.Key.brand.title</h4>
-                                <p>@product.Key.price LKR</p>
+                                <h4 class="desc">@product.title - @product.brand.title</h4>
+
+                                @{
+                                    decimal priceDiscountApplied = 0;
+                                    priceDiscountApplied = product.price * (1 - pair.Value.discount * (decimal)0.01);
+                                }
+                                <p>@priceDiscountApplied  LKR</p>
                             </div>
                             <div class="cart-item-qty">
                                 <h5 class="desc">Quantity</h5>
-                                <p>@product.Value</p>
+                                <p>@pair.Value.quantity</p>
                             </div>
                             <div class="cart-item-total">
                                 <h5 class="desc">Item Total</h5>
                                 <p>Rs. @subTotal</p>
                             </div>
+                            <button class="sdp-style" type="submit" name="productId" value="@product.productId" style=" color:indianred">Remove Item</button>
                         </li>
                     }
                 }
@@ -44,6 +56,13 @@
                     <h4>Order Total</h4>
                     <p>Rs. @total</p>
                 </div>
+                <form asp-controller="Cart" asp-action="promoCodeCheck"  method="post">
+                    <div>
+                        <input name="promoCode" type="text" placeholder="PromoCode" style=" margin-top:10px; margin-bottom:10px">
+                        <button class="sdp-style" type="submit">Add Promo Code</button>
+                    </div>
+                </form>
+
                 <button type="button" id="cart-btn-checkout" class="sdp-style">Proceed to Checkout</button>
                 <small><a href="#">Continue Shopping</a></small>
             </div>

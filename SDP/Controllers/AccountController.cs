@@ -28,9 +28,11 @@ namespace SDP.Controllers
         private IConfiguration _configuration { get; }
         private IEmailSender _emailSender { get; }
         private string _APIkey; //this is the sendgrid api key grabbed from appsetting.json file, see below constructor
+        private IDbRepo _dbRepo ;
+
 
         public AccountController(UserManager<IdentityUser> um, SignInManager<IdentityUser> sm,
-            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender)
+            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender, IDbRepo dbRepo)
         {
             this._userManager = um;
             this._signInManager = sm;
@@ -38,6 +40,7 @@ namespace SDP.Controllers
             this._configuration = configuration;
             this._emailSender = emailSender;
             this._APIkey = _configuration.GetValue<string>("APIKeys:SDP-SENDGRID-API");
+            this._dbRepo = dbRepo;
         }
 
 
@@ -62,9 +65,9 @@ namespace SDP.Controllers
                     {
                         
                         var user = _userManager.FindByNameAsync(LM.Email);
-                        RegisteredCustomer rc = new RegisteredCustomer { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email, };
+                        RegisteredCustomer rc = new RegisteredCustomer( _dbRepo) { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email };
                    
-                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();//transfers the GuestCustomers Cart to registered customer
+                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart(_dbRepo);//transfers the GuestCustomers Cart to registered customer
 
                         HttpContext.Session.SetString("Id", user.Result.Id.ToString());
 
@@ -158,7 +161,7 @@ namespace SDP.Controllers
             {
                 await _signInManager.SignOutAsync();
                 HttpContext.Session.SetString("LoggedIN", "false");
-                GuestCustomer gc = new GuestCustomer();
+                GuestCustomer gc = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(gc);//register new guest customer
               
                 HttpContext.Session.SetString("Id", gc.userId.ToString());
@@ -376,7 +379,7 @@ namespace SDP.Controllers
                 {
                     await _signInManager.SignOutAsync();
                     HttpContext.Session.SetString("LoggedIN", "false");
-                    GuestCustomer gc = new GuestCustomer();
+                    GuestCustomer gc = new GuestCustomer(_dbRepo);
                     GlobalVar.customerList.Add(gc);//register new guest customer
 
                     HttpContext.Session.SetString("Id", gc.userId.ToString());

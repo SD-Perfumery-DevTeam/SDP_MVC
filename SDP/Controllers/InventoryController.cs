@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPInfrastructure.Services;
+using SDPWeb.ViewModels;
 
 namespace SDP.Controllers
 {
@@ -26,11 +27,13 @@ namespace SDP.Controllers
         private static ProductDbContext _db;
         private ImageService _imageService;
         ICustomer customer = null;
+        private IDbRepo _dbRepo;
 
-        public InventoryController(ProductDbContext db, ImageService imageService)
+        public InventoryController(ProductDbContext db, ImageService imageService, IDbRepo dbRepo)
         {
             _db = db;
             _imageService = imageService;
+            _dbRepo = dbRepo;
         }
         //===================Inventory display page=======================
         [HttpGet]
@@ -149,6 +152,57 @@ namespace SDP.Controllers
             }
            
             return RedirectToAction("Index", "Inventory");
+        }
+
+        //===================List out promotions=======================
+        public IActionResult ViewPromotions() 
+        {
+            var list = _db.promotion.Include(m => m.product).ToList<Promotion>();
+            return View(new AddPromotionView { promotionList = list});
+        }
+        //===================Add promotion page HTTPPOST=======================
+        [HttpPost]
+        public IActionResult AddPromotion(string productId)
+        {
+            return View(new AddPromotionView { promotion = new Promotion { product = _dbRepo.getProduct(productId) }}); 
+        }
+
+        //===================Add promotion page HTTPGET=======================
+        [HttpGet]
+        public IActionResult AddPromotion(string productId, string ErrorMsg)
+        {
+            ViewData["Error"] = ErrorMsg;
+            return View(new AddPromotionView { promotion = new Promotion { product = _dbRepo.getProduct(productId) } });
+        }
+
+        //===================Add promotion to the db checking for duplicate codes=======================
+        [HttpPost]
+        public IActionResult AddPromotionToDb(string productId, AddPromotionView model )
+        {
+            try
+            {
+                Promotion promotion = model.promotion;
+                if (_dbRepo.getPromotion(promotion.promoCode) != null)
+                {
+                    return RedirectToAction("AddPromotion", "Inventory", new { productId = productId, ErrorMsg = "Duplicate Promotion Code, please try a different code" });
+                }
+                else if (promotion.startDate > promotion.endDate)
+                {
+                    return RedirectToAction("AddPromotion", "Inventory", new { productId = productId, ErrorMsg = "Start Date cannot be later than the end date" });
+                }
+                promotion.product = _dbRepo.getProduct(productId);
+
+                _db.promotion.Add(promotion);
+                _db.SaveChanges();
+
+                var list = _db.promotion.Include(m => m.product).ToList<Promotion>();
+                return RedirectToAction("ViewPromotions", new AddPromotionView { promotionList = list });
+            }
+            catch (Exception ex)
+            {
+
+                return RedirectToAction("Error", "Home");
+            }
         }
     }
 }

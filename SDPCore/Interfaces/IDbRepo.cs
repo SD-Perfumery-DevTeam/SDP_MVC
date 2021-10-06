@@ -17,5 +17,6 @@ namespace Microsoft.SDP.SDPCore.Interface
 
         private static ProductDbContext _db;
         private static UserManager<IdentityUser> _userManager;
+        public Promotion getPromotion(string promoCode);
     }
 }
