@@ -3,38 +3,38 @@
 
 /* CSS variables for common colours */
 :root {
-  /* These colours are specified by the client - do not change */
-  --color-client-spec-1: #b7dde3;
-  --color-client-spec-2: #fff9fb;
-  --color-client-spec-3: #f3cabc;
-  --color-client-spec-4: #7e989c;
-  --color-client-spec-5: #985855;
+    /* These colours are specified by the client - do not change */
+    --color-client-spec-1: #b7dde3;
+    --color-client-spec-2: #fff9fb;
+    --color-client-spec-3: #f3cabc;
+    --color-client-spec-4: #7e989c;
+    --color-client-spec-5: #985855;
+    /* Black and white, but may be changed very subtly to suit palette */
+    /* Note: please ensure correct contrast is maintained */
+    --color-white: #fff;
+    --color-black: #000;
+    /* These are proposed colours - we can adjust these if desired */
+    --color-proposed-purple-90: hsl(270, 5%, 10%);
+    --color-proposed-purple-70: hsl(270, 10%, 30%);
+    --color-proposed-purple-60: hsl(270, 10%, 40%);
+    --color-proposed-purple-55: hsl(270, 10%, 45%);
+    --color-proposed-purple-50: hsl(270, 15%, 50%);
+    --color-proposed-purple-45: hsl(270, 20%, 55%);
+    --color-proposed-purple-40: hsl(270, 25%, 60%);
+    --color-proposed-purple-35: hsl(270, 30%, 65%);
+    --color-proposed-purple-30: hsl(270, 35%, 70%);
+    --color-proposed-purple-25: hsl(270, 35%, 75%);
+    --color-proposed-purple-20: hsl(270, 35%, 80%);
+    --color-proposed-purple-15: hsl(270, 40%, 85%);
+    --color-proposed-purple-10: hsl(270, 40%, 90%);
+    --color-proposed-purple-05: hsl(270, 40%, 95%);
 
-  /* Black and white, but may be changed very subtly to suit palette */
-  /* Note: please ensure correct contrast is maintained */
-  --color-white: #fff;
-  --color-black: #000;
+    --color-proposed-nav-link: #a3657a;
 
-  /* These are proposed colours - we can adjust these if desired */
-  --color-proposed-purple-90: hsl(270, 5%, 10%);
-  --color-proposed-purple-70: hsl(270, 10%, 30%);
-  --color-proposed-purple-60: hsl(270, 10%, 40%);
-  --color-proposed-purple-55: hsl(270, 10%, 45%);
-  --color-proposed-purple-50: hsl(270, 15%, 50%);
-  --color-proposed-purple-45: hsl(270, 20%, 55%);
-  --color-proposed-purple-40: hsl(270, 25%, 60%);
-  --color-proposed-purple-35: hsl(270, 30%, 65%);
-  --color-proposed-purple-30: hsl(270, 35%, 70%);
-  --color-proposed-purple-25: hsl(270, 35%, 75%);
-  --color-proposed-purple-20: hsl(270, 35%, 80%);
-  --color-proposed-purple-15: hsl(270, 40%, 85%);
-  --color-proposed-purple-10: hsl(270, 40%, 90%);
-  --color-proposed-purple-05: hsl(270, 40%, 95%);
-
-  /* Font variables */
-  --font-family-display: 'MonteCarlo', serif;
-  --font-family-display-serif: 'Antic Didone', serif;
-  --font-family-body-sans-serif: 'Open Sans', sans-serif;
+    /* Font variables */
+    --font-family-display: 'MonteCarlo', serif;
+    --font-family-display-serif: 'Antic Didone', serif;
+    --font-family-body-sans-serif: 'Open Sans', sans-serif;
 }
 
 /* Remove arrows from number spinners */
@@ -213,10 +213,10 @@ header nav ul li {
   padding-right: 1rem;
 }
 
-header nav ul li a {
-  color: var( --color-client-spec-5);
-  text-decoration: none;
-}
+    header nav ul li a {
+        color: var(--color-proposed-nav-link);
+        text-decoration: none;
+    }
 
 .material-icons {
   padding-bottom: 0.2rem;
