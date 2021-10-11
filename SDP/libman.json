@@ -9,6 +9,18 @@
     {
       "library": "bootstrap-icons@1.5.0",
       "destination": "wwwroot/lib/bootstrap-icons/"
+    },
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery/dist/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.12",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "library": "jquery-validate@1.19.3",
+      "destination": "wwwroot/lib/jquery-validation/dist/"
     }
   ]
 }
