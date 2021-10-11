@@ -309,10 +309,10 @@ footer .container ul.ul-links-social li {
   display: inline-block;
 }
 
-footer .container ul.ul-links-social img {
+footer .container ul.ul-links-social i {
   margin-right: 1rem;
-  width: 32px;
-  height: 32px;
+  font-size: 2rem;
+  color: var(--color-white)
 }
 
 footer .container ul li {

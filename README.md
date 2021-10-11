@@ -67,8 +67,13 @@ Update 23/09/2021
 3. deleting code that deals with sending email in account controller
 ```
 
-
 ```
 Update 24/09/2021
 1. adding reset for My Account page
+```
+
+```
+Update 11/10/2021
+1. small styling improvements
+2. switch to bootstrap icons
 ```
