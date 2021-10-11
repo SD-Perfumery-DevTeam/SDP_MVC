@@ -9,10 +9,12 @@
     --color-client-spec-3: #f3cabc;
     --color-client-spec-4: #7e989c;
     --color-client-spec-5: #985855;
+    
     /* Black and white, but may be changed very subtly to suit palette */
     /* Note: please ensure correct contrast is maintained */
     --color-white: #fff;
     --color-black: #000;
+    
     /* These are proposed colours - we can adjust these if desired */
     --color-proposed-purple-90: hsl(270, 5%, 10%);
     --color-proposed-purple-70: hsl(270, 10%, 30%);
@@ -213,10 +215,10 @@ header nav ul li {
   padding-right: 1rem;
 }
 
-    header nav ul li a {
-        color: var(--color-proposed-nav-link);
-        text-decoration: none;
-    }
+header nav ul li a {
+  color: var(--color-proposed-nav-link);
+  text-decoration: none;
+}
 
 .material-icons {
   padding-bottom: 0.2rem;
