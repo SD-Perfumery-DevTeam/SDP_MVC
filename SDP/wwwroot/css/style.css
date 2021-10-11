@@ -189,6 +189,10 @@ header nav .container {
   line-height: 1rem;
 }
 
+header nav .container #cart {
+    font-size: 1.9rem;
+}
+
 header nav #header-cta {
   margin-left: 1rem;
   font-style: italic;
