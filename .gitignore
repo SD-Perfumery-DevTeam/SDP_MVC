@@ -39,7 +39,7 @@ bld/
 #wwwroot/
 
 # Prevent upload of external libraries - requires the add libraries on project build setting
-wwwroot/lib/
+/SDP/wwwroot/lib
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
