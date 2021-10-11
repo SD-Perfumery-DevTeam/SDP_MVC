@@ -174,7 +174,9 @@ header {
 }
 
 header nav {
+  height: 5.2rem;
   background-color: var(--color-client-spec-1);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
 }
 
 header nav .container {
@@ -219,7 +221,6 @@ header nav ul li a {
 
 header #header-brand {
   padding: 1.5rem 0 2rem 0;
-  background-color: var(--color-client-spec-2);
 }
 
 header #header-brand .container {
