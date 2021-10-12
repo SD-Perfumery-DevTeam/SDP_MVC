@@ -196,16 +196,7 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-        public IActionResult AddCategory()
-        {
-            return View();
-        }
-
-        public IActionResult AddBrand()
-        {
-            return View();
-        }
-
+        
 
     }
 }

@@ -21,7 +21,7 @@
 
 
 
-
+                <input required="required" name="promoId" value="@Model.promotion.promoId" hidden />
                 <input required="required" name="productId" value="@Model.promotion.product.productId" hidden />
 
                 <div class="mb-4">
@@ -42,7 +42,7 @@
                     <label class="form-label">Enter the discount(the number indicates how many % off the original price)</label>
                     <div class="input-group">
 
-                        <input required="required" type="number" min="1" max="100" asp-for="promotion.discount" class="form-control"  />
+                        <input required="required" type="number" min="1" max="100" asp-for="promotion.discount" class="form-control" />
                     </div>
                     <span asp-validation-for="promotion.discount" class="text-danger"></span>
                 </div>
@@ -52,7 +52,7 @@
                     <label class="form-label">Start Date</label>
                     <div class="input-group">
 
-                        <input type="date" asp-for="promotion.startDate"/>
+                        <input type="date" asp-for="promotion.startDate" />
                     </div>
                     <span asp-validation-for="promotion.startDate" class="text-danger"></span>
                 </div>
@@ -61,7 +61,7 @@
                     <label class="form-label">End Date</label>
                     <div class="input-group">
 
-                        <input type="date" asp-for="promotion.endDate"/>
+                        <input type="date" asp-for="promotion.endDate" />
                     </div>
                     <span asp-validation-for="promotion.endDate" class="text-danger"></span>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="mb-4">
                     <span class="hint" id="textarea_message"></span>
                     <label asp-for="promotion.description" class="form-label"></label>
-                    <textarea required="required" asp-for="promotion.description" id="message_area"  class="form-control message_area" maxlength="2048" ></textarea>
+                    <textarea required="required" asp-for="promotion.description" id="message_area" class="form-control message_area" maxlength="2048"></textarea>
                     <span asp-validation-for="promotion.description" class="text-danger"></span>
                 </div>
 
@@ -88,7 +88,7 @@
                 @section Scripts{
                     <script type="text/javascript" src="~/js/addproduct.js"></script>
                 }
-            <button type="submit" class="btn btn-primary">Edit Promotion</button>
+                <button type="submit" class="btn btn-primary">Edit Promotion</button>
 
             </form>
         </section>

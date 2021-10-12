@@ -229,10 +229,8 @@ namespace SDP.Controllers
             }
             catch (Exception)
             {
-
                 return RedirectToAction("Error", "Home");
             }
-
         }
 
         [HttpPost]
@@ -240,6 +238,7 @@ namespace SDP.Controllers
         {
             try
             {
+                model.promotion.promoId = !string.IsNullOrWhiteSpace(promoId) ? Guid.Parse(promoId) : Guid.NewGuid();
                 if (ufile != null && ufile.Length > 0)
                 {
                     using (var context = _contextFactory.CreateDbContext())
@@ -271,5 +270,6 @@ namespace SDP.Controllers
             }
 
         }
+
     }
 }

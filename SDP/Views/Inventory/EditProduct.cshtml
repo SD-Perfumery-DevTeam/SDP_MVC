@@ -30,10 +30,10 @@
                         <select id="listbox" class="form-select" name="brandID">
                             @foreach (var item in Model.brands)
                             {
-                <option value="@item.Value" name="brandID">
-                    @item.Text
-                </option>
-}
+                                <option value="@item.Value" name="brandID">
+                                    @item.Text
+                                </option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -134,15 +134,15 @@
                     <div class="col-6">
                         <label asp-for="product.isActive" class="form-label"></label>
                         @Html.DropDownListFor(m => m.product.isActive, new SelectList(
-                                      new[]
-                                      {
+                                                new[]
+                                                {
                                 new {Value = "True", Text = "Active"},
                                 new {Value = "False", Text = "Inactive"},
-              },
-                                      "Value",
-                                      "Text",
-                                      Model.product
-                                  ))
+},
+                                                "Value",
+                                                "Text",
+                                                Model.product
+                                            ))
                     </div>
                 </div>
 

@@ -38,5 +38,6 @@ namespace Microsoft.SDP.SDPCore.Models
         public decimal discount { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
+        public bool Active;
     }
 }
