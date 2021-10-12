@@ -3,6 +3,15 @@
 please make sure the database being used is up to date(ask peter for the latest version)
 
 do a "git rm -rf --cached ." if there is conflict caused by git ingnore not working as intended
+
+library files are now excluded in .gitignore (bootstrap, jquery, etc.).
+
+***Please enable the 'Enable Restore Client Libraries on Build' setting by right
+clicking on the libman.json file in the SDPWeb section of the project.***
+
+***If your commits try to uploade these files, please run the "git rm -rf --cached ."
+command and try again before committing.***
+
 ```
 
 ## Change Overview
