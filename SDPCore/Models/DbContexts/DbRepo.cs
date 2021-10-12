@@ -43,5 +43,10 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
         {
             return _db.product.Include(m => m.brand).Include(m => m.category).ToList();
         }
+
+        public IEnumerable<IdentityUser> GetCustomerList()
+        {
+            return _userManager.Users.ToList();
+        }
     }
 }

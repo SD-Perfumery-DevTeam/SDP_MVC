@@ -90,7 +90,14 @@
                 }
                 <button type="submit" class="btn btn-primary">Edit Promotion</button>
 
+
+            </form>
+
+            <form asp-action="SendEmailToCustomers" asp-controller="CMS" method="post" style="margin-top:20px;">
+                <input required="required" name="promoId" value="@Model.promotion.promoId" hidden />
+                <button type="submit" class="btn btn-primary" id="popupConfrimSend"> send promo email to customers </button>
             </form>
         </section>
     </div>
 </section>
+<script src="~/js/site.js" asp-append-version="true"></script>

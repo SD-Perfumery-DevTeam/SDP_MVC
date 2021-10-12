@@ -59,22 +59,20 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             return false;
         }
 
-       /* public async Task<bool> sendCPromtionEmailAsyncAsync(List<string> emails, string confirmationLink)
+        public async Task sendPromtionEmailAsyncAsync(List<string> emails,string promotionName, string promotionCode, string startDate, string endDate, string discount, string productName)
         {
-            var client = new SendGridClient(_APIkey);
-            var from = new EmailAddress("sdp.utils@gmail.com", "SDPAdmin");
-            var subject = "Confirm your SDP email";
-            var to = new EmailAddress(Email, "Dear Customer");
-            var plainTextContent = "please confirm email: ";
-            var htmlContent = "<a href=" + confirmationLink + "> click here to confirm email </a> <br>" + " <strong>Regards from the SDP team</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
 
-            if (response.IsSuccessStatusCode)
+            foreach (var email in emails)
             {
-                return true;
+                var client = new SendGridClient(_APIkey);
+                var from = new EmailAddress("sdp.utils@gmail.com", "SDPAdmin");
+                var subject = "Confirm your SDP email";
+                var to = new EmailAddress(email, "Dear Customer");
+                var plainTextContent = "please confirm email: ";
+                var htmlContent = "<a href=" + "sdp site link placeholder" + "> <strong>check out our promotion\""+ promotionName + "\""+discount+" off "+ productName+": </strong> promoCode:" + promotionCode + " </a>   <br> <p>starts: " + startDate + ", ends: " + endDate + "  </p> " + " <strong>Regards from the SDP team</strong>";
+                var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+                var response = await client.SendEmailAsync(msg);
             }
-            return false;
-        }*/
+        }
     }
 }

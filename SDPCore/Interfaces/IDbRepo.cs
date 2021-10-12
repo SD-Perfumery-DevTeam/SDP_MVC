@@ -18,5 +18,6 @@ namespace Microsoft.SDP.SDPCore.Interface
         public Promotion getPromotionBypromoCode(string promoCode);
         public Promotion getPromotionByID(string promoId);
         public IEnumerable<Product> GetProductList();
+        public IEnumerable<IdentityUser> GetCustomerList();
     }
 }

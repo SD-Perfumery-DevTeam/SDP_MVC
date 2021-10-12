@@ -12,4 +12,6 @@ $("body").on("submit", "#popup", function () {
 
    
 
-        
+$("body").on("submit", "#popupConfrimSend", function () {
+    return confirm("Are you sure you want to send out this promotion");
+});
