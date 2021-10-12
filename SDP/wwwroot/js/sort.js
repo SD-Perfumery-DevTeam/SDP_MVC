@@ -7,8 +7,12 @@ productDbJson.forEach(displayCardFunc);
 
 function reDisplay()
 {
-    productDbJson.forEach(displayCardFunc);
-
+    productCon.innerHTML = "";
+    var list = productDbJson.filter(prod => (prod.brand.title == "Nina Ricci"));
+    console.log(list)
+    list.forEach(displayCardFunc);
+    console.log(list)
+    
 }
 
 function displayCardFunc(prod) {
