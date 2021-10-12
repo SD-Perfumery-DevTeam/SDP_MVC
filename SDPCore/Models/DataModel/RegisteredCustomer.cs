@@ -11,11 +11,12 @@ namespace Microsoft.SDP.SDPCore.Models
     {
         public Cart cart { get; set; }
         public List<Order> orderList { get; set; }
-
-        public RegisteredCustomer() 
+        private IDbRepo _dbRepo;
+        public RegisteredCustomer(IDbRepo dbRepo) 
         {
             this.orderList = new List<Order>();
             userId = Guid.NewGuid();
+            _dbRepo = dbRepo;
             cart = new Cart();
         }
 
@@ -39,8 +40,8 @@ namespace Microsoft.SDP.SDPCore.Models
                             ol.quantity++;
                         }
                     }
-                    OrderLine temp = new OrderLine(o, p.Key, 1, null);
-                    o.OLList.Add(temp);
+                    //OrderLine temp = new OrderLine(o, p.Key, 1, null); taken out for now, re-insert once cart serivce is up
+                    //o.OLList.Add(temp);
                 }
                 cart.addOrderToCustomerList(o);
                 return o;

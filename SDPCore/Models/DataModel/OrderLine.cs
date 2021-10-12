@@ -14,10 +14,10 @@ namespace Microsoft.SDP.SDPCore.Models
         private Order order { get; set; }
         private Product product { get; set; }
         public int quantity { get; set; }
-        public IPromotion promotion;
+        public IPromotionService promotion;
 
         public OrderLine(Order order, Product product, 
-            int quantity, IPromotion promotion)
+            int quantity, IPromotionService promotion)
         {
 
             lineId = Guid.NewGuid();

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.SDP.SDPCore.Models;
-using Microsoft.SDP.SDPCore.Models.DbContext;
+using Microsoft.SDP.SDPCore.Models.DbContexts;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using SDP.ViewModels;
 using System;
@@ -36,19 +36,18 @@ namespace SDP.Controllers
         [HttpGet]
         public IActionResult Index(int pageNumber = 0)
         {
-
-            var products = _db.product
+            var products = _dbRepo.GetProductList()
                           .Skip(pageNumber * 20)
                           .Take(20);
             int totalPage = _db.product.Count() / 20;
 
             if (HttpContext.Session.GetString("Id") == null)
             {
-                GuestCustomer guest = new GuestCustomer();
+                GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 
-                
+
 
                 HttpContext.Session.SetString("Id", Id);
             }
@@ -57,10 +56,13 @@ namespace SDP.Controllers
 
             try
             {
+                var brands = _db.brand.ToList();
                 return View(new Catalog
                 {
                     products = products,
-                    brands = _db.brand.ToList(),
+                    brands = brands,
+                  
+                    categories = _db.category.ToList(),
                     totalPage = totalPage,
                     customer = _customer
                 });
@@ -76,11 +78,11 @@ namespace SDP.Controllers
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
-                GuestCustomer guest = new GuestCustomer();
+                GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 
-               
+
 
                 HttpContext.Session.SetString("Id", Id);
             }
@@ -108,7 +110,7 @@ namespace SDP.Controllers
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
-                GuestCustomer guest = new GuestCustomer();
+                GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 
@@ -176,7 +178,7 @@ namespace SDP.Controllers
         {
             if (ufile != null && ufile.Length > 0)
             {
-                if ( await _imageService.addImageToFileAsync(ufile, AP.product, _db.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
+                if (await _imageService.addImageToFileAsync(ufile, AP.product, _db.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
             }
 
             try
@@ -194,17 +196,5 @@ namespace SDP.Controllers
             }
             return RedirectToAction("Index", "Product");
         }
-
-        public IActionResult AddCategory()
-        {
-            return View();
-        }
-
-        public IActionResult AddBrand()
-        {
-            return View();
-        }
-
-
     }
 }

@@ -2,7 +2,6 @@
     ViewData["Title"] = "All Products";
 }
 @model SDP.ViewModels.Catalog
-
 <!-- ============================================== Product Display ====================================================== -->
 
 <section id="section-product-list">
@@ -36,6 +35,25 @@
         }
     </div>
 </section>
+
+<aside>
+    <div id="filter" style="position:absolute; top :280px; margin-left:50px">
+        <h4> <strong> Add filters</strong></h4>
+
+        <table>
+            @foreach (var brand in Model.brands)
+            {
+                <tr>
+                    <td style="padding:7px"><label><input type="checkbox" name="@brand.title" value="@brand.title" /> @brand.title </label></td>
+                </tr>
+            }
+        </table>
+        <br />
+
+        <button class="sdp-style" type="submit" onclick="" style="margin-top:30px">Apply filter</button>
+    </div>
+</aside>
+
 <section id="section-suggested">
     <div class="container">
         <h3>Recommended Fragrances</h3>
@@ -43,7 +61,8 @@
 </section>
 <script>
 var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
-console.log(productDbJson)
+    console.log(productDbJson)
+
 </script>
 <script src="~/js/product.js" asp-append-version="true"></script>
 <script src="~/js/sort.js" asp-append-version="true"></script>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.SDP.SDPCore.Models;
-using Microsoft.SDP.SDPCore.Models.DbContext;
+using Microsoft.SDP.SDPCore.Models.DbContexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +12,12 @@ namespace Microsoft.SDP.SDPCore.Interface
     {
         
         public Product getProduct(string Id);
-
         public Task<IdentityUser> getCustomerAsync(string Id);
-
         private static ProductDbContext _db;
         private static UserManager<IdentityUser> _userManager;
+        public Promotion getPromotionBypromoCode(string promoCode);
+        public Promotion getPromotionByID(string promoId);
+        public IEnumerable<Product> GetProductList();
+        public IEnumerable<IdentityUser> GetCustomerList();
     }
 }

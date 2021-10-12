@@ -2,17 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>7ba27af0-487c-48e0-b4af-49cba1381957</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="wwwroot\images\article\**" />
-    <Compile Remove="wwwroot\images\promotion\**" />
+    <Compile Remove="wwwroot\images\NewFolder\**" />
     <Content Remove="wwwroot\images\article\**" />
-    <Content Remove="wwwroot\images\promotion\**" />
+    <Content Remove="wwwroot\images\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\images\article\**" />
-    <EmbeddedResource Remove="wwwroot\images\promotion\**" />
+    <EmbeddedResource Remove="wwwroot\images\NewFolder\**" />
     <None Remove="wwwroot\images\article\**" />
-    <None Remove="wwwroot\images\promotion\**" />
+    <None Remove="wwwroot\images\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
     <PackageReference Include="SendGrid" Version="9.24.2" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
   </ItemGroup>

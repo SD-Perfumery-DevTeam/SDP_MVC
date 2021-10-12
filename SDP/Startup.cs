@@ -7,20 +7,23 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.SDP.SDPCore.Interface;
-using Microsoft.SDP.SDPCore.Models.DbContext;
+using Microsoft.SDP.SDPCore.Models.DbContexts;
 using Microsoft.SDP.SDPInfrastructure.Services;
+using SDPInfrastructure.Services;
 using System;
 
 namespace Global
 {
     public class Startup
     {
+        string conString;
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            conString = Configuration.GetValue<string>("ConnectionStrings:PostConnCtion");
         }
-
-        public IConfiguration Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -33,17 +36,24 @@ namespace Global
             services.AddMemoryCache();
             services.AddDbContext<ProductDbContext>(options =>
             {
-                string conString = Configuration.GetValue<string>("ConnectionStrings:PostConnCtion");
                 options.UseSqlServer(conString);
             });
+
+            services.AddDbContextFactory<ProductDbContext>(
+              options =>
+                  options.UseSqlServer(conString),ServiceLifetime.Scoped);
+
+
             services.AddIdentity<IdentityUser, IdentityRole>()
               .AddEntityFrameworkStores<ProductDbContext>()
               .AddDefaultTokenProviders();
             
             services.AddScoped<IDbRepo, DbRepo>();//database repo
-            services.AddSingleton<IEmailSender, EmailService>();//email sender service
-            services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
-            services.AddScoped<ImageService, ImageService>();//image storage service
+            services.AddScoped<IEmailSender, EmailService>();//email sender service
+            //services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
+            services.AddSingleton<ImageService, ImageService>();//image storage service
+            services.AddScoped<IPromotionService, PromotionService>();//promotion service
+
 
             services.Configure<IdentityOptions>(options =>
             {
