@@ -4,7 +4,7 @@
         <section class="cms-area">
             <h2>Content Management System</h2>
             <div>
-                <h3 style="color:darkseagreen">"@ViewData["Msg"]"</h3>
+                <h3 style="color:darkseagreen">@ViewData["Msg"]</h3>
                 <div>
                     <h3>Users</h3>
                     <ul>
@@ -18,6 +18,12 @@
                     <ul>
                         <li><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
                         <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Promotions</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewPromotions">View Promotions</a></li>
                     </ul>
                 </div>
                 <div>
