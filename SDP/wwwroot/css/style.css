@@ -9,10 +9,12 @@
     --color-client-spec-3: #f3cabc;
     --color-client-spec-4: #7e989c;
     --color-client-spec-5: #985855;
+
     /* Black and white, but may be changed very subtly to suit palette */
     /* Note: please ensure correct contrast is maintained */
     --color-white: #fff;
     --color-black: #000;
+
     /* These are proposed colours - we can adjust these if desired */
     --color-proposed-purple-90: hsl(270, 5%, 10%);
     --color-proposed-purple-70: hsl(270, 10%, 30%);
@@ -28,6 +30,9 @@
     --color-proposed-purple-15: hsl(270, 40%, 85%);
     --color-proposed-purple-10: hsl(270, 40%, 90%);
     --color-proposed-purple-05: hsl(270, 40%, 95%);
+
+    --color-proposed-nav-link: #a3657a;
+
     /* Font variables */
     --font-family-display: 'MonteCarlo', serif;
     --font-family-display-serif: 'Antic Didone', serif;
@@ -141,10 +146,9 @@ button.sdp-style, select.sdp-style {
 }
 
 .btn-big {
-    height: 2.5rem;
-    font-size: 1rem;
-    color: var(--color-proposed-purple-90);
-    ;
+  height: 2.5rem;
+  font-size: 1rem;
+  color: var(--color-proposed-purple-90);
 }
 
 button.sdp-style:hover, select.sdp-style:hover {
@@ -168,47 +172,53 @@ button.sdp-style:active, select.sdp-style:active {
 }
 
 header {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-    header nav {
-        background-color: var(--color-client-spec-1);
-    }
+header nav {
+  height: 5.2rem;
+  background-color: var(--color-client-spec-1);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
 
-        header nav .container {
-            padding: 0.7rem 0 0.5rem 0;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: baseline;
-            font-size: 1rem;
-            line-height: 1rem;
-        }
+header nav .container {
+  padding: 0.7rem 0 0.5rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1rem;
+  line-height: 1rem;
+}
 
-        header nav #header-cta {
-            margin-left: 1rem;
-            font-style: italic;
-        }
+header nav .container #cart {
+    font-size: 1.9rem;
+}
 
-            header nav #header-cta .material-icons {
-                margin-right: 0.25rem;
-            }
+header nav #header-cta {
+  margin-left: 1rem;
+  font-style: italic;
+}
 
-        header nav ul {
-            margin: 0;
-            padding: 0;
-            display: inline-block;
-        }
+header nav #header-cta .material-icons {
+  margin-right: 0.25rem;
+}
 
-            header nav ul li {
-                display: inline-block;
-                padding-right: 1rem;
-            }
+header nav ul {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
 
-                header nav ul li a {
-                    color: var( --color-client-spec-5);
-                    text-decoration: none;
-                }
+header nav ul li {
+  display: inline-block;
+  padding-right: 1rem;
+}
+
+header nav ul li a {
+  color: var(--color-proposed-nav-link);
+  text-decoration: none;
+}
 
 .material-icons {
     padding-bottom: 0.2rem;
@@ -216,27 +226,26 @@ header {
 }
 
 header #header-brand {
-    padding: 1.5rem 0 2rem 0;
-    background-color: var(--color-client-spec-2);
+  padding: 1.5rem 0 2rem 0;
 }
 
-    header #header-brand .container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: baseline;
-        justify-content: space-between;
-    }
+header #header-brand .container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+}
 
-    header #header-brand h1 {
-        font-family: var(--font-family-display);
-        font-weight: 400;
-        font-size: 4.5rem;
-        line-height: 4.5rem;
-        color: var(--color-proposed-purple-90);
-        text-shadow: 0.2rem 0.2rem 0.3rem var(--color-client-spec-1);
-        min-width: 380px;
-    }
+header #header-brand h1 {
+  font-family: var(--font-family-display);
+  font-weight: 400;
+  font-size: 4.5rem;
+  line-height: 4.5rem;
+  color: var(--color-proposed-purple-90);
+  text-shadow: 0.2rem 0.2rem 0.3rem var(--color-client-spec-1);
+  min-width: 380px;
+}
 
 header #header-search {
     display: inline-block;
@@ -283,41 +292,27 @@ main #section-product-list .product-wrapper {
 }
 
 
-footer {
-    box-sizing: border-box;
-    margin-top: auto;
-    min-height: 4rem;
-    color: var(--color-white);
-    background-color: var(--color-client-spec-4);
+footer .container ul {
+  margin: 1rem;
+  padding-left: 0;
+  list-style-type: none;
 }
 
-    footer .container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-    }
+footer .container ul.ul-links-social li {
+  display: inline-block;
+}
 
-        footer .container ul {
-            margin: 1rem;
-            padding-left: 0;
-            list-style-type: none;
-        }
+footer .container ul.ul-links-social i {
+  margin-right: 1rem;
+  font-size: 2rem;
+  color: var(--color-white)
+}
 
-            footer .container ul.ul-links-social li {
-                display: inline-block;
-            }
-
-            footer .container ul.ul-links-social img {
-                margin-right: 1rem;
-                width: 32px;
-                height: 32px;
-            }
-
-            footer .container ul li {
-                margin-bottom: 0.5rem;
-                font-size: 0.8rem;
-                line-height: 0.8rem;
-            }
+footer .container ul li {
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+}
 
 .form-small {
     margin: 6rem auto;

@@ -10,8 +10,6 @@
         text = "Logout";
         action = "Logout";
     }
-
-
 }
 
 <!DOCTYPE html>
@@ -22,9 +20,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SD Perfumery</title>
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -32,7 +29,7 @@
         <nav>
             <div class="container">
                 <span id="header-cta">
-                    <span class="material-icons">phone_iphone</span>
+                    <i class="bi bi-telephone"></i>
                     <a href="tel:001 284 227">Call us on 001-284-227</a>
                 </span>
                 <ul>
@@ -42,8 +39,7 @@
                     <li><a asp-controller="Account" asp-action=@action>@text</a></li>
                     <li>
                         <a asp-controller="Cart" asp-action="Index">
-                            <span class="material-icons">shopping_cart</span>
-                            (3)
+                            <i class="bi bi-cart" id="cart"></i><!-- Add dynamic cart contents count here. -->
                         </a>
                     </li>
                 </ul>
@@ -59,7 +55,9 @@
                          copied from Product-Index view. Remove if unecessary
                          (should probably function site wide and be implemented
                          as a listener). -->
-                    <input type="search" /><button id="btnSearch" class="sdp-style" onclick='setList(JSON.parse())'>Search</button>
+                    <input type="search" /><button id="btnSearch" class="sdp-style" onclick='setList(JSON.parse())'>
+                        <i class="bi bi-search" id="search"></i>
+                    </button>
                 </form>
             </div>
         </div>
@@ -70,8 +68,8 @@
     <footer>
         <div class="container">
             <ul class="ul-links-social">
-                <li><a href="#"><img src="~/images/assets/social-facebook-24px.svg" alt="SD Perfumery on Facebook" /></a></li>
-                <li><a href="#"><img src="~/images/assets/social-instagram-24px.svg" alt="SD Perfumery on Instagram" /></a></li>
+                <li><a href="#"><i class="bi bi-facebook" id="facebook"></i></a></li>
+                <li><a href="#"><i class="bi bi-instagram" id="instagram"></i></a></li>
             </ul>
             <ul class="ul-links-onsite">
                 <li><a href="#">Home</a></li>
@@ -91,7 +89,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-       <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

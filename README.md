@@ -3,6 +3,15 @@
 please make sure the database being used is up to date(ask peter for the latest version)
 
 do a "git rm -rf --cached ." if there is conflict caused by git ingnore not working as intended
+
+library files are now excluded in .gitignore (bootstrap, jquery, etc.).
+
+***Please enable the 'Enable Restore Client Libraries on Build' setting by right
+clicking on the libman.json file in the SDPWeb section of the project.***
+
+***If your commits try to uploade these files, please run the "git rm -rf --cached ."
+command and try again before committing.***
+
 ```
 
 ## Change Overview
@@ -67,8 +76,14 @@ Update 23/09/2021
 3. deleting code that deals with sending email in account controller
 ```
 
-
 ```
 Update 24/09/2021
 1. adding reset for My Account page
+```
+
+```
+Update 11/10/2021
+1. remove external library files from repo and configure libman.json
+2. small styling improvements
+3. switch to bootstrap icons
 ```
