@@ -31,17 +31,14 @@
                 <div class="col-6">
                     <label class="form-label">Enter the discount(the number indicates how many % off the original price)</label>
                     <div class="input-group">
-
                         <input required="required" type="number" min="1" max="100" asp-for="promotion.discount" class="form-control" />
                     </div>
                     <span asp-validation-for="promotion.discount" class="text-danger"></span>
                 </div>
 
-
                 <div class="col-6">
                     <label class="form-label">Start Date</label>
                     <div class="input-group">
-
                         <input type="date" asp-for="promotion.startDate" value="@DateTime.Now" />
                     </div>
                     <span asp-validation-for="promotion.startDate" class="text-danger"></span>
@@ -50,7 +47,6 @@
                 <div class="col-6">
                     <label class="form-label">End Date</label>
                     <div class="input-group">
-
                         <input type="date" asp-for="promotion.endDate" value="@DateTime.Now" />
                     </div>
                     <span asp-validation-for="promotion.endDate" class="text-danger"></span>
@@ -63,7 +59,6 @@
                     <span asp-validation-for="promotion.description" class="text-danger"></span>
                 </div>
 
-
                 <div class="mb-4">
                     <label asp-for="promotion.imgUrl" class="form-label"></label>
                     <div class="custom-file">
@@ -75,11 +70,24 @@
                     <span asp-validation-for="promotion.imgUrl" class="text-danger"></span>
                 </div>
 
+                <div class="mb-4">
+                    <label asp-for="promotion.isActive" class="form-label"></label>
+                    @Html.DropDownListFor(m => m.promotion.isActive, new SelectList(
+                        new[]
+                        {
+                            new {Value = "True", Text = "Active"},
+                            new {Value = "False", Text = "Inactive"},
+                        },
+                        "Value",
+                        "Text",
+                        Model.promotion
+                    ))
+                </div>
+
                 @section Scripts{
                     <script type="text/javascript" src="~/js/addproduct.js"></script>
                 }
                 <button type="submit" class="btn btn-primary">Add Promotion</button>
-
             </form>
         </section>
     </div>
