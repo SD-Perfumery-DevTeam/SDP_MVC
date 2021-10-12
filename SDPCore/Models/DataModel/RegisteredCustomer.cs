@@ -17,7 +17,7 @@ namespace Microsoft.SDP.SDPCore.Models
             this.orderList = new List<Order>();
             userId = Guid.NewGuid();
             _dbRepo = dbRepo;
-            cart = new Cart( _dbRepo);
+            cart = new Cart();
         }
 
         public Task payment(string info)

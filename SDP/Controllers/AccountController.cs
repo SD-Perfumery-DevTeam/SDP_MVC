@@ -2,14 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.SDP.SDPCore.Models.AccountModel;
 using SDP.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 using Microsoft.SDP.SDPCore.Models;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -45,8 +41,9 @@ namespace SDP.Controllers
 
 
         //====================user to Login==========================
-        public IActionResult Login()
+        public IActionResult Login(string errorMsg)
         {
+            ViewData["Error"] = errorMsg;
             return View();
         }
 
@@ -63,11 +60,11 @@ namespace SDP.Controllers
                 {
                     try
                     {
-                        
+
                         var user = _userManager.FindByNameAsync(LM.Email);
-                        RegisteredCustomer rc = new RegisteredCustomer( _dbRepo) { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email };
-                   
-                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart(_dbRepo);//transfers the GuestCustomers Cart to registered customer
+                        RegisteredCustomer rc = new RegisteredCustomer(_dbRepo) { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email };
+
+                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();//transfers the GuestCustomers Cart to registered customer
 
                         HttpContext.Session.SetString("Id", user.Result.Id.ToString());
 
@@ -80,6 +77,10 @@ namespace SDP.Controllers
                     {
                         return RedirectToAction("Error", "Home");
                     }
+                }
+                else 
+                {
+                    return RedirectToAction("Login", new { errorMsg ="Invalid Login infomation" } );
                 }
             }
             return View();

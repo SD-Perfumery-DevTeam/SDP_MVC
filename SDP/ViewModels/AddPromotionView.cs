@@ -12,7 +12,7 @@ namespace SDPWeb.ViewModels
         public Promotion promotion { get; set; }
         public IFormFile Image { get; set; }
 
-        //used for viewing all promotions
+        //only used for viewing all promotions
         public IEnumerable<Promotion> promotionList{ get; set; }
     }
 }

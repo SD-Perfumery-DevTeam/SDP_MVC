@@ -13,5 +13,6 @@ namespace Microsoft.SDP.SDPCore.Interface
         private static string _APIkey;
         Task<bool> sendConfirmationEmailAsyncAsync(string Email, IdentityUser user, string confirmationLink);
         Task<bool> sendPasswordChangeEmail(string Email, IdentityUser user, string changepasswordLink);
+        Task sendPromtionEmailAsyncAsync(List<string> emails, string promotionName, string promotionCode, string startDate, string endDate, string discount, string productName);
     }
 }

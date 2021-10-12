@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.SDP.SDPCore.Models;
-using Microsoft.SDP.SDPCore.Models.DbContext;
+using Microsoft.SDP.SDPCore.Models.DbContexts;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using SDP.ViewModels;
 using System;
@@ -196,16 +196,7 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-        public IActionResult AddCategory()
-        {
-            return View();
-        }
-
-        public IActionResult AddBrand()
-        {
-            return View();
-        }
-
+        
 
     }
 }

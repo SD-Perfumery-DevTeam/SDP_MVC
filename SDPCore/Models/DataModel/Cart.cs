@@ -6,19 +6,13 @@ using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Models
 {
-    
+    //cart object is not present in the database
+    //cart list stores the product id as a key and the quantity of said prodcut and any discount as value
     public class Cart
     {
         public int cartID { get; set; }
-        public IDbRepo _dbRepo;
         public bool promotionActive { get; set; } = false;
-
-        public Cart(IDbRepo dbRepo)
-        {
-            _dbRepo = dbRepo;
-        }
-
-        public Dictionary<string, CartValuePair> cartList = new Dictionary<string, CartValuePair>();
+        public Dictionary<string, CartValuePair> cartList = new Dictionary<string, CartValuePair>(); 
 
         public void addOrderToCustomerList(Order order) => order.customer.orderList.Add(order);
         
