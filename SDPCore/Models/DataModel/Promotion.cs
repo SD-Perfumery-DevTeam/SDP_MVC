@@ -29,18 +29,36 @@ namespace Microsoft.SDP.SDPCore.Models
         }
         [Key]
         public Guid promoId { get; set; }
+
+        [Display(Name = "Title")]
         public string title { get; set; }
+
+        [Display(Name = "Promotion Image")]
         public string imgUrl { get; set; }
+
+        [Display(Name = "Description")]
         public string description { get; set; }
+
         [Required]
+        [Display(Name = "Product")]
         public Product product { get; set; }
+
         [Required]
+        [Display(Name = "Promotion Code")]
         public string promoCode { get; set; }
+
         [Required]
+        [Display(Name = "Discount Percentage")]
         public decimal discount { get; set; }
+
+        [Display(Name = "Start Date")]
         public DateTime startDate { get; set; }
+
+        [Display(Name = "End Date")]
         public DateTime endDate { get; set; }
+
         [Required]
+        [Display(Name = "Active")]
         public bool isActive { get; set; }
     }
 }
