@@ -6,13 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\images\article\**" />
-    <Compile Remove="wwwroot\images\promotion\**" />
+    <Compile Remove="wwwroot\images\NewFolder\**" />
     <Content Remove="wwwroot\images\article\**" />
-    <Content Remove="wwwroot\images\promotion\**" />
+    <Content Remove="wwwroot\images\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\images\article\**" />
-    <EmbeddedResource Remove="wwwroot\images\promotion\**" />
+    <EmbeddedResource Remove="wwwroot\images\NewFolder\**" />
     <None Remove="wwwroot\images\article\**" />
-    <None Remove="wwwroot\images\promotion\**" />
+    <None Remove="wwwroot\images\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>

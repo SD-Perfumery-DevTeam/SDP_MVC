@@ -1,4 +1,4 @@
-﻿@model Microsoft.SDP.SDPCore.Models.Cart
+﻿@model SDPWeb.ViewModels.CartView
 @{
     Microsoft.SDP.SDPCore.Interface.ICustomer cutomer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
@@ -23,7 +23,15 @@
                 {
                     foreach (var pair in cutomer.cart.getCartList())
                     {
-                        product = Model._dbRepo.getProduct(pair.Key);
+
+                        foreach (var item in Model.productList)
+                        {
+                            if (item.productId.ToString() == pair.Key)
+                            {
+                                product = item;
+                            }
+                        }
+                        
 
                         decimal subTotal = (1-pair.Value.discount * (decimal)0.01)* product.price * pair.Value.quantity;
                         total = total + subTotal;

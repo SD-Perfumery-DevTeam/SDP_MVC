@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.SDP.SDPCore.Models.DbContext
+namespace Microsoft.SDP.SDPCore.Models.DbContexts
 {
     public class DbRepo : IDbRepo 
     {
@@ -30,10 +30,18 @@ namespace Microsoft.SDP.SDPCore.Models.DbContext
             return !string.IsNullOrWhiteSpace(Id)? _db.product.Include(m => m.brand).Include(m => m.category).ToList().Find(m => m.productId == Guid.Parse(Id)) : null;
         }
 
-        public Promotion getPromotion(string promoCode)
+        public Promotion getPromotionBypromoCode(string promoCode)
         {
             return !string.IsNullOrWhiteSpace(promoCode) ?  _db.promotion.Include(m => m.product).ToList().Find(m => m.promoCode == promoCode) : null;
         }
 
+        public Promotion getPromotionByID(string promoId)
+        {
+            return !string.IsNullOrWhiteSpace(promoId) ? _db.promotion.Include(m => m.product).ToList().Find(m => m.promoId.ToString()== promoId) : null;
+        }
+        public IEnumerable<Product> GetProductList() 
+        {
+            return _db.product.Include(m => m.brand).Include(m => m.category).ToList();
+        }
     }
 }

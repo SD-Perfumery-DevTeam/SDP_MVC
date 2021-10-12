@@ -7,7 +7,7 @@
             <h2>Edit Product - @Model.product.title @Model.product.productType</h2>
 
             <form asp-controller="Inventory" asp-action="AddPromotion" method="post">
-                 <button type="submit"  class="btn btn-primary"  name="productId" value="@Model.product.productId">Add a promotion</button>
+                <button type="submit" class="btn btn-primary" name="productId" value="@Model.product.productId">Add a promotion</button>
             </form>
 
 
@@ -32,7 +32,8 @@
                             {
                 <option value="@item.Value" name="brandID">
                     @item.Text
-                </option>}
+                </option>
+}
                         </select>
                     </div>
                 </div>
@@ -67,7 +68,8 @@
                             {
                 <option value="@item.Value" name="catID">
                     @item.Text
-                </option>}
+                </option>
+}
                         </select>
                     </div>
                     <div class="col-4">
@@ -132,15 +134,15 @@
                     <div class="col-6">
                         <label asp-for="product.isActive" class="form-label"></label>
                         @Html.DropDownListFor(m => m.product.isActive, new SelectList(
-                                 new[]
-                                 {
+                                      new[]
+                                      {
                                 new {Value = "True", Text = "Active"},
                                 new {Value = "False", Text = "Inactive"},
-                     },
-                                 "Value",
-                                 "Text",
-                                 Model.product
-                             ))
+              },
+                                      "Value",
+                                      "Text",
+                                      Model.product
+                                  ))
                     </div>
                 </div>
 

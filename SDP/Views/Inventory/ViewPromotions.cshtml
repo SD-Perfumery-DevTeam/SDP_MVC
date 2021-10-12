@@ -10,7 +10,7 @@
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
             <h2>Promotions</h2>
-            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
+            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditPromotion" method="post">
                 <div>
                     <table class="table table-bordered" style="margin:0 auto">
                         <thead>
@@ -33,7 +33,7 @@
                                 <td>@item.discount %</td>
                                 <td>@item.startDate</td>
                                 <td>@item.endDate</td>
-                                <td><button class="btn btn-sm btn-primary" name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
+                                <td><button class="btn btn-sm btn-primary" name="promoId" value="@item.promoId" type="submit">Edit</button></td>
                             </tr>
                         }
                     </table>

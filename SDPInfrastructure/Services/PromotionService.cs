@@ -19,12 +19,12 @@ namespace SDPInfrastructure.Services
 
         public string validatePromoCode(string promoCode) 
         {
-           return  _dbRepo.getPromotion(promoCode).product.productId.ToString();
+           return  _dbRepo.getPromotionBypromoCode(promoCode).product.productId.ToString();
         }
 
         public bool validatePromoDate(string promoCode)
         {
-            if (_dbRepo.getPromotion(promoCode).startDate > DateTime.UtcNow || _dbRepo.getPromotion(promoCode).endDate < DateTime.UtcNow)
+            if (_dbRepo.getPromotionBypromoCode(promoCode).startDate > DateTime.UtcNow || _dbRepo.getPromotionBypromoCode(promoCode).endDate < DateTime.UtcNow)
             {
                 return false;
             }

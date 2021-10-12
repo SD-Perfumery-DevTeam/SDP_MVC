@@ -36,5 +36,30 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             product.imgUrl = fileName;
             return fileName;
         }
+        public async Task<string> addImageToFileAsync(IFormFile imgFile, Promotion promotion, List<Product> pList)
+        {
+            var fileName = Path.GetFileName(imgFile.FileName);
+            string[] fileNameAry = fileName.Split(".");
+            foreach (var p in pList)
+            {
+                if (p.imgUrl.Equals(fileName.Trim()))
+                {
+                    fileName = fileNameAry[fileNameAry.Length - 2] + "_new." + fileNameAry[fileNameAry.Length - 1];
+                }
+            }
+
+            if (fileNameAry[fileNameAry.Length - 1].Trim().ToLower() != "png" && fileNameAry[fileNameAry.Length - 1].Trim().ToLower() != "jpg")
+            {
+                return "Format Error";
+            }
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\promotion", fileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await imgFile.CopyToAsync(fileStream);
+            }
+            promotion.imgUrl = fileName;
+            return fileName;
+        }
     }
 }

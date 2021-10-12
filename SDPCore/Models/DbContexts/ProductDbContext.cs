@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.SDP.SDPCore.Models.DbContext
+namespace Microsoft.SDP.SDPCore.Models.DbContexts
 {
     public class ProductDbContext:IdentityDbContext
     {
@@ -23,7 +23,7 @@ namespace Microsoft.SDP.SDPCore.Models.DbContext
           public DbSet<OrderLine> orderLines { get; set; }
           public DbSet<Articles> articles { get; set; }
           public DbSet<Delivery> deliveries { get; set; }*/
-
+       
         public ProductDbContext(DbContextOptions<ProductDbContext> options):base(options)
         {
             Database.EnsureCreated();
