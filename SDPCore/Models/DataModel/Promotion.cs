@@ -13,7 +13,8 @@ namespace Microsoft.SDP.SDPCore.Models
 
         public Promotion(Guid promoId, string title, string imgUrl,
             string description, Product product, string promoCode,
-            decimal discount, DateTime statDate, DateTime endDate)
+            decimal discount, DateTime startDate, DateTime endDate,
+            bool isActive)
         {
             this.promoId = promoId;
             this.title = title;
@@ -22,8 +23,9 @@ namespace Microsoft.SDP.SDPCore.Models
             this.product = product;
             this.promoCode = promoCode;
             this.discount = discount;
-            this.startDate = statDate;
+            this.startDate = startDate;
             this.endDate = endDate;
+            this.isActive = isActive;
         }
         [Key]
         public Guid promoId { get; set; }
@@ -38,5 +40,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public decimal discount { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
+        [Required]
+        public bool isActive { get; set; } 
     }
 }
