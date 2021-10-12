@@ -148,7 +148,7 @@ button.sdp-style, select.sdp-style {
 .btn-big {
   height: 2.5rem;
   font-size: 1rem;
-  color: var(--color-proposed-purple-90);;
+  color: var(--color-proposed-purple-90);
 }
 
 button.sdp-style:hover, select.sdp-style:hover {

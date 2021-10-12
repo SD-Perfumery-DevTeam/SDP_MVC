@@ -74,6 +74,7 @@ Update 24/09/2021
 
 ```
 Update 11/10/2021
-1. small styling improvements
-2. switch to bootstrap icons
+1. remove external library files from repo and configure libman.json
+2. small styling improvements
+3. switch to bootstrap icons
 ```
