@@ -5,6 +5,12 @@ const row = document.querySelector("#product-list");
 
 productDbJson.forEach(displayCardFunc);
 
+function reDisplay()
+{
+    productDbJson.forEach(displayCardFunc);
+
+}
+
 function displayCardFunc(prod) {
     //Switch case to display a different string for EDP / EDT perfumes.
     let type;

@@ -36,8 +36,7 @@ namespace SDP.Controllers
         [HttpGet]
         public IActionResult Index(int pageNumber = 0)
         {
-
-            var products = _db.product
+            var products = _dbRepo.GetProductList()
                           .Skip(pageNumber * 20)
                           .Take(20);
             int totalPage = _db.product.Count() / 20;
@@ -48,7 +47,7 @@ namespace SDP.Controllers
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 
-                
+
 
                 HttpContext.Session.SetString("Id", Id);
             }
@@ -57,14 +56,16 @@ namespace SDP.Controllers
 
             try
             {
+                var brands = _db.brand.ToList();
                 return View(new Catalog
                 {
                     products = products,
-                    brands = _db.brand.ToList(),
+                    brands = brands,
+                  
                     categories = _db.category.ToList(),
                     totalPage = totalPage,
                     customer = _customer
-                }); 
+                });
             }
             catch (Exception ex)
             {
@@ -81,7 +82,7 @@ namespace SDP.Controllers
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.userId.ToString();
 
-               
+
 
                 HttpContext.Session.SetString("Id", Id);
             }
@@ -177,7 +178,7 @@ namespace SDP.Controllers
         {
             if (ufile != null && ufile.Length > 0)
             {
-                if ( await _imageService.addImageToFileAsync(ufile, AP.product, _db.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
+                if (await _imageService.addImageToFileAsync(ufile, AP.product, _db.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
             }
 
             try
@@ -195,8 +196,5 @@ namespace SDP.Controllers
             }
             return RedirectToAction("Index", "Product");
         }
-
-        
-
     }
 }
