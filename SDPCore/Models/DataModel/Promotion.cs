@@ -25,7 +25,7 @@ namespace Microsoft.SDP.SDPCore.Models
             this.discount = discount;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.isActive = isActive;
+            /*this.isActive = isActive;*/
         }
         [Key]
         public Guid promoId { get; set; }
@@ -40,7 +40,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public decimal discount { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
-        [Required]
-        public bool isActive { get; set; }
+        /*[Required]
+        public bool isActive { get; set; }*/
     }
 }

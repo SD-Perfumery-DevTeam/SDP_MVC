@@ -36,54 +36,23 @@
     </div>
 </section>
 
-@*<aside>
+<aside>
     <div id="filter" style="position:absolute; top :280px; margin-left:50px">
         <h4> <strong> Add filters</strong></h4>
-        <form action="/" method="post">
-            <strong> Gender</strong>
-            <table>
-                @foreach (var item in Enum.GetValues(typeof(Microsoft.SDP.SDPCore.Consts.Genders)))
-                {
-                    <tr>
-                        <td><label><input type="checkbox" name="" value="@item" /> @item </label></td>
-                    </tr>
-                }
-            </table>
-            <br />
-            <strong> Type </strong>
-            <table>
 
-                @foreach (var item in Enum.GetValues(typeof(Microsoft.SDP.SDPCore.Consts.PTypes)))
-                {
-                    <tr>
-                        <td><label><input type="checkbox" name="" value="@item." /> @item.ToString() </label></td>
-                    </tr>
-                }
-            </table>
-            <br />
-            <strong> Size </strong>
-            <table>
+        <table>
+            @foreach (var brand in Model.brands)
+            {
                 <tr>
-                    <td><label><input type="checkbox" name="" value=50 /> 50ml or less </label></td>
+                    <td style="padding:7px"><label><input type="checkbox" name="@brand.title" value="@brand.title" /> @brand.title </label></td>
                 </tr>
-                <tr>
-                    <td><label><input type="checkbox" name="" value=100 /> 50ml -100ml </label></td>
-                </tr>
-                <tr>
-                    <td><label><input type="checkbox" name="" value=200 /> 100ml -200ml </label></td>
-                </tr>
-                <tr>
-                    <td><label><input type="checkbox" name="" value=400 />200ml - 400ml </label></td>
-                </tr>
+            }
+        </table>
+        <br />
 
-                <tr>
-                    <td><label><input type="checkbox" name="" value=1000 />400ml and greater </label></td>
-                </tr>
-            </table>
-            <button class="sdp-style" type="submit" style="margin-top:30px">Apply filter</button>
-        </form>
+        <button class="sdp-style" type="submit" onclick="" style="margin-top:30px">Apply filter</button>
     </div>
-</aside>*@
+</aside>
 
 <section id="section-suggested">
     <div class="container">
@@ -92,7 +61,8 @@
 </section>
 <script>
 var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
-console.log(productDbJson)
+    console.log(productDbJson)
+
 </script>
 <script src="~/js/product.js" asp-append-version="true"></script>
 <script src="~/js/sort.js" asp-append-version="true"></script>
