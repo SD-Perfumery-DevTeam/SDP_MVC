@@ -1,25 +1,15 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model SDPWeb.ViewModels.AddPromotionView
+﻿@model SDPWeb.ViewModels.AddPromotionView
 
 <section id="section-cms">
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
-            <h2>Edit Promotion for - @Model.promotion.product.title </h2>
+            <h2>Edit Promotion for - @Model.promotion.product.title</h2>
 
             <h3>@ViewData["Error"]</h3>
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="UpdatePromotionDb" method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
-
-
 
                 <input required="required" name="promoId" value="@Model.promotion.promoId" hidden />
                 <input required="required" name="productId" value="@Model.promotion.product.productId" hidden />
@@ -41,17 +31,14 @@
                 <div class="col-6">
                     <label class="form-label">Enter the discount(the number indicates how many % off the original price)</label>
                     <div class="input-group">
-
                         <input required="required" type="number" min="1" max="100" asp-for="promotion.discount" class="form-control" />
                     </div>
                     <span asp-validation-for="promotion.discount" class="text-danger"></span>
                 </div>
 
-
                 <div class="col-6">
                     <label class="form-label">Start Date</label>
                     <div class="input-group">
-
                         <input type="date" asp-for="promotion.startDate" />
                     </div>
                     <span asp-validation-for="promotion.startDate" class="text-danger"></span>
@@ -60,7 +47,6 @@
                 <div class="col-6">
                     <label class="form-label">End Date</label>
                     <div class="input-group">
-
                         <input type="date" asp-for="promotion.endDate" />
                     </div>
                     <span asp-validation-for="promotion.endDate" class="text-danger"></span>
@@ -73,7 +59,6 @@
                     <span asp-validation-for="promotion.description" class="text-danger"></span>
                 </div>
 
-
                 <div class="mb-4">
                     <label asp-for="promotion.imgUrl" class="form-label"></label>
                     <div class="custom-file">
@@ -85,12 +70,24 @@
                     <span asp-validation-for="promotion.imgUrl" class="text-danger"></span>
                 </div>
 
+                <div class="mb-4">
+                    <label asp-for="promotion.isActive" class="form-label"></label>
+                    @Html.DropDownListFor(m => m.promotion.isActive, new SelectList(
+                        new[]
+                        {
+                            new {Value = "True", Text = "Active"},
+                            new {Value = "False", Text = "Inactive"},
+                        },
+                        "Value",
+                        "Text",
+                        Model.promotion
+                    ))
+                </div>
+
                 @section Scripts{
                     <script type="text/javascript" src="~/js/addproduct.js"></script>
                 }
                 <button type="submit" class="btn btn-primary">Edit Promotion</button>
-
-
             </form>
 
             <form asp-action="SendEmailToCustomers" asp-controller="CMS" method="post" style="margin-top:20px;">
