@@ -7,9 +7,14 @@ productDbJson.forEach(displayCardFunc);
 
 function reDisplay()
 {
-    productDbJson.forEach(displayCardFunc);
-
+    row.innerHTML = "";
+    var list = productDbJson.filter(filterByBrand);
+    list.forEach(displayCardFunc);
 }
+function filterByBrand(product) {
+    return document.getElementById(product.brand.title).checked;
+}
+
 
 function displayCardFunc(prod) {
     //Switch case to display a different string for EDP / EDT perfumes.
@@ -158,3 +163,6 @@ function sortBy(byWat) {
         sortByNameZA();
     }
 }
+
+
+
