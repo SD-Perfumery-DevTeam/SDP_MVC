@@ -23,8 +23,9 @@ namespace SDP.Controllers
             _promotionService = promotionService;
         }
         //===================Displays the cart page=======================
-        public IActionResult Index()
+        public IActionResult Index(string Msg)
         {
+            ViewData["Msg"] = Msg;
             //checking for valid id in session data creates a new one if none exist
             if (HttpContext.Session.GetString("Id") == null)
             {
@@ -41,6 +42,10 @@ namespace SDP.Controllers
         [HttpPost]
         public IActionResult promoCodeCheck(string promoCode) 
         {
+            if (string.IsNullOrEmpty(promoCode))
+            {
+                return RedirectToAction("Index", new { Msg = "Invalid promo code" });
+            }
             string appliedId = _promotionService.validatePromoCode(promoCode);
             var customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -94,6 +99,13 @@ namespace SDP.Controllers
             try
             {
                 customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
+               
+
+                if (HttpContext.Session.GetString("count") != null)
+                {
+                    var count = int.Parse(HttpContext.Session.GetString("count"));
+                    HttpContext.Session.SetString("count", (count - customer.cart.cartList[Id].quantity).ToString());
+                }
                 customer.cart.RemoveProductToCart(Id);
                 return RedirectToAction("Index");
             }
@@ -101,7 +113,7 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-
+            
         }
     }
 }
