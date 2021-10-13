@@ -4,7 +4,6 @@
     decimal total = 0;
 
     Product product = null;
-
 }
 
 <section id="section-banner">
@@ -18,13 +17,14 @@
         <div class="cart-contents">
             <h2>@ViewData["Msg"]</h2>
             <h2 style="color:red">@ViewData["Error"]</h2>
-            <ul>
-                @if (customer != null)
-                {
-                    foreach (var pair in customer.cart.getCartList())
+
+            @if (customer != null && customer.cart.getCartList().Count > 0)
+            {
+                <ul>
+                    @foreach (var pair in customer.cart.getCartList())
                     {
 
-                        foreach (var item in Model.productList)
+                        @foreach (var item in Model.productList)
                         {
                             if (item.productId.ToString() == pair.Key)
                             {
@@ -32,9 +32,9 @@
                             }
                         }
 
-
                         decimal subTotal = (1 - pair.Value.discount * (decimal)0.01) * product.price * pair.Value.quantity;
                         total = total + subTotal;
+
                         <li class="cart-item">
                             <img src="~/images/product/@product.imgUrl" alt="@product.title" />
                             <div class="cart-item-desc">
@@ -57,23 +57,25 @@
                             <a asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@product.productId" class="sdp-style btn btn-danger" name="productId" value="@product.productId" style="height:38px;">Remove Item</a>
                         </li>
                     }
-                }
-            </ul>
-            <div class="cart-total">
-                <div class="cart-total-box">
-                    <h4>Order Total</h4>
-                    <p>Rs. @total</p>
-                </div>
-                <form asp-controller="Cart" asp-action="promoCodeCheck" method="post">
-                    <div>
-                        <input name="promoCode" type="text" placeholder="PromoCode" style=" margin-top:10px; margin-bottom:10px">
-                        <button class="sdp-style" type="submit">Add Promo Code</button>
+                </ul>
+                <div class="cart-total">
+                    <div class="cart-total-box">
+                        <h4>Order Total</h4>
+                        <p>Rs. @total</p>
                     </div>
-                </form>
+                    <form asp-controller="Cart" asp-action="promoCodeCheck" method="post">
+                        <div>
+                            <input name="promoCode" type="text" placeholder="PromoCode" style=" margin-top:10px; margin-bottom:10px">
+                            <button class="sdp-style" type="submit">Add Promo Code</button>
+                        </div>
+                    </form>
 
-                <button type="button" id="cart-btn-checkout" class="sdp-style">Proceed to Checkout</button>
-                <small><a asp-area="" asp-controller="Product" asp-action="Index">Continue Shopping</a></small>
-            </div>
+                    <button type="button" id="cart-btn-checkout" class="sdp-style">Proceed to Checkout</button>
+                    <small><a asp-area="" asp-controller="Product" asp-action="Index">Continue Shopping</a></small>
+                </div>
+
+            }
+
         </div>
     </div>
 </section>
