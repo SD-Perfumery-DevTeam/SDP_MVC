@@ -66,7 +66,7 @@
                 </div>
                 <form asp-controller="Cart" asp-action="promoCodeCheck" method="post">
                     <div>
-                        <input name="promoCode" type="text" placeholder="PromoCode" style=" margin-top:10px; margin-bottom:10px">
+                        <input maxlength="10" name="promoCode" type="text" placeholder="PromoCode" style=" margin-top:10px; margin-bottom:10px">
                         <button class="sdp-style" type="submit">Add Promo Code</button>
                     </div>
                 </form>
