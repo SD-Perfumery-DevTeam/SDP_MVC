@@ -1,6 +1,6 @@
 ﻿@model SDPWeb.ViewModels.CartView
 @{
-    Microsoft.SDP.SDPCore.Interface.ICustomer cutomer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
+    Microsoft.SDP.SDPCore.Interface.ICustomer customer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
 
     Product product = null;
@@ -19,9 +19,9 @@
             <h2>@ViewData["Msg"]</h2>
             <h2 style="color:red">@ViewData["Error"]</h2>
             <ul>
-                @if (cutomer != null)
+                @if (customer != null)
                 {
-                    foreach (var pair in cutomer.cart.getCartList())
+                    foreach (var pair in customer.cart.getCartList())
                     {
 
                         foreach (var item in Model.productList)
