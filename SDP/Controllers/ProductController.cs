@@ -61,7 +61,6 @@ namespace SDP.Controllers
                 {
                     products = products,
                     brands = brands,
-                  
                     categories = _db.category.ToList(),
                     totalPage = totalPage,
                     customer = _customer

@@ -27,6 +27,16 @@ namespace Microsoft.SDP.SDPCore.Models
             }
             else cartList.Add(product.productId.ToString(), new CartValuePair { quantity =count, discount = 0 });
         }
+
+        public void RemoveProductToCart(string productId)
+        {
+            if (cartList.ContainsKey(productId))
+            {
+                cartList.Remove(productId);
+            }
+        }
+
+
         public class CartValuePair //internal class recording both quantity and discount
         {
             public int quantity { get; set; }

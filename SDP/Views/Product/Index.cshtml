@@ -26,11 +26,13 @@
         @using (Html.BeginForm("Index", "Product"))
         {
             <div class="page-numbers">
-                @for (int i = 0; i < Model.totalPage; i++)
-                {
-                    int pageNum = i + 1;
-                    <button class="sdp-style" type="submit" name="pageNumber" value=@i> @pageNum </button>
-                }
+                 @for (int i = 0; i < Model.totalPage; i++)
+                    {
+                        int pageNum = i + 1;
+                        <button class="sdp-style" type="submit" name="pageNumber" value=@i> @pageNum </button>
+                    }
+
+                <button id="btn_prev" class="sdp-style">prev</button> <button id="btn_next" class="sdp-style">next</button>
             </div>
         }
     </div>
@@ -39,16 +41,16 @@
 <aside>
     <div id="filter" style="position:absolute; top :280px; margin-left:50px">
         <h4> <strong> Add filters</strong></h4>
-
         <table>
             @foreach (var brand in Model.brands)
             {
                 <tr>
-                    <td style="padding:7px"><label><input type="checkbox" name="@brand.title" value="@brand.title" /> @brand.title </label></td>
+                    <td style="padding:7px"><label><input type="checkbox" name="brand" id="@brand.title" value="@brand.title" /> @brand.title </label></td>
                 </tr>
             }
         </table>
         <br />
+
 
         <button class="sdp-style" type="button" onclick="reDisplay()" style="margin-top:30px">Apply filter</button>
     </div>
@@ -59,10 +61,14 @@
         <h3>Recommended Fragrances</h3>
     </div>
 </section>
-<script>
-var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
-    console.log(productDbJson)
 
+<script>
+    var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
 </script>
-<script src="~/js/product.js" asp-append-version="true"></script>
+
+
 <script src="~/js/sort.js" asp-append-version="true"></script>
+@*<script src="~/js/pagination.js" asp-append-version="true"></script>*@
+
+
+    

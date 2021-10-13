@@ -86,6 +86,23 @@ namespace SDP.Controllers
             }
             
         }
+
+        //===================Remove from cart=======================
+        public IActionResult RemoveFromCart(string Id)
+        {
+
+            try
+            {
+                customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
+                customer.cart.RemoveProductToCart(Id);
+                return RedirectToAction("Index");
+            }
+            catch (System.Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+        }
     }
 }
 
