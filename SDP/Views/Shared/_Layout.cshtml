@@ -5,11 +5,15 @@
     string text = "Login";
     string action = "Login";
     string status = HttpContextAccessor.HttpContext.Session.GetString("LoggedIN");
+    string count  = HttpContextAccessor.HttpContext.Session.GetString("count") == null ? "0" : HttpContextAccessor.HttpContext.Session.GetString("count");
+
+
     if (status == "true")
     {
         text = "Logout";
         action = "Logout";
     }
+
 }
 
 <!DOCTYPE html>
@@ -39,7 +43,11 @@
                     <li><a asp-controller="Account" asp-action=@action>@text</a></li>
                     <li>
                         <a asp-controller="Cart" asp-action="Index">
-                            <i class="bi bi-cart" id="cart"></i><!-- Add dynamic cart contents count here. -->
+                            @{
+
+                                var display = int.Parse(count);
+                             }
+                            <i class="bi bi-cart" id="cart"></i>@await Html.PartialAsync("~/Views/Partials/CartCountPartial.cshtml", display)
                         </a>
                     </li>
                 </ul>

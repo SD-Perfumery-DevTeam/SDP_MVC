@@ -129,6 +129,22 @@ namespace SDP.Controllers
             var list = GlobalVar.customerList;
             ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart.addProductToCart(product, quantity); //add product to guest customer
 
+            try//increments cart count display
+            {
+                if (HttpContext.Session.GetString("count") == null)
+                {
+                    HttpContext.Session.SetString("count", quantity.ToString());
+                }
+                else
+                {
+                    var count = int.Parse(HttpContext.Session.GetString("count"));
+                    HttpContext.Session.SetString("count",(count + quantity).ToString());
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("Index", "Product");
         }
 
