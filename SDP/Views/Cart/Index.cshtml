@@ -4,12 +4,22 @@
     decimal total = 0;
 
     Product product = null;
+    bool emptyCart = customer.cart.getCartList().Count > 0 ? false : true;
 }
 
 <section id="section-banner">
     <div class="container">
         <h2>Shopping cart</h2>
-        <p>You have selected the following items.</p>
+        @if (emptyCart)
+        {
+            <p>
+                Cart is currently empty - <a asp-area="" asp-controller="Product" asp-action="Index">take me back to the store</a>
+            </p>
+        }
+        else
+        {
+            <p>You have selected the following items.</p>
+        }
     </div>
 </section>
 <section>
@@ -18,7 +28,7 @@
             <h2>@ViewData["Msg"]</h2>
             <h2 style="color:red">@ViewData["Error"]</h2>
 
-            @if (customer != null && customer.cart.getCartList().Count > 0)
+            @if (customer != null && !emptyCart)
             {
                 <ul>
                     @foreach (var pair in customer.cart.getCartList())
