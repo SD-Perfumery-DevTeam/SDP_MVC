@@ -7,15 +7,15 @@
             <h2>Promotions</h2>
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditPromotion" method="post">
                 <div>
-                    <table class="table table-bordered" style="margin:0 auto">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Promotion Title</th>
-                                <th>Promotion ID</th>
-                                <th>Product name</th>
-                                <th>Discount Rate</th>
+                                <th>Product Name</th>
+                                <th>Discount</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Active</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -23,11 +23,11 @@
                         {
                             <tr>
                                 <td>@item.title</td>
-                                <td>@item.promoId</td>
                                 <td>@item.product.title</td>
                                 <td>@item.discount %</td>
                                 <td>@item.startDate</td>
                                 <td>@item.endDate</td>
+                                <td>@item.isActive</td>
                                 <td><button class="btn btn-sm btn-primary" name="promoId" value="@item.promoId" type="submit">Edit</button></td>
                             </tr>
                         }

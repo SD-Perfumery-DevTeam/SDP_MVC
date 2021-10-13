@@ -363,6 +363,12 @@ footer .container ul li {
   border-radius: 0.3rem;
 }
 
+.cart-promo-cta {
+  padding: 1rem;
+  border-radius: 0.3rem;
+  background-color: var(--color-client-spec-1)
+}
+
 .product {
   width: 15rem;
 }
@@ -431,7 +437,7 @@ footer .container ul li {
   list-style: none;
 }
 
-.cart-item {
+.cart-item, .cart-promo-cta {
   margin-bottom: 1rem;
   display: flex;
   flex-direction: row;
@@ -439,8 +445,19 @@ footer .container ul li {
   flex-wrap: wrap;
 }
 
+.cart-promo-cta input {
+  margin-right: 1rem;
+  border: 1px solid var(--color-proposed-purple-40);
+}
+
+.cart-promo-cta input, .cart-promo-cta button {
+  height: 1.6rem;
+  font-size: 0.9rem;
+  border-radius: 0.3rem;
+}
+
 .cart-item img {
-  max-width: 6rem;
+    max-width: 6rem;
 }
 
 .cart-total, #cart-btn-checkout {
