@@ -31,6 +31,14 @@
             @if (customer != null && !emptyCart)
             {
                 <ul>
+                    <li class="cart-promo-cta">
+                        <form asp-controller="Cart" asp-action="promoCodeCheck" method="post">
+                            <div>
+                                <input name="promoCode" type="text" placeholder="Enter promo code" />
+                                <button class="sdp-style" type="submit">Add Promo Code</button>
+                            </div>
+                        </form>
+                    </li>
                     @foreach (var pair in customer.cart.getCartList())
                     {
 
@@ -64,7 +72,7 @@
                                 <h5 class="desc">Item Total</h5>
                                 <p>Rs. @Decimal.Round(subTotal, 2)</p>
                             </div>
-                            <a asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@product.productId" class="sdp-style btn btn-danger" name="productId" value="@product.productId" style="height:38px;">Remove Item</a>
+                            <small><a asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@product.productId" name="productId" value="@product.productId" style="height:38px;">Remove Item</a></small>
                         </li>
                     }
                 </ul>
@@ -73,12 +81,6 @@
                         <h4>Order Total</h4>
                         <p>Rs. @Decimal.Round(total, 2)</p>
                     </div>
-                    <form asp-controller="Cart" asp-action="promoCodeCheck" method="post">
-                        <div>
-                            <input name="promoCode" type="text" placeholder="PromoCode" style=" margin-top:10px; margin-bottom:10px">
-                            <button class="sdp-style" type="submit">Add Promo Code</button>
-                        </div>
-                    </form>
 
                     <button type="button" id="cart-btn-checkout" class="sdp-style">Proceed to Checkout</button>
                     <small><a asp-area="" asp-controller="Product" asp-action="Index">Continue Shopping</a></small>
