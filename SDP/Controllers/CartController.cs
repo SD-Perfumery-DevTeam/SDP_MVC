@@ -94,6 +94,13 @@ namespace SDP.Controllers
             try
             {
                 customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
+               
+
+                if (HttpContext.Session.GetString("count") != null)
+                {
+                    var count = int.Parse(HttpContext.Session.GetString("count"));
+                    HttpContext.Session.SetString("count", (count - customer.cart.cartList[Id].quantity).ToString());
+                }
                 customer.cart.RemoveProductToCart(Id);
                 return RedirectToAction("Index");
             }
@@ -101,7 +108,7 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-
+            
         }
     }
 }
