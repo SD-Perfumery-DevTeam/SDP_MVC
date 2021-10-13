@@ -52,7 +52,7 @@
 
                                 @{
                                     decimal priceDiscountApplied = 0;
-                                    priceDiscountApplied = product.price * (1 - pair.Value.discount * (decimal)0.01);
+                                    priceDiscountApplied = Decimal.Round(product.price * (1 - pair.Value.discount * (decimal)0.01), 2);
                                 }
                                 <p>Rs. @priceDiscountApplied</p>
                             </div>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="cart-item-total">
                                 <h5 class="desc">Item Total</h5>
-                                <p>Rs. @subTotal</p>
+                                <p>Rs. @Decimal.Round(subTotal, 2)</p>
                             </div>
                             <a asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@product.productId" class="sdp-style btn btn-danger" name="productId" value="@product.productId" style="height:38px;">Remove Item</a>
                         </li>
@@ -71,7 +71,7 @@
                 <div class="cart-total">
                     <div class="cart-total-box">
                         <h4>Order Total</h4>
-                        <p>Rs. @total</p>
+                        <p>Rs. @Decimal.Round(total, 2)</p>
                     </div>
                     <form asp-controller="Cart" asp-action="promoCodeCheck" method="post">
                         <div>
