@@ -14,6 +14,7 @@
         action = "Logout";
     }
 
+    var display = int.Parse(count);
 }
 
 <!DOCTYPE html>
@@ -43,10 +44,6 @@
                     <li><a asp-controller="Account" asp-action=@action>@text</a></li>
                     <li>
                         <a asp-controller="Cart" asp-action="Index">
-                            @{
-
-                                var display = int.Parse(count);
-                             }
                             <i class="bi bi-cart" id="cart"></i>@await Html.PartialAsync("~/Views/Partials/CartCountPartial.cshtml", display)
                         </a>
                     </li>
