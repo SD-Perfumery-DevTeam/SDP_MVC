@@ -208,15 +208,6 @@ header nav .container #cart:after {
   text-align: center;
 }
 
-header nav #header-cta {
-  margin-left: 1rem;
-  font-style: italic;
-}
-
-header nav #header-cta .material-icons {
-  margin-right: 0.25rem;
-}
-
 header nav h1 {
   font-family: var(--font-family-display);
   font-weight: 400;
@@ -258,6 +249,15 @@ header #header-brand .container {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
+}
+
+header #header-brand #header-cta {
+    margin-left: 1rem;
+    font-style: italic;
+}
+
+header #header-brand .material-icons {
+    margin-right: 0.25rem;
 }
 
 header #header-search {
