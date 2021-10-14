@@ -36,7 +36,7 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <h1>SD Perfumery</h1>
                 </a>
-                <ul>
+                <ul class="nav-links d-none d-md-block">
                     <li><a asp-area="" asp-controller="Product" asp-action="Index">Shop</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">About Us</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">Contact Us</a></li>
@@ -47,6 +47,7 @@
                         </a>
                     </li>
                 </ul>
+                <span class="nav-links-collapsed d-md-none"><i class="bi bi-list" id="list"></i></span>
             </div>
         </nav>
         <div id="header-brand">

@@ -191,7 +191,7 @@ header nav .container {
   line-height: 1rem;
 }
 
-header nav .container #cart {
+header nav .container i {
   font-size: 1.9rem;
   position: relative;
 }
@@ -215,7 +215,10 @@ header nav h1 {
   line-height: 3rem;
   color: var(--color-proposed-purple-75);
   text-shadow: -0.15rem 0 0.2rem var(--color-white);
-  min-width: 380px;
+}
+
+header nav .nav-links-collapsed {
+
 }
 
 header nav ul {
@@ -252,12 +255,12 @@ header #header-brand .container {
 }
 
 header #header-brand #header-cta {
-    margin-left: 1rem;
-    font-style: italic;
+  margin-left: 1rem;
+  font-style: italic;
 }
 
 header #header-brand .material-icons {
-    margin-right: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 header #header-search {
