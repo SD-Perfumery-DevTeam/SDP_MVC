@@ -44,7 +44,7 @@
                     <li><a asp-controller="Account" asp-action=@action>@text</a></li>
                     <li>
                         <a asp-controller="Cart" asp-action="Index">
-                            <i class="bi bi-cart" id="cart"></i>@await Html.PartialAsync("~/Views/Partials/CartCountPartial.cshtml", display)
+                            <i class="bi bi-cart" id="cart" cart-count="@await Html.PartialAsync("~/Views/Partials/CartCountPartial.cshtml", display)"></i>
                         </a>
                     </li>
                 </ul>

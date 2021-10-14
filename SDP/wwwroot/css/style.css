@@ -193,6 +193,16 @@ header nav .container {
 
 header nav .container #cart {
   font-size: 1.9rem;
+  position: relative;
+}
+
+header nav .container #cart:after {
+    content:attr(cart-count);
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 header nav #header-cta {
