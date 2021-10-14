@@ -25,7 +25,7 @@ namespace SDP.Controllers
         //===================Displays the cart page=======================
         public IActionResult Index(string Msg)
         {
-            ViewData["Msg"] = Msg;
+            ViewData["Error"] = Msg;
             //checking for valid id in session data creates a new one if none exist
             if (HttpContext.Session.GetString("Id") == null)
             {
@@ -46,7 +46,7 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Index", new { Msg = "Invalid promo code" });
             }
-            string appliedId = _promotionService.validatePromoCode(promoCode);
+            string appliedId = _promotionService.GetPromoProductId(promoCode);
             var customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
             ViewData["Id"] = HttpContext.Session.GetString("Id");
             try
@@ -62,7 +62,7 @@ namespace SDP.Controllers
                 //validating promocode info  
                 if (customer != null)
                 {
-                    if (_promotionService.validatePromoDate(promoCode))
+                    if (_promotionService.validatePromo(promoCode))
                     {
                         if (customer.cart.cartList.ContainsKey(productAppliedTo.productId.ToString()))
                         {
