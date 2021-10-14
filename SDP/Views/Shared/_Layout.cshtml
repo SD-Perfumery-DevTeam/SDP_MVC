@@ -36,7 +36,7 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <h1>SD Perfumery</h1>
                 </a>
-                <ul class="nav-links d-none d-md-block">
+                <ul id="nav-links-desktop" class=" d-none d-md-block">
                     <li><a asp-area="" asp-controller="Product" asp-action="Index">Shop</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">About Us</a></li>
                     <li><a asp-area="" asp-controller="" asp-action="">Contact Us</a></li>
@@ -47,9 +47,10 @@
                         </a>
                     </li>
                 </ul>
-                <span class="nav-links-collapsed d-md-none">
+                <span id="nav-links-collapsed" class="d-md-none">
                     <a href="#"><i class="bi bi-list" id="list"></i></a>
                 </span>
+                <div id="nav-links-mobile" class="d-none"></div>
             </div>
         </nav>
         <div id="header-brand">
@@ -60,9 +61,9 @@
                 </span>
                 <form id="header-search">
                     <!-- Onclick attribute in the search button below has been
-             copied from Product-Index view. Remove if unecessary
-             (should probably function site wide and be implemented
-             as a listener). -->
+                    copied from Product-Index view. Remove if unecessary
+                    (should probably function site wide and be implemented
+                    as a listener). -->
                     <input type="search" /><button id="btnSearch" class="sdp-style" onclick='setList(JSON.parse())'>
                         <i class="bi bi-search" id="search"></i>
                     </button>
