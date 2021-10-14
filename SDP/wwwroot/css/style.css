@@ -197,12 +197,15 @@ header nav .container #cart {
 }
 
 header nav .container #cart:after {
-    content:attr(cart-count);
-    position: absolute;
-    top: 0.7rem;
-    right: 0.7rem;
-    text-align: center;
-    font-size: 0.9rem;
+  content: attr(cart-count);
+  position: absolute;
+  top: 0.7rem;
+  right: 0.65rem;
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
 }
 
 header nav #header-cta {
