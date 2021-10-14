@@ -208,15 +208,15 @@ header nav .container #cart:after {
   text-align: center;
 }
 
-    header nav h1 {
-        font-family: var(--font-family-display);
-        font-weight: 400;
-        font-size: 3rem;
-        line-height: 3rem;
-        color: var(--color-proposed-purple-75);
-        text-shadow: -0.15rem 0 0.2rem var(--color-white);
-        min-width: 380px;
-    }
+header nav h1 {
+  font-family: var(--font-family-display);
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 3rem;
+  color: var(--color-proposed-purple-75);
+  text-shadow: -0.15rem 0 0.2rem var(--color-white);
+  min-width: 380px;
+}
 
 header nav ul {
   margin: 0;
