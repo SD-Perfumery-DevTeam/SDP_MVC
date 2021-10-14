@@ -199,7 +199,7 @@ header nav .container #cart {
 header nav .container #cart:after {
   content: attr(cart-count);
   position: absolute;
-  top: 0.7rem;
+  top: 0.75rem;
   right: 0.65rem;
   font-size: 0.9rem;
   font-family: Arial, sans-serif;
@@ -215,6 +215,16 @@ header nav #header-cta {
 
 header nav #header-cta .material-icons {
   margin-right: 0.25rem;
+}
+
+header nav h1 {
+  font-family: var(--font-family-display);
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 3rem;
+  color: var(--color-proposed-purple-90);
+  text-shadow: 0.2rem 0.2rem 0.3rem var(--color-client-spec-1);
+  min-width: 380px;
 }
 
 header nav ul {
@@ -248,16 +258,6 @@ header #header-brand .container {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-}
-
-header #header-brand h1 {
-  font-family: var(--font-family-display);
-  font-weight: 400;
-  font-size: 4.5rem;
-  line-height: 4.5rem;
-  color: var(--color-proposed-purple-90);
-  text-shadow: 0.2rem 0.2rem 0.3rem var(--color-client-spec-1);
-  min-width: 380px;
 }
 
 header #header-search {
