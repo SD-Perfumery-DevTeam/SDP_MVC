@@ -219,6 +219,7 @@ header nav h1 {
 
 header nav #nav-links-mobile {
   display: none;
+  transition: ease-in-out 0.5s;
 }
 
 header nav ul {
@@ -473,7 +474,7 @@ footer .container ul li {
 }
 
 .cart-item img {
-    max-width: 6rem;
+  max-width: 6rem;
 }
 
 .cart-total, #cart-btn-checkout {
