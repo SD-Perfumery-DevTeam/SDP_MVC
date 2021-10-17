@@ -36,7 +36,7 @@ namespace SDP.Controllers
         [HttpGet]
         public IActionResult Index(int pageNumber = 0)
         {
-            var products = _dbRepo.GetProductList()
+            var products = _dbRepo.GetProductList().Where(m => m.isActive)
                           .Skip(pageNumber * 20)
                           .Take(20);
             int totalPage = _db.product.Count() / 20;

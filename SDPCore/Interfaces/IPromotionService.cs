@@ -7,7 +7,7 @@ namespace Microsoft.SDP.SDPCore.Interface
 {
     public interface IPromotionService
     {
-        public string validatePromoCode(string promoCode);
-        public bool validatePromoDate(string promoCode);
+        public string GetPromoProductId(string promoCode);
+        public bool validatePromo(string promoCode);
     }
 }
