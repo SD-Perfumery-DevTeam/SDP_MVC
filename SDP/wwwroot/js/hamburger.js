@@ -3,8 +3,19 @@ document.getElementById("nav-links-collapsed").addEventListener("click", toggleH
 
 // Target the content to toggle when clicked.
 var h = document.getElementById("nav-links-mobile");
+// This variable avoids the conditional statement from evaluating incorrectly
+// on the first click. Another workaround is to add display: none as inline
+// styling (prefer to avoid this).
+var hContentVisible = false;
 
 // Toggle visibility of hamburger content.
 function toggleHamburgerContent() {
-    h.style.display === "none" ? h.style.display = "block" : h.style.display = "none";
+    if (!hContentVisible) {
+        h.style.display = "block";
+        hContentVisible = true;
+    }
+    else {
+        h.style.display = "none";
+        hContentVisible = false;
+    }
 }
