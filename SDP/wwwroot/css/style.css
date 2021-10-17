@@ -217,6 +217,10 @@ header nav h1 {
   text-shadow: -0.15rem 0 0.2rem var(--color-white);
 }
 
+header nav #nav-links-mobile {
+  display: none;
+}
+
 header nav ul {
   margin: 0;
   padding: 0;
