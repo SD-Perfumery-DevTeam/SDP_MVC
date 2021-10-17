@@ -6,5 +6,10 @@ var hClass = document.getElementById("nav-links-mobile").className;
 
 // Toggle visibility of hamburger content.
 function toggleHamburgerContent() {
-    hClass === "hide" ? hClass = "show" : hClass = "hide";
+    if (document.getElementById("nav-links-mobile").className === "hide") {
+        document.getElementById("nav-links-mobile").className = "show";
+    }
+    else {
+        document.getElementById("nav-links-mobile").className = "hide";
+    }
 }
