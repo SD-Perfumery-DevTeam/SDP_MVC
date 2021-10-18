@@ -218,7 +218,12 @@ header nav h1 {
 }
 
 header nav #nav-links-mobile {
-  background-color: red;
+  padding-bottom: 0.5rem;
+  background-color: var(--color-client-spec-1);
+}
+
+header nav #nav-links-mobile ul li {
+  margin: 0.5rem 0 0.5rem 0;
 }
 
 header nav #nav-links-mobile.hide {
@@ -226,7 +231,7 @@ header nav #nav-links-mobile.hide {
 }
 
 header nav #nav-links-mobile.show {
-  display: flex;
+  display: block;
 }
 
 header nav #nav-links-desktop ul {
@@ -238,6 +243,10 @@ header nav #nav-links-desktop ul {
 header nav #nav-links-desktop ul li {
   display: inline-block;
   padding-right: 1rem;
+}
+
+header nav ul {
+  list-style-type: none;
 }
 
 header nav ul li a {
