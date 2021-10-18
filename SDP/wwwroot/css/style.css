@@ -229,13 +229,13 @@ header nav #nav-links-mobile.show {
   display: flex;
 }
 
-header nav ul#nav-links-desktop {
+header nav #nav-links-desktop ul {
   margin: 0;
   padding: 0;
   display: inline-block;
 }
 
-header nav ul#nav-links-desktop li {
+header nav #nav-links-desktop ul li {
   display: inline-block;
   padding-right: 1rem;
 }

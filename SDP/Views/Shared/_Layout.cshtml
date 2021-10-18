@@ -36,17 +36,19 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <h1>SD Perfumery</h1>
                 </a>
-                <ul id="nav-links-desktop" class=" d-none d-md-block">
-                    <li><a asp-area="" asp-controller="Product" asp-action="Index">Shop</a></li>
-                    <li><a asp-area="" asp-controller="" asp-action="">About Us</a></li>
-                    <li><a asp-area="" asp-controller="" asp-action="">Contact Us</a></li>
-                    <li><a asp-controller="Account" asp-action=@action>@text</a></li>
-                    <li>
-                        <a asp-controller="Cart" asp-action="Index">
-                            <i class="bi bi-cart" id="cart" cart-count="@await Html.PartialAsync("~/Views/Partials/CartCountPartial.cshtml", display)"></i>
-                        </a>
-                    </li>
-                </ul>
+                <div id="nav-links-desktop" class="d-none d-md-block">
+                    <ul>
+                        <li><a asp-area="" asp-controller="Product" asp-action="Index">Shop</a></li>
+                        <li><a asp-area="" asp-controller="" asp-action="">About Us</a></li>
+                        <li><a asp-area="" asp-controller="" asp-action="">Contact Us</a></li>
+                        <li><a asp-controller="Account" asp-action=@action>@text</a></li>
+                        <li>
+                            <a asp-controller="Cart" asp-action="Index">
+                                <i class="bi bi-cart" id="cart" cart-count="@await Html.PartialAsync("~/Views/Partials/CartCountPartial.cshtml", display)"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <span id="nav-links-collapsed" class="d-md-none">
                     <a href="#"><i class="bi bi-list" id="list"></i></a>
                 </span>
