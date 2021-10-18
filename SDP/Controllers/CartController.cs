@@ -114,11 +114,13 @@ namespace SDP.Controllers
             }
             
         }
-        public IActionResult Payment()
+        [HttpPost]
+        public IActionResult Checkout(decimal amount)
         {
-            return View();
+            return View(amount);
         }
     }
+
 }
 
 

@@ -1,5 +1,5 @@
 ﻿@model SDPWeb.ViewModels.CartView
-@using SDPCore.Models.AccountModel
+
 @{
     Microsoft.SDP.SDPCore.Interface.ICustomer customer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
@@ -83,7 +83,10 @@
                         <p>Rs. @Decimal.Round(total, 2)</p>
                     </div>
 
-                    @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", @Decimal.Round(subTotal, 2)*100, "LKR"))
+                    <form asp-action="Checkout" asp-controller="Cart" method="post">
+                        <input type="hidden"  name="amount" value=@Decimal.Round(total, 2)*100 />
+                        <button class="sdp-style" type="submit">Checkout</button>
+                    </form>
                     <small><a asp-area="" asp-controller="Product" asp-action="Index">Continue Shopping</a></small>
                 </div>
             }
