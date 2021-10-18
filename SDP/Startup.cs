@@ -10,6 +10,7 @@ using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using SDPInfrastructure.Services;
+using Stripe;
 using System;
 
 namespace Global
@@ -18,10 +19,12 @@ namespace Global
     {
         string conString;
         public IConfiguration Configuration { get; }
+        private string secretKey;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             conString = Configuration.GetValue<string>("ConnectionStrings:PostConnCtion");
+            secretKey = configuration.GetConnectionString("Stripe:SecretKey");
         }
         
 
@@ -69,6 +72,7 @@ namespace Global
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = secretKey;
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -79,6 +83,7 @@ namespace Global
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();

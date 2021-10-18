@@ -1,8 +1,9 @@
 ﻿@model SDPWeb.ViewModels.CartView
+@using SDPCore.Models.AccountModel
 @{
     Microsoft.SDP.SDPCore.Interface.ICustomer customer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
-
+    decimal subTotal = 0;
     Product product = null;
     bool emptyCart = customer.cart.getCartList().Count > 0 ? false : true;
 }
@@ -50,7 +51,7 @@
                             }
                         }
 
-                        decimal subTotal = (1 - pair.Value.discount * (decimal)0.01) * product.price * pair.Value.quantity;
+                        subTotal = (1 - pair.Value.discount * (decimal)0.01) * product.price * pair.Value.quantity;
                         total = total + subTotal;
 
                         <li class="cart-item">
@@ -82,10 +83,9 @@
                         <p>Rs. @Decimal.Round(total, 2)</p>
                     </div>
 
-                    <button type="button" id="cart-btn-checkout" class="sdp-style">Proceed to Checkout</button>
+                    @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", @Decimal.Round(subTotal, 2)*100, "LKR"))
                     <small><a asp-area="" asp-controller="Product" asp-action="Index">Continue Shopping</a></small>
                 </div>
-
             }
 
         </div>

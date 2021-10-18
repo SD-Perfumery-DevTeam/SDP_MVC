@@ -7,7 +7,6 @@
     string status = HttpContextAccessor.HttpContext.Session.GetString("LoggedIN");
     string count  = HttpContextAccessor.HttpContext.Session.GetString("count") == null ? "0" : HttpContextAccessor.HttpContext.Session.GetString("count");
 
-
     if (status == "true")
     {
         text = "Logout";

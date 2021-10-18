@@ -10,10 +10,10 @@ namespace Microsoft.SDP.SDPCore
     {
         public enum PTypes
         {
-
             EDP,
             EDT
         };
+
         public enum Genders
         {
             [Display(Name = "Men's")]
@@ -23,6 +23,7 @@ namespace Microsoft.SDP.SDPCore
             [Display(Name = "Unisex")]
             other
         };
+
         public enum Status
         {
             pendingAction,
@@ -38,7 +39,6 @@ namespace Microsoft.SDP.SDPCore
             Kg,
             Oz,
         }
-
     }
 }
 

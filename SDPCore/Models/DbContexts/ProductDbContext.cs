@@ -15,15 +15,14 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
         public DbSet<Brand> brand { get; set; }
         public DbSet<Inventory> inventory{ get; set; }
         public DbSet<Promotion> promotion { get; set; }
+      /*  public DbSet<Order> orders { get; set; }
+        public DbSet<OrderLine> orderLines { get; set; }*/
         /*  
-         public DbSet<Tag> tag { get; set; }
-          public DbSet<Order> orders { get; set; }
           public DbSet<Customer> customers { get; set; }
           public DbSet<RegisteredCustomer> registeredCustomers { get; set; }
-          public DbSet<OrderLine> orderLines { get; set; }
           public DbSet<Articles> articles { get; set; }
           public DbSet<Delivery> deliveries { get; set; }*/
-       
+
         public ProductDbContext(DbContextOptions<ProductDbContext> options):base(options)
         {
             Database.EnsureCreated();

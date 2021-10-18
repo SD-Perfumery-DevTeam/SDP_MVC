@@ -14,7 +14,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public bool promotionActive { get; set; } = false;
         public Dictionary<string, CartValuePair> cartList = new Dictionary<string, CartValuePair>(); 
 
-        public void addOrderToCustomerList(Order order) => order.customer.orderList.Add(order);
+        public void addOrderToCustomerList(Order order) => order.user.orderList.Add(order);
         
         
         public Dictionary<string, CartValuePair> getCartList() { return cartList; }
@@ -42,14 +42,12 @@ namespace Microsoft.SDP.SDPCore.Models
             public int quantity { get; set; }
             public decimal discount { get; set; }
         }
+
+
     }
 
 }
 
 
 
-/*     public async Task checkOut()
-             {
-                 await customer.payment("bank info");
-                 *//* turnCartToOrder().delivery = new Delivery("DATA BROWSER NEEDED HERE");*//*
-             }*/
+
