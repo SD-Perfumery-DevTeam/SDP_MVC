@@ -176,13 +176,13 @@ header {
 }
 
 header nav {
-  height: 5.2rem;
+  min-height: 5.2rem;
   background-color: var(--color-client-spec-1);
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
 }
 
 header nav .container {
-  padding: 0.7rem 0 0.5rem 0;
+  padding: 0.5rem 0 0.7rem 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -191,28 +191,62 @@ header nav .container {
   line-height: 1rem;
 }
 
-header nav .container #cart {
+header nav .container i {
   font-size: 1.9rem;
+  position: relative;
 }
 
-header nav #header-cta {
-  margin-left: 1rem;
-  font-style: italic;
+header nav .container #cart:after {
+  content: attr(cart-count);
+  position: absolute;
+  top: 0.75rem;
+  right: 0.65rem;
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
 }
 
-header nav #header-cta .material-icons {
-  margin-right: 0.25rem;
+header nav h1 {
+  font-family: var(--font-family-display);
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 3rem;
+  color: var(--color-proposed-purple-75);
+  text-shadow: -0.15rem 0 0.2rem var(--color-white);
 }
 
-header nav ul {
+header nav #nav-links-mobile {
+  padding-bottom: 0.5rem;
+  background-color: var(--color-client-spec-1);
+}
+
+header nav #nav-links-mobile ul li {
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+header nav #nav-links-mobile.hide {
+  display: none;
+}
+
+header nav #nav-links-mobile.show {
+  display: block;
+}
+
+header nav #nav-links-desktop ul {
   margin: 0;
   padding: 0;
   display: inline-block;
 }
 
-header nav ul li {
+header nav #nav-links-desktop ul li {
   display: inline-block;
   padding-right: 1rem;
+}
+
+header nav ul {
+  list-style-type: none;
 }
 
 header nav ul li a {
@@ -237,14 +271,13 @@ header #header-brand .container {
   justify-content: space-between;
 }
 
-header #header-brand h1 {
-  font-family: var(--font-family-display);
-  font-weight: 400;
-  font-size: 4.5rem;
-  line-height: 4.5rem;
-  color: var(--color-proposed-purple-90);
-  text-shadow: 0.2rem 0.2rem 0.3rem var(--color-client-spec-1);
-  min-width: 380px;
+header #header-brand #header-cta {
+  margin-left: 1rem;
+  font-style: italic;
+}
+
+header #header-brand .material-icons {
+  margin-right: 0.25rem;
 }
 
 header #header-search {
@@ -457,7 +490,7 @@ footer .container ul li {
 }
 
 .cart-item img {
-    max-width: 6rem;
+  max-width: 6rem;
 }
 
 .cart-total, #cart-btn-checkout {
