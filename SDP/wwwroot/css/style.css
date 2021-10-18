@@ -176,7 +176,7 @@ header {
 }
 
 header nav {
-  height: 5.2rem;
+  min-height: 5.2rem;
   background-color: var(--color-client-spec-1);
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
 }
@@ -217,25 +217,25 @@ header nav h1 {
   text-shadow: -0.15rem 0 0.2rem var(--color-white);
 }
 
+header nav #nav-links-mobile {
+  background-color: red;
+}
+
 header nav #nav-links-mobile.hide {
   display: none;
 }
 
 header nav #nav-links-mobile.show {
-  display: block;
+  display: flex;
 }
 
-/*header nav #nav-links-mobile {
-  display: none;
-}*/
-
-header nav ul {
+header nav ul#nav-links-desktop {
   margin: 0;
   padding: 0;
   display: inline-block;
 }
 
-header nav ul li {
+header nav ul#nav-links-desktop li {
   display: inline-block;
   padding-right: 1rem;
 }
