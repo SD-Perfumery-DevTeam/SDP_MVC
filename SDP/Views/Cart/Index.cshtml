@@ -7,8 +7,8 @@
     bool emptyCart = customer.cart.getCartList().Count > 0 ? false : true;
 }
 
-<section id="section-banner">
-    <div class="container">
+<div class="container">
+    <section id="section-banner">
         <h2>Shopping cart</h2>
         @if (emptyCart)
         {
@@ -20,8 +20,9 @@
         {
             <p>You have selected the following items.</p>
         }
-    </div>
-</section>
+    </section>
+</div>
+
 <section>
     <div class="container">
         <div class="cart-contents">
