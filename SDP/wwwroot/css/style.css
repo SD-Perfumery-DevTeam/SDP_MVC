@@ -40,7 +40,6 @@
   /* SD Perfumery logo font */
   --font-family-display: 'MonteCarlo', serif;
   /* Original fonts */
-  /*--font-family-display-serif: 'Antic Didone', serif;*/
   --font-family-body-sans-serif: 'Open Sans', sans-serif;
   /* Fonts from Luciano's mockup */
   --font-family-display-serif: 'Lora', serif;
@@ -106,7 +105,7 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--font-family-body-serif);
+  font-family: var(--font-family-body-sans-serif);
   font-size: 1.1rem;
   line-height: 1.1rem;
 }
@@ -195,7 +194,8 @@ header nav .container {
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  font-size: 1rem;
+  font-family: var(--font-family-body-serif);
+  font-size: 1.2rem;
   line-height: 1rem;
 }
 
@@ -225,7 +225,12 @@ header nav h1 {
   text-shadow: -0.15rem 0 0.2rem var(--color-white);
 }
 
+#header nav #nav-links-desktop {
+  font-family: var(--font-family-body-serif);
+}
+
 header nav #nav-links-mobile {
+  font-family: var(--font-family-body-serif);
   padding-bottom: 0.5rem;
   background-color: var(--color-client-spec-1);
 }
@@ -329,6 +334,10 @@ main #section-banner p {
   padding: 0 0 0 1rem;
 }
 
+main #category-list {
+  border-radius: 0.3rem;
+}
+
 main #section-product-list .product-wrapper {
   display: grid;
 }
@@ -348,6 +357,7 @@ footer .container {
 }
 
 footer .container ul {
+  font-family: var(--font-family-display-sans-serif);
   margin: 1rem;
   padding-left: 0;
   list-style-type: none;
