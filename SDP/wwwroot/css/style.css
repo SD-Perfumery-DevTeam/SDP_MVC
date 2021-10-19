@@ -334,6 +334,30 @@ main #section-banner p {
   padding: 0 0 0 1rem;
 }
 
+main #section-carousel .carousel-inner .carousel-item {
+  width: 100%;
+  height: 32rem;
+  border-radius: 0.3rem;
+}
+
+/* First in every three items (3n-2) */
+main #section-carousel .carousel-inner .carousel-item:nth-child(3n-2) {
+  color: var(--color-black);
+  background: linear-gradient(90deg, #ffffff, #eca8a7 66%, #c386a1);
+}
+
+/* Second in every three items (3n-1) */
+main #section-carousel .carousel-inner .carousel-item:nth-child(3n-1) {
+  color: var(--color-black);
+  background: linear-gradient(0deg, #fee2e2, #f61414);
+}
+
+/* Last of every three items (3n) */
+main #section-carousel .carousel-inner .carousel-item:nth-child(3n) {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
 main #category-list {
   border-radius: 0.3rem;
 }
