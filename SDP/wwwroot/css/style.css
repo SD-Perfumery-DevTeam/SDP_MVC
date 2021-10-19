@@ -343,7 +343,7 @@ main #section-carousel .carousel-inner .carousel-item {
 /* First in every three items (3n-2) */
 main #section-carousel .carousel-inner .carousel-item:nth-child(3n-2) {
   color: var(--color-black);
-  background: linear-gradient(90deg, #ffffff, #eca8a7 66%, #c386a1);
+  background: linear-gradient(90deg, #f9e4e4, #eca8a7 66%, #c386a1);
 }
 
 /* Second in every three items (3n-1) */
