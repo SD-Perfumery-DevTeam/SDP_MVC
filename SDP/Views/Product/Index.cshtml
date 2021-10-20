@@ -3,12 +3,12 @@
 }
 @model SDP.ViewModels.Catalog
 <!-- Product Display ====================================================== -->
-
-<section id="section-product-list">
-    <div class="container product_con">
+<div class="container">
+    <section id="section-banner">
         <h2>@ViewData["Title"]</h2>
+        <p>Sort</p>
         <div class="sort">
-            <select class="sdp-style" onchange="sortBy(this);">
+            <select class="sdp-style" onchange="sortBy(this);" style="margin: 0 0 1.5rem 1rem;">
                 <option>View By</option>
                 <option value="priceL-H">Price: Highest to Lowest</option>
                 <option value="priceH-L">Price: Lowest to Highest</option>
@@ -16,6 +16,21 @@
                 <option value="nameZ-A">Product Name: Z - A</option>
             </select>
         </div>
+        <p>Filter</p>
+        <div style="margin-left: 1rem;">
+            @foreach (var brand in Model.brands)
+            {
+                <label style="margin-right: 0.5rem;"><input type="checkbox" name="brand" id="@brand.title" value="@brand.title" /> @brand.title</label>
+            }
+        </div>
+        <button class="sdp-style" type="button" onclick="reDisplay()" style="margin: 1rem;">Apply filter</button>
+    </section>
+</div>
+
+<section id="section-product-list">
+    <div class="container product_con">
+        
+        
 
         @using (Html.BeginForm("ProductDisplay", "Product"))
         {
@@ -36,22 +51,6 @@
         }
     </div>
 </section>
-
-<aside>
-    <div id="filter" style="position:absolute; top :280px; margin-left:50px">
-        <h4> <strong> Add filters</strong></h4>
-        <table>
-            @foreach (var brand in Model.brands)
-            {
-                <tr>
-                    <td style="padding:7px"><label><input type="checkbox" name="brand" id="@brand.title" value="@brand.title" /> @brand.title </label></td>
-                </tr>
-            }
-        </table>
-        <br />
-        <button class="sdp-style" type="button" onclick="reDisplay()" style="margin-top:30px">Apply filter</button>
-    </div>
-</aside>
 
 <!-- Recommended Products ================================================= -->
 @await Html.PartialAsync("_RecommendedProducts")
