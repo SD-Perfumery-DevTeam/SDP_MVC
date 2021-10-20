@@ -425,12 +425,15 @@ footer .container ul li {
 }
 
 /* Element Specific CSS */
+
+
 #product-list {
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1rem;
+  justify-content: space-around;
+  row-gap:2rem;
 }
 
 .product, .cart-item, .cart-total-box, .form-small {
@@ -446,7 +449,7 @@ footer .container ul li {
 }
 
 .product {
-  width: 15rem;
+  width: 16rem;
 }
 
 .product img {
