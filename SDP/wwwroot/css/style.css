@@ -42,8 +42,8 @@
   /* Original fonts */
   --font-family-body-sans-serif: 'Open Sans', sans-serif;
   /* Fonts from Luciano's mockup */
-  --font-family-display-serif: 'Lora', serif;
-  --font-family-body-serif: 'Kurale', serif;
+  --font-family-display-serif: 'Kurale', serif;
+  --font-family-body-serif: 'Lora', serif;
 }
 
 /* Remove arrows from number spinners */
@@ -105,13 +105,13 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--font-family-body-sans-serif);
+  font-family: var(--font-family-body-serif);
   font-size: 1.1rem;
   line-height: 1.1rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-display-serif);
+  font-family: var(--font-family-body-serif);
   font-weight: 600;
 }
 
@@ -194,7 +194,7 @@ header nav .container {
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  font-family: var(--font-family-body-serif);
+  font-family: var(--font-family-display-serif);
   font-size: 1.2rem;
   line-height: 1rem;
 }
@@ -327,6 +327,7 @@ main #section-banner {
 main #section-banner h2 {
   margin: 0 0 1rem 1rem;
   padding: 2rem 0 0 0;
+  font-family: var(--font-family-display-serif);
   line-height: 2rem;
 }
 
@@ -377,7 +378,7 @@ footer {
 footer .container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 footer .container ul {
@@ -628,7 +629,22 @@ footer .container ul li {
 }
 
 .recommended-card .info {
-  background-color: red;
+  font-family: var(--font-family-body-serif);
+}
+
+.recommended-card .info .cta {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.recommended-card .info .cta p {
+  line-height: 1rem;
+}
+
+.recommended-card .info .cta .price {
+  font-weight: 600;
 }
 
 .category-card img, .recommended-card img{
