@@ -382,7 +382,6 @@ footer .container {
 }
 
 footer .container ul {
-  font-family: var(--font-family-display-sans-serif);
   margin: 1rem;
   padding-left: 0;
   list-style-type: none;
