@@ -27,17 +27,17 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Brand</th>
+                            <th>Type</th>
+                            <th>Gender</th>
                             <th>Size</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tr>
-                        <td>Size 6</td>
-                        <td>Size 8</td>
-                        <td>Size 10</td>
-                        <td>Size 12</td>
+                        <td>@Model.brand.title</td>
+                        <td>@Model.product.productType</td>
+                        <td>@Model.product.productGender</td>
+                        <td>@Model.product.packageQty@Model.product.packageUom</td>
                     </tr>
                 </table>
             </div>
