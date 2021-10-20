@@ -12,12 +12,16 @@
     <input asp-for="amount" name="amount" value="@Model.amount" type="hidden" />
     <input asp-for="descirption" name="descirption" value="@Model.descirption" type="hidden" />
     <input asp-for="currency" name="currency" value="@Model.currency" type="hidden" />
-    
-    <script src="//checkout.stripe.com/v2/checkout.js"
-            class="stripe-button"
+
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key=@Model.publicKey
-            data-locale="auto"
+            data-amount=@Model.amount
+            data-name="SD-Perfumery"
             data-description=@Model.descirption
-            data-amount=@Model.amount >
+            data-image="/images/SD-logo.PNG"
+            data-email="@Model.email"
+            data-locale="en"
+            data-zip-code="true"
+            data-label="Pay with card using stripe">
     </script>
 </form>

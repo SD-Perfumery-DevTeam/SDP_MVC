@@ -1,6 +1,8 @@
 ﻿@using SDPCore.Models.AccountModel
-@{
-}
+@using Microsoft.SDP.SDPCore.Interface
+@using Microsoft.AspNetCore.Http
+@inject IDbRepo _dbRepo
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="~/css/checkout.css">
 @model decimal
@@ -132,4 +134,12 @@
     </div>
 
 </div>
-@*@await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model, "LKR"))*@
+@{
+    string customerEmail = "";
+    if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
+    {
+        var customer =  await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
+        customerEmail = customer.Email;
+    }
+}
+@await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model, "LKR", customerEmail))
