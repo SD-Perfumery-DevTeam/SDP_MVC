@@ -53,12 +53,8 @@
     </div>
 </aside>
 
-<div class="container">
-    <section id="section-recommended">
-        <h3>Recommended Fragrances</h3>
-    </section>
-</div>
-
+<!-- Recommended Products ================================================= -->
+@await Html.PartialAsync("_RecommendedProducts")
 
 <script>
     var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
