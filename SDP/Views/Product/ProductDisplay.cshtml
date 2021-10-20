@@ -19,7 +19,7 @@
                 <div class="product-display-cta">
                     <p class="product-display-price">Rs. @Model.product.price</p>
                     <form method="post" asp-controller="Product" asp-action="AddToCart">
-                        <input name="quantity" type="number" value=1 min="1" >
+                        <input name="quantity" type="number" value=1 min="1">
                         <button class="sdp-style" type="submit">Add To Cart</button>
                     </form>
                 </div>
@@ -44,8 +44,6 @@
         </div>
     </div>
 </div>
-<div id="section-suggested">
-    <div class="container">
-        <h3>Recommended Fragrances</h3>
-    </div>
-</div>
+
+<!-- Recommended Products ================================================= -->
+@await Html.PartialAsync("_RecommendedProducts")
