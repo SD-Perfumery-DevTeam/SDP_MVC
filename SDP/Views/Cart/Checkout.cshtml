@@ -127,19 +127,19 @@
                         </div>
                     </div>
 
-                </div><input type="submit" value="Continue to checkout" class="btn">
+                </div>
+                @{
+                    string customerEmail = "";
+                    if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
+                    {
+                        var customer = await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
+                        customerEmail = customer.Email;
+                    }
+                }
+                @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model, "LKR", customerEmail))
 
             </form>
         </div>
     </div>
 
 </div>
-@{
-    string customerEmail = "";
-    if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
-    {
-        var customer =  await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
-        customerEmail = customer.Email;
-    }
-}
-@await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model, "LKR", customerEmail))

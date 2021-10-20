@@ -17,7 +17,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public string addressL2 { get; set; }
         public int postCode { get; set; }
         public Status status { get; set; }
-
+    
         public Delivery(string email, int phone, string addressL1,
             string addressL2, int postCode, Status status)
         { 

@@ -1,16 +1,16 @@
-﻿using Microsoft.SDP.SDPCore.Interface;
-using Microsoft.SDP.SDPCore.Models.AccountModel;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.SDP.SDPCore.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Models
 {
-    public class RegisteredCustomer : User, ICustomer
+    public class RegisteredCustomer :  IdentityUser , ICustomer
     {
         public Cart cart { get; set; }
         public List<Order> orderList { get; set; }
+        public Guid userId { get; set; }
+
         private IDbRepo _dbRepo;
         public RegisteredCustomer(IDbRepo dbRepo) 
         {
