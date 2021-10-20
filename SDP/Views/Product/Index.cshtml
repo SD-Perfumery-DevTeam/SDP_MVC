@@ -17,7 +17,7 @@
             </select>
         </div>
         <p>Filter</p>
-        <div style="margin-left: 1rem;">
+        <div style="margin-left: 1rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));">
             @foreach (var brand in Model.brands)
             {
                 <label style="margin-right: 0.5rem;"><input type="checkbox" name="brand" id="@brand.title" value="@brand.title" /> @brand.title</label>
