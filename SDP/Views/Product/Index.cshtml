@@ -26,11 +26,11 @@
         @using (Html.BeginForm("Index", "Product"))
         {
             <div class="page-numbers">
-                 @for (int i = 0; i < Model.totalPage; i++)
-                    {
-                        int pageNum = i + 1;
-                        <button class="sdp-style" type="submit" name="pageNumber" value=@i> @pageNum </button>
-                    }
+                @for (int i = 0; i < Model.totalPage; i++)
+                {
+                    int pageNum = i + 1;
+                    <button class="sdp-style" type="submit" name="pageNumber" value=@i> @pageNum </button>
+                }
                 <button id="btn_prev" class="sdp-style">prev</button> <button id="btn_next" class="sdp-style">next</button>
             </div>
         }
@@ -53,11 +53,12 @@
     </div>
 </aside>
 
-<section id="section-suggested">
-    <div class="container">
+<div class="container">
+    <section id="section-recommended">
         <h3>Recommended Fragrances</h3>
-    </div>
-</section>
+    </section>
+</div>
+
 
 <script>
     var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
@@ -68,4 +69,3 @@
 @*<script src="~/js/pagination.js" asp-append-version="true"></script>*@
 
 
-    

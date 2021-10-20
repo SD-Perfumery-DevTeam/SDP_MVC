@@ -2,76 +2,120 @@
     ViewData["Title"] = "Home";
 }
 
-<!-- Special Message ====================================================== -->
+<!-- Banner =============================================================== -->
 
-<section id="section-banner">
-    <div class="container">
-        <h2>Have you seen these amazing deals?</h2>
-        <p>Treat yourself to one of these luxurious discounts with unbeatable value.</p>
+<div class="container">
+    <section id="section-banner">
+        <h2>Welcome to SD Perfumery</h2>
+        <p>We hope you can find the perfect fragrance to treat yourself or someone you hold close.</p>
         <p>
-            <a asp-action="Signup" asp-controller="Account">Create your account now</a>
-             to make the most of our prices and specials.
+            Don't miss out on our amazing prices and specials - <a asp-action="Signup" asp-controller="Account">create an account</a>
+            and have special offers delivered straight to your inbox.
         </p>
-    </div>
-</section>
+        <p>In need of further assistance? Call us on <a href="tel:001 284 227">001-284-227</a> for help with your order.</p>
+    </section>
+</div>
 
-<!-- Categories  ========================================================== -->
+<!-- Carousel ============================================================= -->
 
-<section id="category-list">
-    <div class="container">
+<div class="container">
+    <section id="section-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#section-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#section-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#section-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active"></div>
+            <div class="carousel-item"></div>
+            <div class="carousel-item"></div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#section-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#section-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </section>
+</div>
+
+<!-- Categories =========================================================== -->
+
+<div class="container">
+    <section id="section-categories">
         <h3>Categories</h3>
-        <div id="category-flex">
-            <div id="category-item">
-                <h4>Womens</h4>
-                <img src="~/images/category/category-img-4.JPG" alt="...">
+        <hr />
+        <div class="category-list">
+            <div id="category-card">
+                <h4>Dynamic Category 1</h4>
+                <img src="~/images/category/category-img-4.JPG" alt="Dynamic Category 1">
             </div>
-
-            <div id="category-item">
-                <h4>Mens</h4>
-                <img src="~/images/category/category-img3.JPG" alt="...">
+            <div class="category-card">
+                <h4>Dynamic Category 2</h4>
+                <img src="~/images/category/category-img3.JPG" alt="Dynamic Category 2">
             </div>
-
-            <div id="category-item">
-                <h4>All Brands</h4>
-                <img src="~/images/category/category-img3.JPG" alt="...">
+            <div class="category-card">
+                <h4>Dynamic Category 3</h4>
+                <img src="~/images/category/category-img3.JPG" alt="Dynamic Category 3">
             </div>
-
-            <div id="category-item">
-                <h4>Best Sellers</h4>
-                <img src="~/images/category/category-img-4.JPG" alt="...">
+            <div class="category-card">
+                <h4>Dynamic Category 4</h4>
+                <img src="~/images/category/category-img-4.JPG" alt="Dynamic Category 4">
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <!-- Recommended ========================================================== -->
 
-<section id="section-suggested">
-    <div class="container">
+<div class="container">
+    <section id="section-recommended">
         <h3>Recommended Fragrances</h3>
-        <div id="category-flex">
-            <div id="fragrance-item">
-                <img src="~/images/category/category-img-4.JPG">
-                <p class="fragrance-title">1 million</p>
-                <p class="fragrance-brand">By Paco Rabanne</p>
+        <hr />
+        <div class="product-list">
+            <div class="recommended-card">
+                <div class="info">
+                    <h4>Dynamic Item 1</h4>
+                    <p>Dynamic Item Brand</p>
+                    <p>Fragrance for Gender</p>
+                    <p>EDX XXXml</p>
+                    <p class="cta">
+                        <span class="price">Rs. 0000</span>
+                        <button class="sdp-style">Shop Now</button>
+                    </p>
+                </div>
+                <img src="~/images/product/nina-ricci-luna-edt-50ml.jpg">
             </div>
-            <div id="fragrance-item">
-                <img src="~/images/category/category-img-4.JPG">
-                <p class="fragrance-title">Chrome</p>
-                <p class="fragrance-brand">By Azzaro</p>
+            <div class="recommended-card">
+                <div class="info">
+                    <h4>Dynamic Item 2</h4>
+                    <p>Dynamic Item Brand</p>
+                    <p>Fragrance for Gender</p>
+                    <p>EDX XXXml</p>
+                    <p class="cta">
+                        <span class="price">Rs. 0000</span>
+                        <button class="sdp-style">Shop Now</button>
+                    </p>
+                </div>
+                <img src="~/images/product/benetton-colors-de-benetton-blue-edt-50ml.jpg">
             </div>
-            <div id="fragrance-item">
-                <img src="~/images/category/category-img-4.JPG">
-                <p class="fragrance-title">Lolita Lempicka</p>
-                <p class="fragrance-brand">By Lolita Lempicka</p>
-            </div>
-            <div id="fragrance-item">
-                <img src="~/images/category/category-img-4.JPG">
-                <p class="fragrance-title">Montblanc Legend</p>
-                <p class="fragrance-brand"> By Mont Blanc</p>
+            <div class="recommended-card">
+                <div class="info">
+                    <h4>Dynamic Item 3</h4>
+                    <p>Dynamic Item Brand</p>
+                    <p>Fragrance for Gender</p>
+                    <p>EDX XXXml</p>
+                    <p class="cta">
+                        <span class="price">Rs. 0000</span>
+                        <button class="sdp-style">Shop Now</button>
+                    </p>
+                </div>
+                <img src="~/images/product/givenchy-irresistible-edt.jpg">
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <script src="~/js/site.js" asp-append-version="true" defer></script>
