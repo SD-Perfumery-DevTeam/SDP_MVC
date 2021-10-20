@@ -619,8 +619,19 @@ footer .container ul li {
 .container .category-list, .container .product-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-#category-item, #recommended-item {
-  flex-basis: 200px;
+.recommended-card {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.recommended-card .info {
+  background-color: red;
+}
+
+.category-card img, .recommended-card img{
+  max-height: 12rem;
+  max-width: 8rem;
 }
