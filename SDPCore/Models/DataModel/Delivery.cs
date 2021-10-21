@@ -15,21 +15,33 @@ namespace Microsoft.SDP.SDPCore.Models
         public int phone { get; set; }
         public string addressL1 { get; set; }
         public string addressL2 { get; set; }
-        public int postCode { get; set; }
-        public Status status { get; set; }
-    
-        public Delivery(string email, int phone, string addressL1,
-            string addressL2, int postCode, Status status)
+        public string postCode { get; set; }
+        public string suburb { get; set; }
+        public string state { get; set; }
+        public string country { get; set; }
+        public string deliverystatus { get; set; }
+        public DateTime deliveryDate { get; set; }
+
+        public Delivery()
         { 
-            deliveryId = Guid.NewGuid();
+           
+        }
+
+        public Delivery( string email, int phone, string addressL1, string addressL2, string postCode, string suburb, string state, string country, string deliverystatus, DateTime deliveryDate)
+        {
+            this.deliveryId = Guid.NewGuid();
             this.email = email;
             this.phone = phone;
             this.addressL1 = addressL1;
             this.addressL2 = addressL2;
             this.postCode = postCode;
-            this.status = status;
+            this.suburb = suburb;
+            this.state = state;
+            this.country = country;
+            this.deliverystatus = deliverystatus;
+            this.deliveryDate = deliveryDate;
         }
 
-        public void changeStatus(Status s) => status = s;
+        /*public void changeStatus(Status s) => status = s;*/
     }
 }

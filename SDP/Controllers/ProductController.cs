@@ -40,9 +40,11 @@ namespace SDP.Controllers
             int totalPage;
             try
             {
-                 products = _dbRepo.GetProductList().Where(m => m.isActive)
+                 products = _dbRepo.GetProductList().Where(m => m.isActive).Where(m => (_dbRepo.GetInventory(m.productId.ToString())>0))
                           .Skip(pageNumber * 20)
                           .Take(20);
+                
+
                 totalPage = _db.product.Count() / 20;
             }
             catch (Exception ex)
@@ -55,14 +57,10 @@ namespace SDP.Controllers
             {
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
-                string Id = guest.userId.ToString();
-
-
-
+                string Id = guest.Id.ToString();
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
-
 
             try
             {
@@ -89,7 +87,7 @@ namespace SDP.Controllers
             {
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
-                string Id = guest.userId.ToString();
+                string Id = guest.Id.ToString();
 
 
 
@@ -121,7 +119,7 @@ namespace SDP.Controllers
             {
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
-                string Id = guest.userId.ToString();
+                string Id = guest.Id.ToString();
 
                 HttpContext.Session.SetString("Id", Id);
             }

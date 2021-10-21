@@ -10,7 +10,6 @@ namespace Microsoft.SDP.SDPCore.Interface
 {
     public interface IDbRepo
     {
-        
         public Product getProduct(string Id);
         public Task<IdentityUser> getCustomerAsync(string Id);
         private static ProductDbContext _db;
@@ -19,5 +18,6 @@ namespace Microsoft.SDP.SDPCore.Interface
         public Promotion getPromotionByID(string promoId);
         public IEnumerable<Product> GetProductList();
         public IEnumerable<IdentityUser> GetCustomerList();
+        public int GetInventory(string Id);
     }
 }

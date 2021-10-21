@@ -43,6 +43,17 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
         {
             return _db.product.Include(m => m.brand).Include(m => m.category).ToList();
         }
+        public int GetInventory(string Id)
+        {
+            foreach (var inventory in _db.inventory.ToList())
+            {
+                if (inventory.product.productId.ToString() == Id)
+                {
+                    return inventory.stockQty;
+                }
+            }
+            return 0;
+        }
 
         public IEnumerable<IdentityUser> GetCustomerList()
         {

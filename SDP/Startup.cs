@@ -33,8 +33,8 @@ namespace Global
         {
             services.AddMvc();
             services.AddSession(o => {
-                o.IdleTimeout = TimeSpan.FromMinutes(60);
-               
+                o.IdleTimeout = TimeSpan.FromMinutes(30);
+                
             });
             services.AddMemoryCache();
             services.AddDbContext<ProductDbContext>(options =>
@@ -65,7 +65,6 @@ namespace Global
                         "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ @._-";
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
-
             });
         }
 

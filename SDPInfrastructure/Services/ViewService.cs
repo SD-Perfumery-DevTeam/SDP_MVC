@@ -18,7 +18,7 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             {
                 try
                 {
-                    if (c.userId == Guid.Parse(id))
+                    if (c.Id ==id)
                     {
                         customer = c;
                     }
@@ -37,7 +37,7 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             {
                 try
                 {
-                    if (c.userId == Guid.Parse(id))
+                    if (c.Id == id)
                     {
                         customer = c;
                     }

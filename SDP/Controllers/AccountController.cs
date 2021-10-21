@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.SDP.SDPCore.Models.DbContexts;
 
 namespace SDP.Controllers
 {
@@ -25,10 +27,10 @@ namespace SDP.Controllers
         private IEmailSender _emailSender { get; }
         private string _APIkey; //this is the sendgrid api key grabbed from appsetting.json file, see below constructor
         private IDbRepo _dbRepo ;
-
+        private readonly IDbContextFactory<ProductDbContext> _contextFactory;
 
         public AccountController(UserManager<IdentityUser> um, SignInManager<IdentityUser> sm,
-            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender, IDbRepo dbRepo)
+            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<ProductDbContext> contextFactory)
         {
             this._userManager = um;
             this._signInManager = sm;
@@ -37,12 +39,14 @@ namespace SDP.Controllers
             this._emailSender = emailSender;
             this._APIkey = _configuration.GetValue<string>("APIKeys:SDP-SENDGRID-API");
             this._dbRepo = dbRepo;
+            this._contextFactory = contextFactory;
         }
 
 
         //====================user to Login==========================
         public IActionResult Login(string errorMsg)
         {
+           
             ViewData["Error"] = errorMsg;
             return View();
         }
@@ -62,7 +66,7 @@ namespace SDP.Controllers
                     {
 
                         var user = _userManager.FindByNameAsync(LM.Email);
-                        RegisteredCustomer rc = new RegisteredCustomer(_dbRepo) { userId = Guid.Parse(user.Result.Id), UserName = user.Result.UserName, Email = user.Result.Email };
+                        RegisteredCustomer rc = new RegisteredCustomer(_dbRepo) {Id= user.Result.Id, UserName = user.Result.UserName, Email = user.Result.Email };
 
                         rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();//transfers the GuestCustomers Cart to registered customer
 
@@ -160,12 +164,12 @@ namespace SDP.Controllers
         {
             try
             {
+                ViewService.DeleteCustomerFromList(HttpContext.Session.GetString("Id")); //deletes the user from temp access
                 await _signInManager.SignOutAsync();
                 HttpContext.Session.SetString("LoggedIN", "false");
                 GuestCustomer gc = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(gc);//register new guest customer
-              
-                HttpContext.Session.SetString("Id", gc.userId.ToString());
+                HttpContext.Session.SetString("Id", gc.Id.ToString());
             }
             catch (Exception ex)
             {
@@ -232,7 +236,7 @@ namespace SDP.Controllers
                 {
                     manageRoleModel.roleList.Add(new SelectListItem { Text = role.Name, Value = role.Id });
                 }
-               
+
                 if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     manageRoleModel.currentRoleList.Add(role);
@@ -383,7 +387,7 @@ namespace SDP.Controllers
                     GuestCustomer gc = new GuestCustomer(_dbRepo);
                     GlobalVar.customerList.Add(gc);//register new guest customer
 
-                    HttpContext.Session.SetString("Id", gc.userId.ToString());
+                    HttpContext.Session.SetString("Id", gc.Id.ToString());
                     var result = await _userManager.DeleteAsync(await _userManager.FindByIdAsync(Id));
                     return RedirectToAction("Login");
                 }

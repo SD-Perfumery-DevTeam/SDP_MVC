@@ -9,7 +9,7 @@ namespace Microsoft.SDP.SDPCore.Models
     [Serializable]
     public class GuestCustomer : ICustomer
     {
-        public Guid userId { get; set; }
+        public string Id { get; set; }
         public Cart cart { get; set; }
         public List<Order> orderList { get; set; }
         private IDbRepo _dbRepo;
@@ -17,7 +17,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public GuestCustomer(IDbRepo dbRepo)
         {
             this.orderList = new List<Order>();
-            userId = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString();
             _dbRepo = dbRepo;
             cart = new Cart();
 
