@@ -14,17 +14,19 @@ namespace Microsoft.SDP.SDPCore.Models
         private Order order { get; set; }
         private Product product { get; set; }
         public int quantity { get; set; }
-        public IPromotionService promotion;
+        public decimal discount;
 
-        public OrderLine(Order order, Product product, 
-            int quantity, IPromotionService promotion)
+        public OrderLine()
         {
+        }
 
-            lineId = Guid.NewGuid();
+        public OrderLine( Order order, Product product, int quantity, decimal discount)
+        {
+            this.lineId = Guid.NewGuid();
             this.order = order;
             this.product = product;
             this.quantity = quantity;
-            this.promotion = promotion;
+            this.discount = discount;
         }
 
         public Order getOrder() => this.order;

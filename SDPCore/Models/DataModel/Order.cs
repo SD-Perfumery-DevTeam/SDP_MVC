@@ -1,4 +1,5 @@
-﻿using Microsoft.SDP.SDPCore.Interface;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.SDP.SDPCore.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +9,35 @@ namespace Microsoft.SDP.SDPCore.Models
 {
     public class Order
     {
-        public Guid ID { get; set; }
-        public ICustomer customer{ get; set; }
-        public List<OrderLine> OLList { get; set; }//OrderLine list 
-        public Delivery delivery;
-
-        public Order(ICustomer customer)
+        public Order( int orderNo, IdentityUser user, List<OrderLine> oLList, Delivery delivery, decimal netPrice, decimal taxRate, decimal totalPrice, bool paymentStatus, DateTime paymentDate, string orderStatus)
         {
-            ID = Guid.NewGuid();
-            this.customer = customer;
+            this.orderId = Guid.NewGuid();
+            this.orderNo = orderNo;
+            this.user = user;
+            OLList = oLList;
+            this.delivery = delivery;
+            this.netPrice = netPrice;
+            this.taxRate = taxRate;
+            this.totalPrice = totalPrice;
+            this.paymentStatus = paymentStatus;
+            this.paymentDate = paymentDate;
+            this.orderStatus = orderStatus;
         }
+
+        public Order()
+        {
+        }
+
+        public Guid orderId { get; set; }
+        public int orderNo { get; set; }
+        public IdentityUser user { get; set; }
+        public List<OrderLine> OLList { get; set; }
+        public Delivery delivery { get; set; }
+        public decimal netPrice { get; set; }
+        public decimal taxRate { get; set; }
+        public decimal totalPrice { get; set; }
+        public bool paymentStatus { get; set; }
+        public DateTime paymentDate { get; set; }
+        public string orderStatus { get; set; }
     }
 }

@@ -1,14 +1,15 @@
 ﻿@model SDPWeb.ViewModels.CartView
+
 @{
     Microsoft.SDP.SDPCore.Interface.ICustomer customer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
     decimal total = 0;
-
+    decimal subTotal = 0;
     Product product = null;
     bool emptyCart = customer.cart.getCartList().Count > 0 ? false : true;
 }
 
-<section id="section-banner">
-    <div class="container">
+<div class="container">
+    <section id="section-banner">
         <h2>Shopping cart</h2>
         @if (emptyCart)
         {
@@ -20,8 +21,9 @@
         {
             <p>You have selected the following items.</p>
         }
-    </div>
-</section>
+    </section>
+</div>
+
 <section>
     <div class="container">
         <div class="cart-contents">
@@ -50,7 +52,7 @@
                             }
                         }
 
-                        decimal subTotal = (1 - pair.Value.discount * (decimal)0.01) * product.price * pair.Value.quantity;
+                        subTotal = (1 - pair.Value.discount * (decimal)0.01) * product.price * pair.Value.quantity;
                         total = total + subTotal;
 
                         <li class="cart-item">
@@ -82,10 +84,12 @@
                         <p>Rs. @Decimal.Round(total, 2)</p>
                     </div>
 
-                    <button type="button" id="cart-btn-checkout" class="sdp-style">Proceed to Checkout</button>
+                    <form asp-action="Checkout" asp-controller="Cart" method="post">
+                        <input type="hidden"  name="amount" value=@Decimal.Round(total, 2)*100 />
+                        <button class="sdp-style" type="submit">Checkout</button>
+                    </form>
                     <small><a asp-area="" asp-controller="Product" asp-action="Index">Continue Shopping</a></small>
                 </div>
-
             }
 
         </div>

@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewBag.Title = "Create";
+}
+@model SDPCore.Models.AccountModel.Key
+<div class="delivery_form">
+    <form asp-action="Payment" asp-controller="Payment" method="POST">
+        <input asp-for="publicKey" name="publicKey" value="@Model.publicKey" type="hidden" />
+        <input asp-for="amount" name="amount" value="@Model.amount" type="hidden" />
+        <input asp-for="descirption" name="descirption" value="@Model.descirption" type="hidden" />
+        <input asp-for="currency" name="currency" value="@Model.currency" type="hidden" />
+
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key=@Model.publicKey
+                data-amount=@Model.amount
+                data-name="SD-Perfumery"
+                data-description=@Model.descirption
+                data-image="/images/SD-logo.PNG"
+                data-email="@Model.email"
+                data-locale="en"
+                data-zip-code="true"
+                data-label="Pay with card using stripe">
+        </script>
+    </form>
+</div>
+
+
+
+<style>
+    .delivery_form button {
+        color: white;
+        border: none;
+        width: 100%;
+        margin:10px 0px 10px 0px;
+        cursor: pointer;
+    }
+</style>

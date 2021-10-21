@@ -1,5 +1,8 @@
 /* Imports for Google Fonts */
+/* Original font imports */
 @import url('https://fonts.googleapis.com/css2?family=Antic+Didone&family=MonteCarlo&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
+/* Font imports from Luciano's mockup */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Kurale&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
 
 /* CSS variables for common colours */
 :root {
@@ -34,9 +37,13 @@
   --color-proposed-nav-link: #a3657a;
 
   /* Font variables */
+  /* SD Perfumery logo font */
   --font-family-display: 'MonteCarlo', serif;
-  --font-family-display-serif: 'Antic Didone', serif;
+  /* Original fonts */
   --font-family-body-sans-serif: 'Open Sans', sans-serif;
+  /* Fonts from Luciano's mockup */
+  --font-family-display-serif: 'Kurale', serif;
+  --font-family-body-serif: 'Lora', serif;
 }
 
 /* Remove arrows from number spinners */
@@ -98,18 +105,18 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  font-family: var(--font-family-body-sans-serif);
+  font-family: var(--font-family-body-serif);
   font-size: 1.1rem;
   line-height: 1.1rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-display-serif);
+  font-family: var(--font-family-body-serif);
   font-weight: 600;
 }
 
 h2, h3 {
-  margin: 1.5rem 0 2rem 1rem;
+  margin: 3rem 0 0.3rem 1rem;
 }
 
 /* Select a h3 element only when it occurs after h2 */
@@ -176,43 +183,83 @@ header {
 }
 
 header nav {
-  height: 5.2rem;
+  min-height: 5.2rem;
   background-color: var(--color-client-spec-1);
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
 }
 
 header nav .container {
-  padding: 0.7rem 0 0.5rem 0;
+  padding: 0.5rem 0 0.7rem 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  font-size: 1rem;
+  font-family: var(--font-family-display-serif);
+  font-size: 1.2rem;
   line-height: 1rem;
 }
 
-header nav .container #cart {
+header nav .container i {
   font-size: 1.9rem;
+  position: relative;
 }
 
-header nav #header-cta {
-  margin-left: 1rem;
-  font-style: italic;
+header nav .container #cart:after {
+  content: attr(cart-count);
+  position: absolute;
+  top: 0.8rem;
+  right: 0.65rem;
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
 }
 
-header nav #header-cta .material-icons {
-  margin-right: 0.25rem;
+header nav h1 {
+  font-family: var(--font-family-display);
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 3rem;
+  color: var(--color-proposed-purple-75);
+  text-shadow: -0.15rem 0 0.2rem var(--color-white);
 }
 
-header nav ul {
+#header nav #nav-links-desktop {
+  font-family: var(--font-family-body-serif);
+}
+
+header nav #nav-links-mobile {
+  font-family: var(--font-family-body-serif);
+  padding-bottom: 0.5rem;
+  background-color: var(--color-client-spec-1);
+}
+
+header nav #nav-links-mobile ul li {
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+header nav #nav-links-mobile.hide {
+  display: none;
+}
+
+header nav #nav-links-mobile.show {
+  display: block;
+}
+
+header nav #nav-links-desktop ul {
   margin: 0;
   padding: 0;
   display: inline-block;
 }
 
-header nav ul li {
+header nav #nav-links-desktop ul li {
   display: inline-block;
   padding-right: 1rem;
+}
+
+header nav ul {
+  list-style-type: none;
 }
 
 header nav ul li a {
@@ -237,20 +284,19 @@ header #header-brand .container {
   justify-content: space-between;
 }
 
-header #header-brand h1 {
-  font-family: var(--font-family-display);
-  font-weight: 400;
-  font-size: 4.5rem;
-  line-height: 4.5rem;
-  color: var(--color-proposed-purple-90);
-  text-shadow: 0.2rem 0.2rem 0.3rem var(--color-client-spec-1);
-  min-width: 380px;
+header #header-brand #header-cta {
+  margin-left: 1rem;
+  font-style: italic;
+}
+
+header #header-brand .material-icons {
+  margin-right: 0.25rem;
 }
 
 header #header-search {
   display: inline-block;
   margin: 1.5rem 0 1rem 0;
-  align-items: middle;
+  align-items: center;
 }
 
 header #header-search input[type=search], #confirmEmail {
@@ -275,16 +321,46 @@ main #section-banner {
   padding-bottom: 1.5rem;
   background-color: var(--color-client-spec-3);
   min-height: 8rem;
+  border-radius: 0.3rem;
 }
 
 main #section-banner h2 {
   margin: 0 0 1rem 1rem;
   padding: 2rem 0 0 0;
+  font-family: var(--font-family-display-serif);
   line-height: 2rem;
 }
 
 main #section-banner p {
   padding: 0 0 0 1rem;
+}
+
+main #section-carousel .carousel-inner .carousel-item {
+  width: 100%;
+  height: 32rem;
+  border-radius: 0.3rem;
+}
+
+/* First in every three items (3n-2) */
+main #section-carousel .carousel-inner .carousel-item:nth-child(3n-2) {
+  color: var(--color-black);
+  background: linear-gradient(90deg, #f9e4e4, #eca8a7 66%, #c386a1);
+}
+
+/* Second in every three items (3n-1) */
+main #section-carousel .carousel-inner .carousel-item:nth-child(3n-1) {
+  color: var(--color-black);
+  background: linear-gradient(0deg, #fee2e2, #f61414);
+}
+
+/* Last of every three items (3n) */
+main #section-carousel .carousel-inner .carousel-item:nth-child(3n) {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+main #category-list {
+  border-radius: 0.3rem;
 }
 
 main #section-product-list .product-wrapper {
@@ -303,7 +379,7 @@ footer {
 footer .container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 footer .container ul {
@@ -350,12 +426,15 @@ footer .container ul li {
 }
 
 /* Element Specific CSS */
+
+
 #product-list {
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1rem;
+  justify-content: space-around;
+  row-gap:2rem;
 }
 
 .product, .cart-item, .cart-total-box, .form-small {
@@ -371,7 +450,7 @@ footer .container ul li {
 }
 
 .product {
-  width: 15rem;
+  width: 16rem;
 }
 
 .product img {
@@ -434,6 +513,10 @@ footer .container ul li {
   font-size: 1rem;
 }
 
+#section-product-display h2{
+  margin-bottom: 1.5rem;
+}
+
 .cart-contents ul li {
   list-style: none;
 }
@@ -458,7 +541,7 @@ footer .container ul li {
 }
 
 .cart-item img {
-    max-width: 6rem;
+  max-width: 6rem;
 }
 
 .cart-total, #cart-btn-checkout {
@@ -541,52 +624,39 @@ footer .container ul li {
   margin-left: 0;
 }
 
-button.category-button {
-  margin-top: 2em;
-  margin-bottom: 1em;
+.container .category-list, .container .product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-#category-flex {
-  display: flex !important;
-  flex-wrap: wrap !important;
+.recommended-card {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
-#category-item {
-  flex-basis: 200px !important;
-  margin-right: 5px;
-  background-color: white;
-  border-style: solid;
-  overflow: hidden;
-  border-radius: 50%;
-  border-color: var(--color-proposed-purple-05);
+.recommended-card .info {
+  font-family: var(--font-family-body-serif);
 }
 
-#category-item > img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.recommended-card .info .cta {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-#category-item > h4 {
-  text-align: center;
-  font-family: var(--font-family-body-sans-serif);
-  color: var(--color-client-spec-4);
+.recommended-card .info .cta p {
+  line-height: 1rem;
 }
 
-#fragrance-item {
-  flex-basis: 200px;
-  margin-right: 5px;
+.recommended-card .info .cta .price {
+  font-weight: 600;
 }
 
-.fragrance-brand {
-  color: hsl(269, 0%, 53%);
-  font-family: var(--font-family-display-serif);
-}
-
-#category-list {
-  background: var(--color-client-spec-2);
-  padding-top: 30px;
-  padding-bottom: 30px;
+.category-card img, .recommended-card img{
+  max-height: 12rem;
+  max-width: 8rem;
 }
 
 button.category-button {

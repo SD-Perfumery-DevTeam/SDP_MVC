@@ -95,7 +95,6 @@ namespace SDP.Controllers
         //===================Remove from cart=======================
         public IActionResult RemoveFromCart(string Id)
         {
-
             try
             {
                 customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
@@ -115,7 +114,13 @@ namespace SDP.Controllers
             }
             
         }
+        [HttpPost]
+        public IActionResult Checkout(decimal amount)
+        {
+            return View(amount);
+        }
     }
+
 }
 
 

@@ -36,10 +36,20 @@ namespace SDP.Controllers
         [HttpGet]
         public IActionResult Index(int pageNumber = 0)
         {
-            var products = _dbRepo.GetProductList().Where(m => m.isActive)
+            IEnumerable<Product> products;
+            int totalPage;
+            try
+            {
+                 products = _dbRepo.GetProductList().Where(m => m.isActive)
                           .Skip(pageNumber * 20)
                           .Take(20);
-            int totalPage = _db.product.Count() / 20;
+                totalPage = _db.product.Count() / 20;
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+           
 
             if (HttpContext.Session.GetString("Id") == null)
             {

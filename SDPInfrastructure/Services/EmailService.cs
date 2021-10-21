@@ -61,7 +61,6 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
 
         public async Task sendPromtionEmailAsyncAsync(List<string> emails,string promotionName, string promotionCode, string startDate, string endDate, string discount, string productName)
         {
-
             foreach (var email in emails)
             {
                 var client = new SendGridClient(_APIkey);

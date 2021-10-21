@@ -14,7 +14,5 @@ namespace Microsoft.SDP.SDPCore
     {
         private static List<Product> P_list = new List<Product>();
         public static List<ICustomer> customerList = new List<ICustomer>();
-
-        
     }
 }

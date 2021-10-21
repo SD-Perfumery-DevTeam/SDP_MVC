@@ -14,9 +14,6 @@ namespace Microsoft.SDP.SDPCore.Models
         public bool promotionActive { get; set; } = false;
         public Dictionary<string, CartValuePair> cartList = new Dictionary<string, CartValuePair>(); 
 
-        public void addOrderToCustomerList(Order order) => order.customer.orderList.Add(order);
-        
-        
         public Dictionary<string, CartValuePair> getCartList() { return cartList; }
 
         public void addProductToCart(Product product, int count)  
@@ -36,20 +33,14 @@ namespace Microsoft.SDP.SDPCore.Models
             }
         }
 
-
         public class CartValuePair //internal class recording both quantity and discount
         {
             public int quantity { get; set; }
             public decimal discount { get; set; }
         }
     }
-
 }
 
 
 
-/*     public async Task checkOut()
-             {
-                 await customer.payment("bank info");
-                 *//* turnCartToOrder().delivery = new Delivery("DATA BROWSER NEEDED HERE");*//*
-             }*/
+

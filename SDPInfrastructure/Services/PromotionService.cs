@@ -19,18 +19,16 @@ namespace SDPInfrastructure.Services
 
         public string GetPromoProductId(string promoCode) 
         {
-           return  _dbRepo.getPromotionBypromoCode(promoCode).product.productId.ToString();
+           return  _dbRepo.getPromotionBypromoCode(promoCode) == null ? null : _dbRepo.getPromotionBypromoCode(promoCode).product.productId.ToString();
         }
 
         public bool validatePromo(string promoCode)
         {
-            
-            if (!_dbRepo.getPromotionBypromoCode(promoCode).isActive || _dbRepo.getPromotionBypromoCode(promoCode).startDate > DateTime.UtcNow || _dbRepo.getPromotionBypromoCode(promoCode).endDate < DateTime.UtcNow)
+            if (_dbRepo.getPromotionBypromoCode(promoCode) == null || (!_dbRepo.getPromotionBypromoCode(promoCode).isActive || _dbRepo.getPromotionBypromoCode(promoCode).startDate > DateTime.UtcNow || _dbRepo.getPromotionBypromoCode(promoCode).endDate < DateTime.UtcNow))
             {
                 return false;
             }
             return  true;
         } 
-
     }
 }
