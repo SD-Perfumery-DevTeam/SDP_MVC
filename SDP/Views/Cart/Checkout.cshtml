@@ -114,12 +114,16 @@
                             <div asp-validation-summary="All" class="text-danger"></div>
 
                             <input type="hidden" asp-for="delivery.deliveryId" value="@guid " />
-                            <input type="hidden"  asp-for="amount" value="@Model.amount">
+                            <input type="hidden" asp-for="amount" value="@Model.amount">
+
+                            <label asp-for="delivery.firstName"><i class="fa fa-user"></i> First Name</label>
+                            <input type="text" asp-for="delivery.firstName" id="fname" placeholder="John">
+                            <span asp-validation-for="delivery.firstName" class="text-danger"></span>
 
 
-                            <label asp-for="delivery.deliveryName"><i class="fa fa-user"></i> Full Name</label>
-                            <input type="text" asp-for="delivery.deliveryName" id="fname" placeholder="John Smith">
-                            <span asp-validation-for="delivery.deliveryName" class="text-danger"></span>
+                            <label asp-for="delivery.lastName"><i class="fa fa-user-o"></i> Last Name</label>
+                            <input type="text" asp-for="delivery.lastName" id="fname" placeholder="Smith">
+                            <span asp-validation-for="delivery.lastName" class="text-danger"></span>
 
                             <label asp-for="delivery.email"><i class="fa fa-envelope"></i> Email</label>
                             <input type="email" asp-for=delivery.email id="email" placeholder="@placeHolderEmail" value="@customerEmail">
@@ -152,10 +156,8 @@
                                 </div>
                             </div>
 
-
-
                             <label asp-for="delivery.phone"><i class="fa fa-phone"></i> Phone Number</label>
-                            <input type="tel" id="phone" asp-for="delivery.phone" placeholder="+61 4123 456 789">
+                            <input type="number" id="phone" maxlength="12" asp-for="delivery.phone" placeholder="04123456789">
                             <span asp-validation-for="delivery.phone" class="text-danger"></span>
 
                         </div>

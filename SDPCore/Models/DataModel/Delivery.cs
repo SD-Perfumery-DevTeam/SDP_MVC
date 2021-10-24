@@ -11,7 +11,8 @@ namespace Microsoft.SDP.SDPCore.Models
     {
 
         public Guid deliveryId { get; set; }
-        public string deliveryName { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
         public string email { get; set; }
         public int phone { get; set; }
         public string addressLine1 { get; set; }
@@ -27,13 +28,15 @@ namespace Microsoft.SDP.SDPCore.Models
         { 
         }
 
-        public Delivery( string email, int phone, string addressL1, string addressL2, string postCode, string suburb, string state, string country, DeliveryStatus deliverystatus, DateTime deliveryDate)
+        public Delivery( string firstName, string lastName, string email, int phone, string addressLine1, string addressLine2, string postCode, string suburb, string state, string country, DeliveryStatus deliverystatus, DateTime deliveryDate)
         {
             this.deliveryId = Guid.NewGuid();
+            this.firstName = firstName;
+            this.lastName = lastName;
             this.email = email;
             this.phone = phone;
-            this.addressLine1  = addressL1;
-            this.addressLine2  = addressL2;
+            this.addressLine1 = addressLine1;
+            this.addressLine2 = addressLine2;
             this.postCode = postCode;
             this.suburb = suburb;
             this.state = state;
@@ -41,6 +44,8 @@ namespace Microsoft.SDP.SDPCore.Models
             this.deliverystatus = deliverystatus;
             this.deliveryDate = deliveryDate;
         }
+
+
 
         /*public void changeStatus(Status s) => status = s;*/
     }
