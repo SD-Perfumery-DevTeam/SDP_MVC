@@ -1,145 +1,168 @@
 ﻿@using SDPCore.Models.AccountModel
 @using Microsoft.SDP.SDPCore.Interface
 @using Microsoft.AspNetCore.Http
+@using SDPWeb.ViewModels
 @inject IDbRepo _dbRepo
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="~/css/checkout.css">
-@model decimal
-<style>
+@model SDPWeb.ViewModels.CheckoutView
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/checkout.css">
+    <style>
 
 
-    .checkout-container {
-        width: 70%;
-        margin: 0 auto;
-        font-size: 17px;
-        padding: 8px;
-    }
+        .checkout-container {
+            width: 70%;
+            margin: 0 auto;
+            font-size: 17px;
+            padding: 8px;
+        }
 
 
 
-    .col-25 {
-        -ms-flex: 25%;
-        /* IE10 */
-        flex: 25%;
-    }
+        .col-25 {
+            -ms-flex: 25%;
+            /* IE10 */
+            flex: 25%;
+        }
 
-    .col-50 {
-        -ms-flex: 50%;
-        /* IE10 */
-        flex: 50%;
-    }
+        .col-50 {
+            -ms-flex: 50%;
+            /* IE10 */
+            flex: 50%;
+        }
 
-    .col-75 {
-        -ms-flex: 75%;
-        /* IE10 */
-        flex: 75%;
-    }
+        .col-75 {
+            -ms-flex: 75%;
+            /* IE10 */
+            flex: 75%;
+        }
 
-    .col-25,
-    .col-50,
-    .col-75 {
-        padding: 0 16px;
-    }
+        .col-25,
+        .col-50,
+        .col-75 {
+            padding: 0 16px;
+        }
 
-    .address-container {
-        background-color: #fafbfd;
-        padding: 5px 20px 15px 20px;
-        border: 1px solid lightgrey;
-        border-radius: 3px;
-    }
-
-        .address-container input {
-            width: 100%;
-            margin-bottom: 20px;
-            padding: 12px;
-            border: 1px solid #ccc;
+        .address-container {
+            background-color: #fafbfd;
+            padding: 5px 20px 15px 20px;
+            border: 1px solid lightgrey;
             border-radius: 3px;
         }
 
-    label {
-        margin-bottom: 10px;
-        display: block;
-    }
+            .address-container input {
+                width: 100%;
+                margin-bottom: 20px;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+            }
 
-    .icon-container {
-        margin-bottom: 20px;
-        padding: 7px 0;
-        font-size: 24px;
-    }
-
-    .btn {
-        background-color: mediumturquoise;
-        color: white;
-        padding: 12px;
-        margin: 10px 0;
-        border: none;
-        width: 100%;
-        border-radius: 3px;
-        cursor: pointer;
-        font-size: 17px;
-    }
-
-        .btn:hover {
-            background-color: mediumpurple;
+        label {
+            margin-bottom: 10px;
+            display: block;
         }
 
+        .icon-container {
+            margin-bottom: 20px;
+            padding: 7px 0;
+            font-size: 24px;
+        }
 
+        .btn {
+            background-color: mediumturquoise;
+            color: white;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            width: 100%;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 17px;
+        }
 
-    hr {
-        border: 1px solid lightgrey;
+            .btn:hover {
+                background-color: mediumpurple;
+            }
+
+        hr {
+            border: 1px solid lightgrey;
+        }
+
+        span.price {
+            float: right;
+            color: grey;
+        }
+    </style>
+    @{
+        string customerEmail = "";
+        string placeHolderEmail = customerEmail == "" ? "johnsmith@example.com" : customerEmail;
+        if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
+        {
+            var customer = await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
+            customerEmail = customer.Email;
+        }
+        Guid guid = Guid.NewGuid();
     }
+    <div class="checkout-container">
+        <div class="col-50">
+            <div class="address-container">
+                <form asp-action="Payment" asp-controller="Payment" method="POST">
+                    <div class="row">
+                        <div class="col-50">
+                            <h3>Delivery Address</h3>
+                            <div asp-validation-summary="All" class="text-danger"></div>
 
-    span.price {
-        float: right;
-        color: grey;
-    }
-</style>
+                            <input type="hidden" asp-for="delivery.deliveryId" value="@guid " />
+                            <input type="hidden"  asp-for="amount" value="@Model.amount">
 
-<div class="checkout-container">
-    <div class="col-50">
-        <div class="address-container">
-            <form action="/action_page.php">
 
-                <div class="row">
-                    <div class="col-50">
-                        <h3>Delivery Address</h3>
-                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John Smith">
-                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="email" id="email" name="email" placeholder="johnsmith@example.com">
-                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                        <input type="text" id="adr" name="address-lineone" placeholder="2098/300">
-                        <input type="text" id="adr" name="address-linetwo" placeholder="Queen st">
-                        <label for="city"><i class="fa fa-institution"></i> City</label>
-                        <input type="text" id="city" name="city" placeholder="Melbourne">
-                        <label for="phone"><i class="fa fa-phone"></i> Phone Number</label>
-                        <input type="tel" id="city" name="city" placeholder="Melbourne">
-                        <div class="row">
-                            <div class="col-50">
-                                <label for="state">State</label>
-                                <input type="text" id="state" name="state" placeholder="VIC">
+                            <label asp-for="delivery.deliveryName"><i class="fa fa-user"></i> Full Name</label>
+                            <input type="text" asp-for="delivery.deliveryName" id="fname" placeholder="John Smith">
+                            <span asp-validation-for="delivery.deliveryName" class="text-danger"></span>
+
+                            <label asp-for="delivery.email"><i class="fa fa-envelope"></i> Email</label>
+                            <input type="email" asp-for=delivery.email id="email" placeholder="@placeHolderEmail" value="@customerEmail">
+                            <span asp-validation-for="delivery.email" class="text-danger"></span>
+
+                            <label asp-for="delivery.addressLine1 "><i class="fa fa-address-card-o"></i> Address</label>
+                            <input type="text" id="adr" asp-for="delivery.addressLine1 " placeholder="2098/300">
+                            <span asp-validation-for="delivery.addressLine1 " class="text-danger"></span>
+                            <input type="text" id="adr" asp-for="delivery.addressLine2" placeholder="Queen st">
+                            <span asp-validation-for="delivery.addressLine2" class="text-danger"></span>
+
+                            <label asp-for="delivery.suburb"><i class="fa fa-map-marker"></i> Suburb</label>
+                            <input type="text" id="city" asp-for="delivery.suburb" placeholder="Melbourne">
+                            <span asp-validation-for="delivery.suburb" class="text-danger"></span>
+
+                            <label asp-for="delivery.country"><i class="fa fa-institution"></i> Country</label>
+                            <input type="text" id="Country" asp-for="delivery.country" placeholder="Australia">
+                            <span asp-validation-for="delivery.country" class="text-danger"></span>
+
+                            <div class="row">
+                                <div class="col-50">
+                                    <label asp-for="delivery.state">State</label>
+                                    <input type="text" id="state" asp-for="delivery.state" placeholder="VIC">
+                                    <span asp-validation-for="delivery.state" class="text-danger"></span>
+                                </div>
+                                <div class="col-50">
+                                    <label asp-for="delivery.postCode">Postcode</label>
+                                    <input type="text" id=">Postcode" asp-for="delivery.postCode" placeholder="3000">
+                                    <span asp-validation-for="delivery.postCode" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="col-50">
-                                <label for="zip">Postcode</label>
-                                <input type="text" id=">Postcode" name=">Postcode" placeholder="3000">
-                            </div>
+
+
+
+                            <label asp-for="delivery.phone"><i class="fa fa-phone"></i> Phone Number</label>
+                            <input type="tel" id="phone" asp-for="delivery.phone" placeholder="+61 4123 456 789">
+                            <span asp-validation-for="delivery.phone" class="text-danger"></span>
+
                         </div>
                     </div>
 
-                </div>
-                @{
-                    string customerEmail = "";
-                    if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
-                    {
-                        var customer = await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
-                        customerEmail = customer.Email;
-                    }
-                }
-                @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model, "LKR", customerEmail))
-
-            </form>
+                    @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new CheckoutView { key = new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model.amount, "LKR", customerEmail) })
+                </form>
+            </div>
         </div>
     </div>
-
-</div>

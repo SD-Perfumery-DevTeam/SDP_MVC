@@ -40,7 +40,8 @@ namespace SDP.Controllers
             int totalPage;
             try
             {
-                 products = _dbRepo.GetProductList().Where(m => m.isActive).Where(m => (_dbRepo.GetInventory(m.productId.ToString())>0))
+                 products = _dbRepo.GetProductList().Where(m => m.isActive)
+                          .Where(m => (_dbRepo.GetInventory(m.productId.ToString())>0))
                           .Skip(pageNumber * 20)
                           .Take(20);
                 

@@ -22,7 +22,7 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
 
         public async Task<IdentityUser> getCustomerAsync(string Id)
         {
-            return await _userManager.FindByIdAsync(Id);
+            return await _userManager.FindByIdAsync(Id) ;
         }
 
         public Product getProduct(string Id) 

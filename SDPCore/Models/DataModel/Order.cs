@@ -4,17 +4,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.SDP.SDPCore.Consts;
 
 namespace Microsoft.SDP.SDPCore.Models
 {
     public class Order
     {
-        public Order( int orderNo, IdentityUser user, List<OrderLine> oLList, Delivery delivery, decimal netPrice, decimal taxRate, decimal totalPrice, bool paymentStatus, DateTime paymentDate, string orderStatus)
+        public Order( int orderNo, IdentityUser user,  Delivery delivery, decimal netPrice, decimal taxRate, decimal totalPrice, bool paymentStatus, DateTime paymentDate, OrderStatus orderStatus)
         {
             this.orderId = Guid.NewGuid();
             this.orderNo = orderNo;
             this.user = user;
-            OLList = oLList;
             this.delivery = delivery;
             this.netPrice = netPrice;
             this.taxRate = taxRate;
@@ -31,13 +31,12 @@ namespace Microsoft.SDP.SDPCore.Models
         public Guid orderId { get; set; }
         public int orderNo { get; set; }
         public IdentityUser user { get; set; }
-        public List<OrderLine> OLList { get; set; }
         public Delivery delivery { get; set; }
         public decimal netPrice { get; set; }
         public decimal taxRate { get; set; }
         public decimal totalPrice { get; set; }
         public bool paymentStatus { get; set; }
         public DateTime paymentDate { get; set; }
-        public string orderStatus { get; set; }
+        public OrderStatus orderStatus { get; set; }
     }
 }
