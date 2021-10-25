@@ -7,6 +7,7 @@ using Microsoft.SDP.SDPCore.Models;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SDP.Controllers
 {
@@ -28,6 +29,7 @@ namespace SDP.Controllers
             _contextFactory = contextFactory;
         }
 
+      
         public IActionResult Index(string Msg)
         {
             ViewData["Msg"] = Msg;
@@ -51,6 +53,25 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
             return RedirectToAction("Index", "CMS", new { Msg = "Promotions has been sent" });
+        }
+        [HttpGet]
+        public async Task<IActionResult> ViewAllOrdersAsync()
+        {
+            List<Order> list;
+            using (var context = _contextFactory.CreateDbContext())
+            {
+                list = await context.order.Include(m => m.delivery).ToListAsync();
+            }
+            try
+            {
+               
+            }
+            catch (Exception ex)
+            {
+
+                return RedirectToAction("Error", "Home");
+            }
+            return View(list);
         }
     }
 }

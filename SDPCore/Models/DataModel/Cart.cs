@@ -36,7 +36,7 @@ namespace Microsoft.SDP.SDPCore.Models
             }
         }
 
-        public OrderDataTransfer turnCartToOrder(int orderNo, IdentityUser user, Delivery delivery, decimal totalPrice, bool paymentStatus, DateTime paymentDate, OrderStatus orderStatus, List<Product> productList ) //turns the cart into order and orderlines using dto
+        public OrderDataTransfer turnCartToOrder(int orderNo, IdentityUser user, Delivery delivery, decimal totalPrice, string paymentStatus, DateTime paymentDate, OrderStatus orderStatus, List<Product> productList ) //turns the cart into order and orderlines using dto
         {
             Order order = new Order(orderNo, user, delivery, totalPrice, paymentStatus, paymentDate, orderStatus);
             List<OrderLine> orderLineList = new List<OrderLine>();

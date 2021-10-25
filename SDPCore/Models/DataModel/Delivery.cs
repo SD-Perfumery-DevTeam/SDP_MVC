@@ -14,7 +14,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
-        public int phone { get; set; }
+        public string phone { get; set; }
         public string addressLine1 { get; set; }
         public string addressLine2 { get; set; }
         public string postCode { get; set; }
@@ -28,7 +28,7 @@ namespace Microsoft.SDP.SDPCore.Models
         { 
         }
 
-        public Delivery( string firstName, string lastName, string email, int phone, string addressLine1, string addressLine2, string postCode, string suburb, string state, string country, DeliveryStatus deliverystatus, DateTime deliveryDate)
+        public Delivery( string firstName, string lastName, string email, string phone, string addressLine1, string addressLine2, string postCode, string suburb, string state, string country, DeliveryStatus deliverystatus, DateTime deliveryDate)
         {
             this.deliveryId = Guid.NewGuid();
             this.firstName = firstName;

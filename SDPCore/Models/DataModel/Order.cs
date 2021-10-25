@@ -14,7 +14,7 @@ namespace Microsoft.SDP.SDPCore.Models
         {
         }
 
-        public Order(int orderNo, IdentityUser user, Delivery delivery, decimal totalPrice, bool paymentStatus, DateTime paymentDate, OrderStatus orderStatus)
+        public Order(int orderNo, IdentityUser user, Delivery delivery, decimal totalPrice, string paymentStatus, DateTime paymentDate, OrderStatus orderStatus)
         {
             this.orderId = Guid.NewGuid();
             this.orderNo = orderNo;
@@ -31,7 +31,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public IdentityUser user { get; set; }
         public Delivery delivery { get; set; }
         public decimal totalPrice { get; set; }
-        public bool paymentStatus { get; set; }
+        public string paymentStatus { get; set; }
         public DateTime paymentDate { get; set; }
         public OrderStatus orderStatus { get; set; }
     }
