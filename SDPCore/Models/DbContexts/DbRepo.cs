@@ -22,7 +22,7 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
 
         public async Task<IdentityUser> getCustomerAsync(string Id)
         {
-            return await _userManager.FindByIdAsync(Id);
+            return await _userManager.FindByIdAsync(Id) ;
         }
 
         public Product getProduct(string Id) 
@@ -42,6 +42,17 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
         public IEnumerable<Product> GetProductList() 
         {
             return _db.product.Include(m => m.brand).Include(m => m.category).ToList();
+        }
+        public int GetInventory(string Id)
+        {
+            foreach (var inventory in _db.inventory.ToList())
+            {
+                if (inventory.product.productId.ToString() == Id)
+                {
+                    return inventory.stockQty;
+                }
+            }
+            return 0;
         }
 
         public IEnumerable<IdentityUser> GetCustomerList()

@@ -7,6 +7,7 @@ using Microsoft.SDP.SDPCore;
 using SDPWeb.ViewModels;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
 using System.Linq;
+using SDPCore.Models.AccountModel;
 
 namespace SDP.Controllers
 {
@@ -31,7 +32,7 @@ namespace SDP.Controllers
             {
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest); 
-                string Id = guest.userId.ToString(); 
+                string Id = guest.Id.ToString(); 
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
@@ -105,7 +106,7 @@ namespace SDP.Controllers
                     var count = int.Parse(HttpContext.Session.GetString("count"));
                     HttpContext.Session.SetString("count", (count - customer.cart.cartList[Id].quantity).ToString());
                 }
-                customer.cart.RemoveProductToCart(Id);
+                customer.cart.removeProductToCart(Id);
                 return RedirectToAction("Index");
             }
             catch (System.Exception)
@@ -117,7 +118,7 @@ namespace SDP.Controllers
         [HttpPost]
         public IActionResult Checkout(decimal amount)
         {
-            return View(amount);
+            return View(new CheckoutView {amount = amount, delivery= new Delivery(), key = new Key()});
         }
     }
 

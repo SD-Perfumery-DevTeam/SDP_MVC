@@ -1,8 +1,11 @@
-﻿using Microsoft.SDP.SDPCore.Interface;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.SDP.SDPCore.Interface;
+using SDPCore.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.SDP.SDPCore.Consts;
 
 namespace Microsoft.SDP.SDPCore.Models
 {
@@ -25,12 +28,25 @@ namespace Microsoft.SDP.SDPCore.Models
             else cartList.Add(product.productId.ToString(), new CartValuePair { quantity =count, discount = 0 });
         }
 
-        public void RemoveProductToCart(string productId)
+        public void removeProductToCart(string productId)
         {
             if (cartList.ContainsKey(productId))
             {
                 cartList.Remove(productId);
             }
+        }
+
+        public OrderDataTransfer turnCartToOrder(int orderNo, IdentityUser user, Delivery delivery, decimal totalPrice, string paymentStatus, DateTime paymentDate, OrderStatus orderStatus, List<Product> productList ) //turns the cart into order and orderlines using dto
+        {
+            Order order = new Order(orderNo, user, delivery, totalPrice, paymentStatus, paymentDate, orderStatus);
+            List<OrderLine> orderLineList = new List<OrderLine>();
+            foreach (var pair in cartList)
+            {
+                Product p = productList.Where(m => m.productId.ToString() == pair.Key).FirstOrDefault();
+                orderLineList.Add(new OrderLine (order, p, pair.Value.quantity, pair.Value.discount));
+            }
+
+            return new OrderDataTransfer { order = order, orderLineList = orderLineList };
         }
 
         public class CartValuePair //internal class recording both quantity and discount

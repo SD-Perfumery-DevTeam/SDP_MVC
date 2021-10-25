@@ -14,7 +14,7 @@ namespace Microsoft.SDP.SDPCore.Models
         private Order order { get; set; }
         private Product product { get; set; }
         public int quantity { get; set; }
-        public decimal discount;
+        public decimal discount { get; set; }
 
         public OrderLine()
         {

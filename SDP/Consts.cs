@@ -23,13 +23,19 @@ namespace SDP
             [Display(Name = "Unisex")]
             other
         };
-        public enum Status
+        public enum DeliveryStatus
         {
             pendingAction,
             beingDelivered,
             deliveryComplete
         };
-       
+        public enum OrderStatus
+        {
+            pendingAction,
+            beingDelivered,
+            deliveryComplete
+        };
+
         public enum Uom 
         {
             ml,

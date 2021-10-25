@@ -1,145 +1,120 @@
 ﻿@using SDPCore.Models.AccountModel
 @using Microsoft.SDP.SDPCore.Interface
 @using Microsoft.AspNetCore.Http
+@using SDPWeb.ViewModels
 @inject IDbRepo _dbRepo
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="~/css/checkout.css">
-@model decimal
-<style>
+@model SDPWeb.ViewModels.CheckoutView
 
-
-    .checkout-container {
-        width: 70%;
-        margin: 0 auto;
-        font-size: 17px;
-        padding: 8px;
+@{
+    string customerEmail = "";
+    string placeHolderEmail = customerEmail == "" ? "Email Address" : customerEmail;
+    if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
+    {
+        var customer = await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
+        customerEmail = customer.Email;
     }
+    Guid guid = Guid.NewGuid();
+}
+<div class="container">
+    <section id="section-banner">
+        <h2>Enter your shipping details</h2>
+        <p>Please fill in your delivery details so that we may ship your order. Once you are finished, click on the pay button to be directed to our secure payment gateway.</p>
+    </section>
 
+    <section id="section-address">
+        <h3>Delivery Address</h3>
 
+        <form asp-action="Payment" asp-controller="Payment" method="POST">
+            <input type="hidden" asp-for="delivery.deliveryId" value="@guid " />
+            <input type="hidden" asp-for="amount" value="@Model.amount">
 
-    .col-25 {
-        -ms-flex: 25%;
-        /* IE10 */
-        flex: 25%;
-    }
+            <div class="row mb-4">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
 
-    .col-50 {
-        -ms-flex: 50%;
-        /* IE10 */
-        flex: 50%;
-    }
-
-    .col-75 {
-        -ms-flex: 75%;
-        /* IE10 */
-        flex: 75%;
-    }
-
-    .col-25,
-    .col-50,
-    .col-75 {
-        padding: 0 16px;
-    }
-
-    .address-container {
-        background-color: #fafbfd;
-        padding: 5px 20px 15px 20px;
-        border: 1px solid lightgrey;
-        border-radius: 3px;
-    }
-
-        .address-container input {
-            width: 100%;
-            margin-bottom: 20px;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-        }
-
-    label {
-        margin-bottom: 10px;
-        display: block;
-    }
-
-    .icon-container {
-        margin-bottom: 20px;
-        padding: 7px 0;
-        font-size: 24px;
-    }
-
-    .btn {
-        background-color: mediumturquoise;
-        color: white;
-        padding: 12px;
-        margin: 10px 0;
-        border: none;
-        width: 100%;
-        border-radius: 3px;
-        cursor: pointer;
-        font-size: 17px;
-    }
-
-        .btn:hover {
-            background-color: mediumpurple;
-        }
-
-
-
-    hr {
-        border: 1px solid lightgrey;
-    }
-
-    span.price {
-        float: right;
-        color: grey;
-    }
-</style>
-
-<div class="checkout-container">
-    <div class="col-50">
-        <div class="address-container">
-            <form action="/action_page.php">
-
-                <div class="row">
-                    <div class="col-50">
-                        <h3>Delivery Address</h3>
-                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John Smith">
-                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="email" id="email" name="email" placeholder="johnsmith@example.com">
-                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                        <input type="text" id="adr" name="address-lineone" placeholder="2098/300">
-                        <input type="text" id="adr" name="address-linetwo" placeholder="Queen st">
-                        <label for="city"><i class="fa fa-institution"></i> City</label>
-                        <input type="text" id="city" name="city" placeholder="Melbourne">
-                        <label for="phone"><i class="fa fa-phone"></i> Phone Number</label>
-                        <input type="tel" id="city" name="city" placeholder="Melbourne">
-                        <div class="row">
-                            <div class="col-50">
-                                <label for="state">State</label>
-                                <input type="text" id="state" name="state" placeholder="VIC">
-                            </div>
-                            <div class="col-50">
-                                <label for="zip">Postcode</label>
-                                <input type="text" id=">Postcode" name=">Postcode" placeholder="3000">
-                            </div>
-                        </div>
+            @* Fields 'firstName' and 'lastName' grouped in one row. *@
+            <div class="row mb-4">
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label asp-for="delivery.firstName" class="form-label">First Name</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="bi bi-person"></i></div>
+                        <input type="text" asp-for="delivery.firstName" id="fname" class="form-control" placeholder="First Name">
                     </div>
-
+                    <span asp-validation-for="delivery.firstName" class="text-danger"></span>
                 </div>
-                @{
-                    string customerEmail = "";
-                    if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
-                    {
-                        var customer = await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
-                        customerEmail = customer.Email;
-                    }
-                }
-                @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model, "LKR", customerEmail))
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label asp-for="delivery.lastName" class="form-label">Last Name</label>
+                    <input type="text" asp-for="delivery.lastName" id="fname" class="form-control" placeholder="Last Name">
+                    <span asp-validation-for="delivery.lastName" class="text-danger"></span>
+                </div>
+            </div>
 
-            </form>
+            @* Fields 'email' and 'phone' grouped into one row. *@
+            <div class="row mb-4">
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label asp-for="delivery.email" class="form-label">Email</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="bi bi-envelope"></i></div>
+                        <input type="email" asp-for=delivery.email id="email" class="form-control" placeholder="@placeHolderEmail" value="@customerEmail">
+                    </div>
+                    <span asp-validation-for="delivery.email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 col-sm-12 mb-3">
+                    <label asp-for="delivery.phone" class="form-label">Phone Number</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="bi bi-telephone"></i></div>
+                        <input type="number" id="phone" class="form-control" maxlength="12" asp-for="delivery.phone" placeholder="Phone Number">
+                    </div>
+                    <span asp-validation-for="delivery.phone" class="text-danger"></span>
+                </div>
+            </div>
+
+            @* Fields 'addressLine1' and 'addressLine2' on one row each. *@
+            <div class="row mb-3">
+                <div class="col-12 mb-3">
+                    <label asp-for="delivery.addressLine1" class="form-label">Address</label>
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="bi bi-geo-alt"></i></div>
+                        <input type="text" id="address-1" class="form-control" asp-for="delivery.addressLine1 " placeholder="Address Line 1">
+                    </div>
+                    <span asp-validation-for="delivery.addressLine1 " class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <input type="text" id="address-2" class="form-control" asp-for="delivery.addressLine2" placeholder="Address Line 2">
+                    <span asp-validation-for="delivery.addressLine2" class="text-danger"></span>
+                </div>
+            </div>
+
+            @* Fields 'suburb' and 'state' and 'country' grouped in one row. *@
+            <div class="row mb-4">
+                <div class="col-md-4 col-sm-12 mb-3">
+                    <label asp-for="delivery.suburb" class="form-label">Suburb</label>
+                    <input type="text" id="city" class="form-control" asp-for="delivery.suburb" placeholder="Suburb">
+                    <span asp-validation-for="delivery.suburb" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 col-sm-12 mb-3">
+                    <label asp-for="delivery.state" class="form-label">State</label>
+                    <input type="text" id="state" class="form-control" asp-for="delivery.state" placeholder="State">
+                    <span asp-validation-for="delivery.state" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <label asp-for="delivery.country" class="form-label">Country</label>
+                    <input type="text" id="Country" class="form-control" asp-for="delivery.country" placeholder="Country">
+                    <span asp-validation-for="delivery.country" class="text-danger"></span>
+                </div>
+            </div>
+
+            @* Postcode removed at client request *@
+            @*
+        <div class="col-50">
+            <label asp-for="delivery.postCode">Postcode</label>
+            <input type="text" id=">Postcode" asp-for="delivery.postCode" placeholder="Postcode">
+            <span asp-validation-for="delivery.postCode" class="text-danger"></span>
         </div>
-    </div>
+            *@
 
+            @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", new CheckoutView { key = new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", Model.amount, "LKR", customerEmail) })
+        </form>
+    </section>
 </div>

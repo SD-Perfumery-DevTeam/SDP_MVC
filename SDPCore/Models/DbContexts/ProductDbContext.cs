@@ -14,9 +14,9 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
         public DbSet<Brand> brand { get; set; }
         public DbSet<Inventory> inventory{ get; set; }
         public DbSet<Promotion> promotion { get; set; }
-        public DbSet<Order> orders { get; set; }
-        public DbSet<OrderLine> orderLines { get; set; }
-        public DbSet<Delivery> deliveries { get; set; }
+        public DbSet<Order> order { get; set; }
+        public DbSet<OrderLine> orderLine { get; set; }
+        public DbSet<Delivery> delivery { get; set; }
         /*  
           public DbSet<Customer> customers { get; set; }
           public DbSet<RegisteredCustomer> registeredCustomers { get; set; }
