@@ -16,8 +16,11 @@
     }
     Guid guid = Guid.NewGuid();
 }
-
 <div class="container">
+    <section id="section-banner">
+
+    </section>
+
     <section id="section-address">
         <h3>Delivery Address</h3>
 
@@ -72,12 +75,12 @@
                     <label asp-for="delivery.addressLine1" class="form-label">Address</label>
                     <div class="input-group">
                         <div class="input-group-text"><i class="bi bi-geo-alt"></i></div>
-                        <input type="text" id="adr" class="form-control" asp-for="delivery.addressLine1 " placeholder="Address Line 1">
+                        <input type="text" id="address-1" class="form-control" asp-for="delivery.addressLine1 " placeholder="Address Line 1">
                     </div>
                     <span asp-validation-for="delivery.addressLine1 " class="text-danger"></span>
                 </div>
                 <div class="col-12">
-                    <input type="text" id="adr" class="form-control" asp-for="delivery.addressLine2" placeholder="Address Line 2">
+                    <input type="text" id="address-2" class="form-control" asp-for="delivery.addressLine2" placeholder="Address Line 2">
                     <span asp-validation-for="delivery.addressLine2" class="text-danger"></span>
                 </div>
             </div>
