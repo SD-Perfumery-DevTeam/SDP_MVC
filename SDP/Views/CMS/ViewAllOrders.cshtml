@@ -14,7 +14,6 @@
                     <table class="table table-bordered" style="margin:0 auto">
                         <thead>
                             <tr>
-                                <th>Order Id</th>
                                 <th>Order No</th>
                                 <th>User Id</th>
                                 <th>Total Price</th>
@@ -29,7 +28,6 @@
                         {
                             var userId = item.user == null ? "guest user" : item.user.Id;
                             <tr>
-                                <td>@item.orderId</td>
                                 <td>@item.orderNo</td>
                                 <td>@userId </td>
                                 <td>@item.totalPrice</td>
