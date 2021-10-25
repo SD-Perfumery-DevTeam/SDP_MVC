@@ -8,7 +8,6 @@
                 <div>
                     <h3>Users</h3>
                     <ul>
-                        @* The MyAccount link is currently only available to 'Customer' type users. May not be necessary in CMS. *@
                         <li><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
                         <li><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
                     </ul>
@@ -24,6 +23,12 @@
                     <h3>Promotions</h3>
                     <ul>
                         <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewPromotions">View Promotions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Orders</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
                     </ul>
                 </div>
                 <div>

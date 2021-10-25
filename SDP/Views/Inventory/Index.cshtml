@@ -1,10 +1,13 @@
-﻿@model SDP.ViewModels.InventoryView
+﻿@{
+    ViewData["Title"] = "Inventory";
+}
+@model SDP.ViewModels.InventoryView
 
 <section id="section-cms">
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
-            <h2>Inventory Page</h2>
+            <h2>@ViewData["Title"]</h2>
             <div><a asp-controller="Product" asp-action="AddProduct" class="btn btn-primary">Add Product</a></div>
 
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">

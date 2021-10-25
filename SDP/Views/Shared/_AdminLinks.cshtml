@@ -62,22 +62,20 @@
                 </ul>
             </div>
         </div>
-
-        @*I added this but the styling is just copied over*@
         <div class="accordion-item">
-            <p class="accordion-header" id="cms-nav-heading-promotions">
+            <p class="accordion-header" id="cms-nav-heading-orders">
                 <button class="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#cms-nav-child-promotions"
+                        data-bs-target="#cms-nav-child-orders"
                         aria-expanded="false"
-                        aria-controls="cms-nav-collapse-promotions">
+                        aria-controls="cms-nav-collapse-orders">
                     Orders
                 </button>
             </p>
-            <div id="cms-nav-child-promotions"
+            <div id="cms-nav-child-orders"
                  class="accordion-collapse collapse"
-                 aria-labelledby="cms-nav-heading-promotions"
+                 aria-labelledby="cms-nav-heading-orders"
                  data-bs-parent="#cms-nav-accordion">
                 <ul class="list-unstyled fw-normal pb-1 small">
                     <li class="pt-3"><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
