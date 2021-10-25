@@ -312,6 +312,10 @@ header #header-search #btnSearch {
   margin-left: 0.3rem;
 }
 
+main {
+  margin-bottom: 2rem;
+}
+
 main section {
   margin-top: 1rem;
 }
