@@ -334,6 +334,14 @@ main #section-banner p {
   padding: 0 0 0 1rem;
 }
 
+main #section-banner .accordion-header {
+  padding: 0;
+}
+
+main #section-banner .accordion-item,  main #section-banner .accordion-button {
+  background-color: transparent;
+}
+
 main #section-carousel .carousel-inner .carousel-item {
   width: 100%;
   height: 32rem;
