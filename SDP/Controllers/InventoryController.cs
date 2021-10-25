@@ -271,5 +271,29 @@ namespace SDP.Controllers
 
         }
 
+        
+        public IActionResult AddCategory()
+        {
+            return View();
+        }
+
+        
+        public IActionResult AddBrand()
+        {
+            return View();
+        }
+
+        
+        public IActionResult EditBrand()
+        {
+            return View();
+        }
+
+        
+        public IActionResult EditCategory()
+        {
+            return View();
+        }
+
     }
 }
