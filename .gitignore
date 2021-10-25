@@ -372,4 +372,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/SDP
+/SDP/.config/dotnet-tools.json
+/SDP/Properties/ServiceDependencies/SDPerfumeryTestDeploy - Web Deploy/mssql1.arm.json
+/SDP/Properties/ServiceDependencies/SDPerfumeryTestDeploy - Web Deploy/profile.arm.json
+/SDP/Properties/serviceDependencies.json
+/SDP/Properties/serviceDependencies.SDPerfumeryTestDeploy - Web Deploy.json
