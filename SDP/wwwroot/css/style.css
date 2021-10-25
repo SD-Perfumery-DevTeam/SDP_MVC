@@ -422,9 +422,28 @@ footer .container ul li {
   border-radius: 0.3rem;
 }
 
+/* CMS Styling */
+#section-cms .container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0;
+}
+
+#section-cms .container aside {
+  flex-grow: 1;
+  width: 18rem;
+}
+
+#section-cms .container .cms-area {
+  flex-grow: 11;
+  margin: 0 0 3rem;
+  width: 24rem;
+}
+
 /* Element Specific CSS */
-
-
 #product-list {
   margin-top: 1rem;
   display: flex;
@@ -560,69 +579,10 @@ footer .container ul li {
   margin: 1rem 0;
 }
 
-/* CMS Styling */
-
-#section-cms .container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 0;
-}
-
-#section-cms .container aside {
-  flex-grow: 1;
-  width: 18rem;
-}
-
-#section-cms .container .cms-area {
-  flex-grow: 11;
-  margin: 0 0 3rem;
-  width: 24rem;
-}
-
 .form-small input {
   height: 1.75rem;
   border: 1px solid var(--color-client-spec-1);
   border-radius: 0.3rem;
-}
-
-#confirm-email {
-  padding: 0.5em 1em 0.5em 1em;
-  margin-bottom: 10em;
-}
-
-.confirm-email-title {
-  margin-bottom: 1em;
-}
-
-.email-message > p {
-  width: 40%;
-  line-height: 1.5em;
-}
-
-.email-container {
-  background: var(--color-proposed-purple-05);
-}
-
-.email-message {
-  margin-bottom: 3%;
-}
-
-.email-contents {
-  margin-top: 5%;
-  margin-bottom: 5%;
-  padding-bottom: 4%;
-  padding-top: 4%;
-  background: var(--color-proposed-purple-10);
-  border-radius: 10%;
-}
-
-.button-confirm-email {
-  padding-top: 1.05em;
-  padding-bottom: 2.1em;
-  margin-left: 0;
 }
 
 .container .category-list, .container .product-list {
