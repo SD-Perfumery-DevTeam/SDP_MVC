@@ -516,6 +516,10 @@ footer .container ul li {
   margin-bottom: 1.5rem;
 }
 
+.cart-contents ul {
+  padding-left: 0;
+}
+
 .cart-contents ul li {
   list-style: none;
 }
