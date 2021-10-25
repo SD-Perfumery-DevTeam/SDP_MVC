@@ -1,10 +1,13 @@
-﻿@model SDPWeb.ViewModels.AddPromotionView
+﻿@{
+    ViewData["Title"] = "Promotions";
+}
+@model SDPWeb.ViewModels.AddPromotionView
 
 <section id="section-cms">
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
-            <h2>Promotions</h2>
+            <h2>@ViewData["Title"]</h2>
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditPromotion" method="post">
                 <div>
                     <table class="table table-bordered">

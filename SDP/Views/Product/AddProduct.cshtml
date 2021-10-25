@@ -1,10 +1,13 @@
-﻿@model SDP.ViewModels.AddProduct
+﻿@{
+    ViewData["Title"] = "Add New Product";
+}
+@model SDP.ViewModels.AddProduct
 
 <section id="section-cms">
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
-            <h2>Add New Product</h2>
+            <h2>@ViewData["Title"]</h2>
             <form enctype="multipart/form-data" method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
