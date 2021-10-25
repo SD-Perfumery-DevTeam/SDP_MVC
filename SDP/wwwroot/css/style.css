@@ -102,6 +102,7 @@ html {
 }
 
 body {
+  height: 100%;
   display: flex;
   flex-direction: column;
   margin: 0;
@@ -312,6 +313,10 @@ header #header-search #btnSearch {
   margin-left: 0.3rem;
 }
 
+main {
+  margin-bottom: 2rem;
+}
+
 main section {
   margin-top: 1rem;
 }
@@ -370,7 +375,6 @@ main #section-product-list .product-wrapper {
 footer {
   box-sizing: border-box;
   margin-top: auto;
-  min-height: 4rem;
   color: var(--color-white);
   background-color: var(--color-client-spec-4);
 }
@@ -514,6 +518,10 @@ footer .container ul li {
 
 #section-product-display h2{
   margin-bottom: 1.5rem;
+}
+
+.cart-contents ul {
+  padding-left: 0;
 }
 
 .cart-contents ul li {
