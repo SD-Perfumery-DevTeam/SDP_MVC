@@ -32,6 +32,7 @@
   --color-proposed-purple-05: hsl(270, 40%, 95%);
 
   --color-proposed-nav-link: #a3657a;
+  --color-proposed-site-heading: #4d4554;
 
   /* Font variables */
   --font-family-display: 'MonteCarlo', serif;
@@ -215,8 +216,8 @@ header nav h1 {
   font-family: var(--font-family-display);
   font-weight: 400;
   font-size: 3rem;
+  color: var(--color-proposed-site-heading);
   line-height: 3rem;
-  color: var(--color-proposed-purple-75);
   text-shadow: -0.15rem 0 0.2rem var(--color-white);
 }
 
