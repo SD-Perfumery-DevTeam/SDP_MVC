@@ -75,7 +75,7 @@ namespace SDPWeb.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Payment");
             }
             return RedirectToAction();
         }
