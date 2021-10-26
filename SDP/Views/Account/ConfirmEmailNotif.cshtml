@@ -1,14 +1,10 @@
-﻿
-<div class="email-container">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 email-contents">
-                <h1 class="confirm-email-title">Your Email has been verified!</h1>
-                <div class="email-message">
-                    <p>Your account has now been verified with us.</p>
-                </div>
-                
-            </div>
-        </div>
-    </div>
+﻿@{
+    ViewData["Title"] = "Your email address has been verified";
+}
+<div class="container">
+    <section id="section-banner">
+        <h2>>@ViewData["Title"]</h2>
+        <p>Thank-you for verifying your email address.</p>
+        <p>Your should now able to sign into your account.</p>
+    </section>
 </div>
