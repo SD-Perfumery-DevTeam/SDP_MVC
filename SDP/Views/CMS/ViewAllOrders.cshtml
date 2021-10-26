@@ -11,12 +11,20 @@
 
             <form enctype="multipart/form-data" asp-controller="CMS" asp-action="EditOrder" method="post">
                 <div>
+                    @{ 
+                        decimal totalOrders = 0;
+                        foreach(var item in Model)
+                        {
+                            totalOrders += item.totalPrice;
+                        }
+                    }
+                    <p>Total Order Value: <span>@totalOrders</span></p>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Order No</th>
-                                <th>User Id</th>
-                                <th>Total Price</th>
+                                <th>User ID</th>
+                                <th>Order Value</th>
                                 <th>Payment Status</th>
                                 <th>Payment Date</th>
                                 <th>Order Status</th>
