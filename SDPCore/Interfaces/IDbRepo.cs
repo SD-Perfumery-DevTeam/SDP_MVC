@@ -12,7 +12,7 @@ namespace Microsoft.SDP.SDPCore.Interface
     {
         public Product getProduct(string Id);
         public Task<IdentityUser> getCustomerAsync(string Id);
-        private static ProductDbContext _db;
+        private static SDPDbContext _db;
         private static UserManager<IdentityUser> _userManager;
         public Promotion getPromotionBypromoCode(string promoCode);
         public Promotion getPromotionByID(string promoId);

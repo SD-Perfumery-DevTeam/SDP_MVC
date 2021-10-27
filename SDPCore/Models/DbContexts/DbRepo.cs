@@ -11,10 +11,10 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
     public class DbRepo : IDbRepo 
     {
         
-        private  ProductDbContext _db;
+        private  SDPDbContext _db;
         private  UserManager<IdentityUser> _userManager { get; }
 
-        public DbRepo(ProductDbContext db, UserManager<IdentityUser> um)
+        public DbRepo(SDPDbContext db, UserManager<IdentityUser> um)
         {
             _db = db;
             _userManager = um;

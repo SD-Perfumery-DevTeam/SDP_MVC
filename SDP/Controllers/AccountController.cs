@@ -27,10 +27,10 @@ namespace SDP.Controllers
         private IEmailSender _emailSender { get; }
         private string _APIkey; //this is the sendgrid api key grabbed from appsetting.json file, see below constructor
         private IDbRepo _dbRepo ;
-        private readonly IDbContextFactory<ProductDbContext> _contextFactory;
+        private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
 
         public AccountController(UserManager<IdentityUser> um, SignInManager<IdentityUser> sm,
-            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<ProductDbContext> contextFactory)
+            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory)
         {
             this._userManager = um;
             this._signInManager = sm;

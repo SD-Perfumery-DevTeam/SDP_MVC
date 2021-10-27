@@ -21,14 +21,14 @@ namespace SDP.Controllers
     {
 
         List<Product> pList;
-        private ProductDbContext _db;
+        private Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext _db;
         private ImageService _imageService;
         ICustomer customer = null;
         private IDbRepo _dbRepo;
-        private readonly IDbContextFactory<ProductDbContext> _contextFactory;
+        private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
 
 
-        public InventoryController(ProductDbContext db, ImageService imageService, IDbRepo dbRepo, IDbContextFactory<ProductDbContext> contextFactory)
+        public InventoryController(Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext db, ImageService imageService, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory)
         {
             _db = db;
             _imageService = imageService;

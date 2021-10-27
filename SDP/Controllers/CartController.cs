@@ -113,7 +113,6 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            
         }
         [HttpPost]
         public IActionResult Checkout(decimal amount)
@@ -121,7 +120,6 @@ namespace SDP.Controllers
             return View(new CheckoutView {amount = amount, delivery= new Delivery(), key = new Key()});
         }
     }
-
 }
 
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Models.DbContexts
 {
-    public class ProductDbContext:IdentityDbContext
+    public class SDPDbContext:IdentityDbContext
     {
         public DbSet<Product> product { get; set; }
         public DbSet<Category> category { get; set; }
@@ -23,7 +23,7 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
           public DbSet<Articles> articles { get; set; }
           */
 
-        public ProductDbContext(DbContextOptions<ProductDbContext> options):base(options)
+        public SDPDbContext(DbContextOptions<SDPDbContext> options):base(options)
         {
             Database.EnsureCreated();
         }
