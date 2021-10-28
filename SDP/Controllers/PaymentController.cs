@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,13 +21,15 @@ namespace SDPWeb.Controllers
         private readonly IConfiguration _config;
         private Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext _db;
         private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
+        private UserManager<IdentityUser> _userManager { get; }
         private IDbRepo _dbRepo;
 
-        public PaymentController(IConfiguration config, Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext db, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory, IDbRepo dbRepo)
+        public PaymentController(IConfiguration config, Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext db, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory, UserManager<IdentityUser> userManager, IDbRepo dbRepo)
         {
             _config = config;
             _db = db;
             _contextFactory = contextFactory;
+            _userManager = userManager;
             _dbRepo = dbRepo;
         }
 
@@ -63,15 +66,14 @@ namespace SDPWeb.Controllers
                     {
                         orderDataTransfer = currentCutomer.cart.turnCartToOrder(context.order.Count() + 1, currentIdentityCutomer, checkoutView.delivery, checkoutView.amount/100, "paied", DateTime.Now, Consts.OrderStatus.pendingAction, context.product.Include(m=>m.brand).Include(m=>m.category).ToList());
                     }
-                    using (var context = _contextFactory.CreateDbContext())
-                    {
-                        foreach(var order in orderDataTransfer.order.orderLine) 
+                   
+                        foreach (var order in orderDataTransfer.order.orderLine) 
                         {
-                             order.product = await context.product.FindAsync(order.product.productId);
+                             order.product = await _db.product.FindAsync(order.product.productId);
                         }
-                        context.order.Add(orderDataTransfer.order);
-                        await context.SaveChangesAsync();
-                    }
+                        _db.order.Add(orderDataTransfer.order);
+                        await _db.SaveChangesAsync();
+                    
                 
                     currentCutomer.cart = new Cart();
                     return View(orderDataTransfer.order.orderNo);

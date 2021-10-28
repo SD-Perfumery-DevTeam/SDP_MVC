@@ -33,10 +33,9 @@ namespace Microsoft.SDP.SDPCore
         public enum OrderStatus
         {
             pendingAction,
-            beingDelivered,
-            deliveryComplete
+            Actioned,
+            Error
         };
-
         public enum Uom 
         {
             ml,

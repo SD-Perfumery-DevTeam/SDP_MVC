@@ -9,7 +9,7 @@
         <section class="cms-area">
             <h2>@ViewData["Title"]</h2>
 
-            <form enctype="multipart/form-data" asp-controller="CMS" asp-action="EditOrder" method="post">
+            <form enctype="multipart/form-data" asp-controller="CMS" asp-action="ViewOrder" method="post">
                 <div>
                     @{ 
                         decimal totalOrders = 0;
@@ -42,7 +42,7 @@
                                 <td>@item.paymentDate</td>
                                 <td>@item.orderStatus</td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary" name="orderId" value="@item.orderId" type="submit">View order detail</button>
+                                    <button class="btn btn-sm btn-primary" name="orderId" value="@item.orderId" type="submit">View detail</button>
                                 </td>
                             </tr>
                         }

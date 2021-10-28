@@ -1,4 +1,5 @@
-﻿using Microsoft.SDP.SDPCore.Models;
+﻿using Microsoft.SDP.SDPCore;
+using Microsoft.SDP.SDPCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace SDPWeb.ViewModels
     {
         public Order order { get; set; }
         public List<OrderLine> orderLineList { get; set; }
-        public int orderStatus { get; set; }
+        public Consts.OrderStatus orderStatus { get; set; }
     }
 }
