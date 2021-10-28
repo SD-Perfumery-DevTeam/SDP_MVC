@@ -187,10 +187,8 @@ namespace SDP.Controllers
                     Value = i.brandId.ToString(),
                     Text = i.title
                 }
-
                )
             };
-
             return View(model);
         }
 

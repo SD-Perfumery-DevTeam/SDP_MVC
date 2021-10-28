@@ -45,7 +45,7 @@ namespace Microsoft.SDP.SDPCore.Models
                 Product p = productList.Where(m => m.productId.ToString() == pair.Key).FirstOrDefault();
                 orderLineList.Add(new OrderLine (order, p, pair.Value.quantity, pair.Value.discount));
             }
-
+            order.orderLine = orderLineList;
             return new OrderDataTransfer { order = order, orderLineList = orderLineList };
         }
 

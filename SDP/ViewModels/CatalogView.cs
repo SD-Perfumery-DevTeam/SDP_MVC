@@ -18,7 +18,5 @@ namespace SDP.ViewModels
         public ICustomer customer { get; set; }
         public Brand brand { get; set; }
         public int totalPage { get; set; }
- 
     }
-
 }

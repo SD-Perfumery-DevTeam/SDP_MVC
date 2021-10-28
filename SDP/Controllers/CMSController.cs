@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using SDPWeb.ViewModels;
+
 namespace SDP.Controllers
 {
     [Authorize(Roles = "Admin, SuperAdmin")]
@@ -73,6 +75,24 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
             return View(list);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ViewOrdersAsync(string orderId)
+        {
+            List<OrderLine> lineList = null;
+            try
+            {
+                using (var context = _contextFactory.CreateDbContext()) 
+                {
+                    /*context.orderLine.ToListAsync*/
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            return View(new OrderView { orderLineList = lineList, });
         }
     }
 }

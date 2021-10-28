@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SDPWeb.ViewModels.OrderView
+
+    <h1> Order Number </h1>
+    <h2>@Model.order.orderNo</h2>
+    
+    <div>
+        
+        @foreach (var item in Enum.GetNames(typeof(Consts.OrderStatus)))
+        {
+             <label asp-for="order.orderStatus" class="form-label">@Html.RadioButtonFor(m=>m.orderStatus, Model.order.orderStatus) @item</label>
+        }
+    </div>
+    

@@ -61,10 +61,18 @@ namespace SDPWeb.Controllers
                     checkoutView.delivery.deliveryDate = DateTime.Now;
                     using (var context = _contextFactory.CreateDbContext())
                     {
-                        orderDataTransfer = currentCutomer.cart.turnCartToOrder(context.order.Count() + 1, currentIdentityCutomer, checkoutView.delivery, checkoutView.amount/100, "paied", DateTime.Now, Consts.OrderStatus.pendingAction, context.product.ToList());
+                        orderDataTransfer = currentCutomer.cart.turnCartToOrder(context.order.Count() + 1, currentIdentityCutomer, checkoutView.delivery, checkoutView.amount/100, "paied", DateTime.Now, Consts.OrderStatus.pendingAction, context.product.Include(m=>m.brand).Include(m=>m.category).ToList());
                     }
-                    _db.order.Add(orderDataTransfer.order);
-                    await _db.SaveChangesAsync();
+                    using (var context = _contextFactory.CreateDbContext())
+                    {
+                        foreach(var order in orderDataTransfer.order.orderLine) 
+                        {
+                             order.product = await context.product.FindAsync(order.product.productId);
+                        }
+                        context.order.Add(orderDataTransfer.order);
+                        await context.SaveChangesAsync();
+                    }
+                
                     currentCutomer.cart = new Cart();
                     return View(orderDataTransfer.order.orderNo);
                 }

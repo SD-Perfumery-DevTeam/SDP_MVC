@@ -11,8 +11,8 @@ namespace Microsoft.SDP.SDPCore.Models
     {
         [Key]
         public Guid lineId { get; set; }
-        private Order order { get; set; }
-        private Product product { get; set; }
+        public Order order { get; set; }
+        public Product product { get; set; }
         public int quantity { get; set; }
         public decimal discount { get; set; }
 

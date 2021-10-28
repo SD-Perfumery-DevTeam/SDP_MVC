@@ -32,8 +32,8 @@ namespace SDP
         public enum OrderStatus
         {
             pendingAction,
-            beingDelivered,
-            deliveryComplete
+            Actioned,
+            Error
         };
 
         public enum Uom 
