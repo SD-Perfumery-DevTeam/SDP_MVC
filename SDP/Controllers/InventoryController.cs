@@ -377,13 +377,26 @@ namespace SDP.Controllers
         {
             Guid guidToDelete;
             Brand brandToDelete;
+            bool assocRecordsExist;
 
             try
             {
                 guidToDelete = Guid.Parse(brandId);
                 brandToDelete = _db.brand.Find(guidToDelete);
-                _db.brand.Remove(brandToDelete);
-                _db.SaveChanges();
+
+                // 1. Check that there are no associated products.
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                     assocRecordsExist = context.product.Any(p => p.brand == brandToDelete);
+                }
+
+                // 2. If possible, delete the brand.
+                if (!assocRecordsExist)
+                {
+                    _logger.LogInformation(brandToDelete.title + " can be safely deleted.");
+                    _db.brand.Remove(brandToDelete);
+                    _db.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -497,13 +510,26 @@ namespace SDP.Controllers
         {
             Guid guidToDelete;
             Category categoryToDelete;
+            bool assocRecordsExist;
 
             try
             {
                 guidToDelete = Guid.Parse(categoryId);
                 categoryToDelete = _db.category.Find(guidToDelete);
-                _db.category.Remove(categoryToDelete);
-                _db.SaveChanges();
+
+                // 1. Check that there are no associated products.
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                    assocRecordsExist = context.product.Any(p => p.category == categoryToDelete);
+                }
+
+                // 2. If possible, delete the category.
+                if (!assocRecordsExist)
+                {
+                    _logger.LogInformation(categoryToDelete.title + " can be safely deleted.");
+                    _db.category.Remove(categoryToDelete);
+                    _db.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
