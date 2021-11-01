@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDPWeb", "SDP\SDPWeb.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDPInfrastructure", "SDPInfrastructure\SDPInfrastructure.csproj", "{4BDD124C-126C-4E08-BB65-CD22FB4A4C6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDPCore", "SDPCore\SDPCore.csproj", "{B991435D-A81F-4943-8258-231439AA3041}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDPCore", "SDPCore\SDPCore.csproj", "{B991435D-A81F-4943-8258-231439AA3041}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FE6D7872-E10C-4C96-BEFB-38DF1EFE26E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

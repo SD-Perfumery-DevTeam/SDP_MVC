@@ -16,10 +16,12 @@ namespace SDP.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _logger.LogDebug(1, "NLog injected into HomeController");
         }
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Index view in HomeController loaded.");
             return View();
         }
 
@@ -33,7 +35,5 @@ namespace SDP.Controllers
         {
             return View();
         }
-
-     
     }
 }

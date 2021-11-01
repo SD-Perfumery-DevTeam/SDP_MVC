@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog.Web;
 
 namespace SDP
 {
@@ -13,7 +14,25 @@ namespace SDP
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            // Adding logging with NLog.
+            // reference: https://github.com/NLog/NLog/wiki/Getting-started-with-ASP.NET-Core-5
+            var logger = NLogBuilder.ConfigureNLog("nlog.config")
+                .GetCurrentClassLogger();
+            try
+            {
+                logger.Debug("Initialise Main.");
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                // Log any errors in startup.
+                logger.Error(ex, "An exception occured when initialising Main.");
+            }
+            finally
+            {
+                // Flush and stop internal timers / threads (avoids segmentation fault).
+                NLog.LogManager.Shutdown();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -21,6 +40,12 @@ namespace SDP
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Global.Startup>();
-                });
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog(); // Setup NLog for dependency injection.
     }
 }
