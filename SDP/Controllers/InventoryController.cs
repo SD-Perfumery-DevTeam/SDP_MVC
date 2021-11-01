@@ -36,7 +36,7 @@ namespace SDP.Controllers
             _contextFactory = contextFactory;
             _logger = logger;
         }
-        //===================Inventory display page=======================
+        // Inventory Display Page =============================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult Index()
@@ -54,7 +54,7 @@ namespace SDP.Controllers
             return View(new InventoryView { inventories = list });
         }
 
-        //===================this method displays the change page=======================
+        // This method displays the change page ===============================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditProduct(string productId)
@@ -103,8 +103,9 @@ namespace SDP.Controllers
 
             return View(model);
         }
-        //===================Update Product=======================
-        //this method saves the changes to the database
+
+        // Update Product =====================================================
+        // This method saves the changes to the database.
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public async Task<IActionResult> UpdateProduct(AddProduct AP, string productId, string InvenId, string catID, string brandID, IFormFile ufile, string Url)
@@ -143,7 +144,7 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Inventory");
         }
         
-        //===================DeleteProduct=======================
+        // Delete Product =====================================================
         //this deletes the product based on product ID
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -167,20 +168,20 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Inventory");
         }
 
-        //===================List out promotions=======================
+        // List out promotions ================================================
         public IActionResult ViewPromotions()
         {
             var list = _db.promotion.Include(m => m.product).ToList<Promotion>();
             return View(new AddPromotionView { promotionList = list });
         }
-        //===================Add promotion page HTTPPOST=======================
+        // Add promotion page HTTPPOST ========================================
         [HttpPost]
         public IActionResult AddPromotion(string productId)
         {
             return View(new AddPromotionView { promotion = new Promotion { product = _dbRepo.getProduct(productId) } });
         }
 
-        //===================Add promotion page HTTPGET=======================
+        // Add promotion page HTTPGET =========================================
         [HttpGet]
         public IActionResult AddPromotion(string productId, string ErrorMsg)
         {
@@ -188,7 +189,7 @@ namespace SDP.Controllers
             return View(new AddPromotionView { promotion = new Promotion { product = _dbRepo.getProduct(productId) } });
         }
 
-        //===================Add promotion to the db checking for duplicate codes=======================
+        // Add promotion to the db checking for duplicate codes ===============
         [HttpPost]
         public async Task<IActionResult> AddPromotionToDbAsync(string productId, IFormFile ufile, AddPromotionView model)
         {
