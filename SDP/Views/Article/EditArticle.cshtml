@@ -12,7 +12,7 @@
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
 
-                <input name="categoryId" value="@Model.articleId" hidden />
+                <input name="articleId" value="@Model.articleId" hidden />
 
                 @* Field 'title' in its own row. *@
                 <div class="mb-4">
