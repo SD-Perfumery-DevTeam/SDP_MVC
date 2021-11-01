@@ -108,6 +108,28 @@
                 </ul>
             </div>
         </div>
+        @* Articles Submenu *@
+        <div class="accordion-item">
+            <p class="accordion-header" id="cms-nav-heading-articles">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cms-nav-child-articles"
+                        aria-expanded="false"
+                        aria-controls="cms-nav-collapse-articles">
+                    Articles
+                </button>
+            </p>
+            <div id="cms-nav-child-articles"
+                 class="accordion-collapse collapse"
+                 aria-labelledby="cms-nav-heading-articles"
+                 data-bs-parent="#cms-nav-accordion">
+                <ul class="list-unstyled fw-normal pb-1 small">
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Article" asp-action="AddArticle">Add Article</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Article" asp-action="Index">View / Edit Articles</a></li>
+                </ul>
+            </div>
+        </div>
         @* Users Submenu*@
         <div class="accordion-item">
             <p class="accordion-header" id="cms-nav-heading-users">
