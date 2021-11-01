@@ -6,17 +6,9 @@
             <div>
                 <h3 style="color:darkseagreen">@ViewData["Msg"]</h3>
                 <div>
-                    <h3>Users</h3>
+                    <h3>Orders</h3>
                     <ul>
-                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
-                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3>Products</h3>
-                    <ul>
-                        <li><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
-                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">Edit Products</a></li>
+                        <li><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
                     </ul>
                 </div>
                 <div>
@@ -26,9 +18,38 @@
                     </ul>
                 </div>
                 <div>
-                    <h3>Orders</h3>
+                    <h3>Products</h3>
                     <ul>
-                        <li><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Product" asp-action="AddProduct">Add Product</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="Index">View / Edit Products</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Brands</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="AddBrand">Add Brand</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewBrands">View / Edit Brands</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Categories</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="AddCategory">Add Category</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewCategories">View / Edit Categories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Articles</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Article" asp-action="AddArticle">Add Article</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Article" asp-action="Index">View / Edit Articles</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Users</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
                     </ul>
                 </div>
                 <div>

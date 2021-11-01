@@ -1,15 +1,26 @@
-﻿
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <form method="post">
-                <div class="form-group">
-                    <label>Category</label>
-                    <input required="required" class="form-control" />
-                    <span></span>
+﻿@{
+    ViewData["Title"] = "Add Category";
+}
+@model Microsoft.SDP.SDPCore.Models.Category
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>@ViewData["Title"]</h2>
+            <form enctype="multipart/form-data" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                @* Field 'title' in its own row. *@
+                <div class="mb-4">
+                    <label asp-for="title" class="form-label"></label>
+                    <input required="required" asp-for="title" class="form-control" maxlength="256" />
+                    <span asp-validation-for="title" class="text-danger"></span>
                 </div>
-                <button type="submit">Add</button>
+
+                <button type="submit" class="btn btn-primary">Add Category</button>
             </form>
-        </div>
+        </section>
     </div>
-</div>
+</section>

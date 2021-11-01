@@ -1,16 +1,18 @@
 ﻿@{
-    ViewData["Title"] = "Add Brand";
+    ViewData["Title"] = "Edit Category";
 }
-@model Microsoft.SDP.SDPCore.Models.Brand
+@model Microsoft.SDP.SDPCore.Models.Category
 
 <section id="section-cms">
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
-            <h2>@ViewData["Title"]</h2>
+            <h2>@ViewData["Title"] - @Model.title</h2>
             <form enctype="multipart/form-data" method="post">
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
+
+                <input name="categoryId" value="@Model.categoryId" hidden />
 
                 @* Field 'title' in its own row. *@
                 <div class="mb-4">
@@ -19,7 +21,11 @@
                     <span asp-validation-for="title" class="text-danger"></span>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Add Brand</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button asp-controller="Inventory" asp-action="DeleteCategory" name="categoryId"
+                        value="@Model.categoryId" class="btn btn-danger" id="popup">
+                    Delete
+                </button>
             </form>
         </section>
     </div>

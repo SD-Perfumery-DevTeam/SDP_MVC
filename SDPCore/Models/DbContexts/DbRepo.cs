@@ -25,24 +25,21 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
             return await _userManager.FindByIdAsync(Id) ;
         }
 
-        public Product getProduct(string Id) 
+        public Article GetArticle(string Id)
         {
-            return !string.IsNullOrWhiteSpace(Id)? _db.product.Include(m => m.brand).Include(m => m.category).ToList().Find(m => m.productId == Guid.Parse(Id)) : null;
+            return !string.IsNullOrWhiteSpace(Id) ? _db.article.ToList().Find(m => m.articleId == Guid.Parse(Id)) : null;
         }
 
-        public Promotion getPromotionBypromoCode(string promoCode)
+        public Brand GetBrand(string Id)
         {
-            return !string.IsNullOrWhiteSpace(promoCode) ?  _db.promotion.Include(m => m.product).ToList().Find(m => m.promoCode == promoCode) : null;
+            return !string.IsNullOrWhiteSpace(Id) ? _db.brand.ToList().Find(m => m.brandId == Guid.Parse(Id)) : null;
         }
 
-        public Promotion getPromotionByID(string promoId)
+        public Category GetCategory(string Id)
         {
-            return !string.IsNullOrWhiteSpace(promoId) ? _db.promotion.Include(m => m.product).ToList().Find(m => m.promoId.ToString()== promoId) : null;
+            return !string.IsNullOrWhiteSpace(Id) ? _db.category.ToList().Find(m => m.categoryId == Guid.Parse(Id)) : null;
         }
-        public IEnumerable<Product> GetProductList() 
-        {
-            return _db.product.Include(m => m.brand).Include(m => m.category).ToList();
-        }
+        
         public int GetInventory(string Id)
         {
             foreach (var inventory in _db.inventory.ToList())
@@ -53,6 +50,26 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
                 }
             }
             return 0;
+        }
+
+        public Product getProduct(string Id) 
+        {
+            return !string.IsNullOrWhiteSpace(Id)? _db.product.Include(m => m.brand).Include(m => m.category).ToList().Find(m => m.productId == Guid.Parse(Id)) : null;
+        }
+
+        public IEnumerable<Product> GetProductList() 
+        {
+            return _db.product.Include(m => m.brand).Include(m => m.category).ToList();
+        }
+
+        public Promotion getPromotionBypromoCode(string promoCode)
+        {
+            return !string.IsNullOrWhiteSpace(promoCode) ?  _db.promotion.Include(m => m.product).ToList().Find(m => m.promoCode == promoCode) : null;
+        }
+
+        public Promotion getPromotionByID(string promoId)
+        {
+            return !string.IsNullOrWhiteSpace(promoId) ? _db.promotion.Include(m => m.product).ToList().Find(m => m.promoId.ToString()== promoId) : null;
         }
 
         public IEnumerable<IdentityUser> GetCustomerList()

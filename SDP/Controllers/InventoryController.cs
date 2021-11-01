@@ -13,29 +13,30 @@ using System.Threading.Tasks;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using SDPWeb.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace SDP.Controllers
 {
     [Authorize(Roles = "Admin, SuperAdmin")]
     public class InventoryController : Controller
     {
-
         List<Product> pList;
-        private Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext _db;
+        private SDPDbContext _db;
         private ImageService _imageService;
         ICustomer customer = null;
         private IDbRepo _dbRepo;
-        private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
+        private readonly IDbContextFactory<SDPDbContext> _contextFactory;
+        private readonly ILogger<HomeController> _logger;
 
-
-        public InventoryController(Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext db, ImageService imageService, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory)
+        public InventoryController(SDPDbContext db, ImageService imageService, IDbRepo dbRepo, IDbContextFactory<SDPDbContext> contextFactory, ILogger<HomeController> logger)
         {
             _db = db;
             _imageService = imageService;
             _dbRepo = dbRepo;
             _contextFactory = contextFactory;
+            _logger = logger;
         }
-        //===================Inventory display page=======================
+        // Inventory Display Page =============================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult Index()
@@ -47,14 +48,13 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Problem loading Index view in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
             return View(new InventoryView { inventories = list });
         }
 
-        //===================this method displays the change page=======================
-
+        // This method displays the change page ===============================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditProduct(string productId)
@@ -69,7 +69,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Problem displaying Product object: EditProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
             List<Category> c;
@@ -81,6 +81,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem displaying Category / Brand object: EditProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
 
@@ -102,8 +103,9 @@ namespace SDP.Controllers
 
             return View(model);
         }
-        //===================Update Product=======================
-        //this method saves the changes to the database
+
+        // Update Product =====================================================
+        // This method saves the changes to the database.
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public async Task<IActionResult> UpdateProduct(AddProduct AP, string productId, string InvenId, string catID, string brandID, IFormFile ufile, string Url)
@@ -136,12 +138,13 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem updating Product object: UpdateProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
             return RedirectToAction("Index", "Inventory");
-
         }
-        //===================DeleteProduct=======================
+        
+        // Delete Product =====================================================
         //this deletes the product based on product ID
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -158,26 +161,27 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem deleting Product object: DeleteProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction("Index", "Inventory");
         }
 
-        //===================List out promotions=======================
+        // List out promotions ================================================
         public IActionResult ViewPromotions()
         {
             var list = _db.promotion.Include(m => m.product).ToList<Promotion>();
             return View(new AddPromotionView { promotionList = list });
         }
-        //===================Add promotion page HTTPPOST=======================
+        // Add promotion page HTTPPOST ========================================
         [HttpPost]
         public IActionResult AddPromotion(string productId)
         {
             return View(new AddPromotionView { promotion = new Promotion { product = _dbRepo.getProduct(productId) } });
         }
 
-        //===================Add promotion page HTTPGET=======================
+        // Add promotion page HTTPGET =========================================
         [HttpGet]
         public IActionResult AddPromotion(string productId, string ErrorMsg)
         {
@@ -185,7 +189,7 @@ namespace SDP.Controllers
             return View(new AddPromotionView { promotion = new Promotion { product = _dbRepo.getProduct(productId) } });
         }
 
-        //===================Add promotion to the db checking for duplicate codes=======================
+        // Add promotion to the db checking for duplicate codes ===============
         [HttpPost]
         public async Task<IActionResult> AddPromotionToDbAsync(string productId, IFormFile ufile, AddPromotionView model)
         {
@@ -215,7 +219,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Problem adding Promotion object: AddPromotionToDbAsync view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -227,8 +231,9 @@ namespace SDP.Controllers
             {
                 return View(new AddPromotionView { promotion = _dbRepo.getPromotionByID(promoId) });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem editing Promotion object: EditPromotion view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -261,15 +266,277 @@ namespace SDP.Controllers
                     var list = context.promotion.Include(m => m.product).ToList<Promotion>();
                     return RedirectToAction("ViewPromotions", new AddPromotionView { promotionList = list });
                 }
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem updating Promotion object: UpdatePromotionToDbAsync view (HttpPost) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+        }
 
+        // View Brands ========================================================
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult ViewBrands()
+        {
+            List<Brand> list;
+
+            try
+            {
+                list = _db.brand.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in ViewBrands action method in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return View(list);
+        }
+
+        // Add Brand HTTPGET ==================================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddBrand()
+        {
+            return View();
+        }
+
+        // Add Brand HTTPPOST =================================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddBrand(Brand brand)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            try
+            {
+                _db.brand.Add(brand);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in AddBrand action method (get) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("ViewBrands");
+        }
+
+        // Edit Brand HTTPGET =================================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditBrand(string brandId)
+        {
+            Brand brand;
+
+            try
+            {
+                brand = _dbRepo.GetBrand(brandId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditBrand action method (get) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return View(brand);
+        }
+
+        // Edit Brand HTTPPOST ================================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditBrand(Brand brand)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Brand brandToUpdate;
+
+            try
+            {
+                brandToUpdate = _db.brand.Find(brand.brandId);
+                brandToUpdate.brandId = brand.brandId;
+                brandToUpdate.title = brand.title;
+                _db.Entry(brandToUpdate).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditBrand action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("ViewBrands");
+        }
+
+        // Delete Brand HTTPPOST ==============================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult DeleteBrand(string brandId)
+        {
+            Guid guidToDelete;
+            Brand brandToDelete;
+            bool assocRecordsExist;
+
+            try
+            {
+                guidToDelete = Guid.Parse(brandId);
+                brandToDelete = _db.brand.Find(guidToDelete);
+
+                // 1. Check that there are no associated products.
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                     assocRecordsExist = context.product.Any(p => p.brand == brandToDelete);
+                }
+
+                // 2. If possible, delete the brand.
+                if (!assocRecordsExist)
+                {
+                    _logger.LogInformation(brandToDelete.title + " can be safely deleted.");
+                    _db.brand.Remove(brandToDelete);
+                    _db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in DeleteBrand action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("ViewBrands");
+        }
+
+        // View Categories ====================================================
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult ViewCategories()
+        {
+            List<Category> list;
+
+            try
+            {
+                list = _db.category.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in ViewCategories action method in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
 
+            return View(list);
         }
 
+        // Add Category HTTPGET ===============================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddCategory()
+        {
+            return View();
+        }
+
+        // Add Category HTTPPOST ==============================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddCategory(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            try
+            {
+                _db.category.Add(category);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in AddCategory action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("ViewCategories");
+        }
+
+        // Edit Category HTTPGET ==============================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditCategory(string categoryId)
+        {
+            Category category;
+
+            try
+            {
+                category = _dbRepo.GetCategory(categoryId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditCategory action method (get) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return View(category);
+        }
+
+        // Edit Category HTTPPOST =============================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditCategory(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Category categoryToUpdate;
+
+            try
+            {
+                categoryToUpdate = _db.category.Find(category.categoryId);
+                categoryToUpdate.categoryId = category.categoryId;
+                categoryToUpdate.title = category.title;
+                _db.Entry(categoryToUpdate).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditCategory action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("ViewCategories");
+        }
+
+        // Delete Category HTTPPOST ===========================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult DeleteCategory(string categoryId)
+        {
+            Guid guidToDelete;
+            Category categoryToDelete;
+            bool assocRecordsExist;
+
+            try
+            {
+                guidToDelete = Guid.Parse(categoryId);
+                categoryToDelete = _db.category.Find(guidToDelete);
+
+                // 1. Check that there are no associated products.
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                    assocRecordsExist = context.product.Any(p => p.category == categoryToDelete);
+                }
+
+                // 2. If possible, delete the category.
+                if (!assocRecordsExist)
+                {
+                    _logger.LogInformation(categoryToDelete.title + " can be safely deleted.");
+                    _db.category.Remove(categoryToDelete);
+                    _db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in DeleteCategory action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return RedirectToAction("ViewCategories");
+        }
     }
 }
