@@ -19,6 +19,14 @@
                     <span asp-validation-for="title" class="text-danger"></span>
                 </div>
 
+                @* Field 'description' in its own row. *@
+                <div class="mb-4">
+                    <span class="hint" id="textarea_message"></span>
+                    <label asp-for="text" class="form-label"></label>
+                    <textarea required="required" asp-for="text" id="message_area" class="form-control message_area"></textarea>
+                    <span asp-validation-for="text" class="text-danger"></span>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Add Article</button>
             </form>
         </section>
