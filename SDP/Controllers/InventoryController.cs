@@ -278,7 +278,17 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult ViewBrands()
         {
-            var list = _db.brand.ToList();
+            List<Brand> list;
+
+            try
+            {
+                list = _db.brand.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in ViewBrands action method in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return View(list);
         }
 
@@ -300,9 +310,16 @@ namespace SDP.Controllers
                 return View();
             }
 
-            _db.brand.Add(brand);
-            _db.SaveChanges();
-
+            try
+            {
+                _db.brand.Add(brand);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in AddBrand action method (get) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("ViewBrands");
         }
 
@@ -311,8 +328,17 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditBrand(string brandId)
         {
-            var brand = _dbRepo.GetBrand(brandId);
-            
+            Brand brand;
+
+            try
+            {
+                brand = _dbRepo.GetBrand(brandId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditBrand action method (get) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return View(brand);
         }
 
@@ -326,12 +352,21 @@ namespace SDP.Controllers
                 return View();
             }
 
-            Brand brandToUpdate = _db.brand.Find(brand.brandId);
-            brandToUpdate.brandId = brand.brandId;
-            brandToUpdate.title = brand.title;
-            _db.Entry(brandToUpdate).State = EntityState.Modified;
-            _db.SaveChanges();
+            Brand brandToUpdate;
 
+            try
+            {
+                brandToUpdate = _db.brand.Find(brand.brandId);
+                brandToUpdate.brandId = brand.brandId;
+                brandToUpdate.title = brand.title;
+                _db.Entry(brandToUpdate).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditBrand action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("ViewBrands");
         }
 
@@ -340,12 +375,21 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult DeleteBrand(string brandId)
         {
-            Guid guidToDelete = Guid.Parse(brandId);
+            Guid guidToDelete;
+            Brand brandToDelete;
 
-            Brand brandToDelete = _db.brand.Find(guidToDelete);
-            _db.brand.Remove(brandToDelete);
-            _db.SaveChanges();
-
+            try
+            {
+                guidToDelete = Guid.Parse(brandId);
+                brandToDelete = _db.brand.Find(guidToDelete);
+                _db.brand.Remove(brandToDelete);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in DeleteBrand action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("ViewBrands");
         }
 
@@ -353,7 +397,18 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult ViewCategories()
         {
-            var list = _db.category.ToList();
+            List<Category> list;
+
+            try
+            {
+                list = _db.category.ToList();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in ViewCategories action method in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
+
             return View(list);
         }
 
@@ -375,9 +430,16 @@ namespace SDP.Controllers
                 return View();
             }
 
-            _db.category.Add(category);
-            _db.SaveChanges();
-
+            try
+            {
+                _db.category.Add(category);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in AddCategory action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("ViewCategories");
         }
 
@@ -386,8 +448,17 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditCategory(string categoryId)
         {
-            var category = _dbRepo.GetCategory(categoryId);
+            Category category;
 
+            try
+            {
+                category = _dbRepo.GetCategory(categoryId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditCategory action method (get) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return View(category);
         }
 
@@ -401,12 +472,21 @@ namespace SDP.Controllers
                 return View();
             }
 
-            Category categoryToUpdate = _db.category.Find(category.categoryId);
-            categoryToUpdate.categoryId = category.categoryId;
-            categoryToUpdate.title = category.title;
-            _db.Entry(categoryToUpdate).State = EntityState.Modified;
-            _db.SaveChanges();
+            Category categoryToUpdate;
 
+            try
+            {
+                categoryToUpdate = _db.category.Find(category.categoryId);
+                categoryToUpdate.categoryId = category.categoryId;
+                categoryToUpdate.title = category.title;
+                _db.Entry(categoryToUpdate).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in EditCategory action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("ViewCategories");
         }
 
@@ -415,12 +495,21 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult DeleteCategory(string categoryId)
         {
-            Guid guidToDelete = Guid.Parse(categoryId);
+            Guid guidToDelete;
+            Category categoryToDelete;
 
-            Category categoryToDelete = _db.category.Find(guidToDelete);
-            _db.category.Remove(categoryToDelete);
-            _db.SaveChanges();
-
+            try
+            {
+                guidToDelete = Guid.Parse(categoryId);
+                categoryToDelete = _db.category.Find(guidToDelete);
+                _db.category.Remove(categoryToDelete);
+                _db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in DeleteCategory action method (post) in Inventory controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return RedirectToAction("ViewCategories");
         }
     }
