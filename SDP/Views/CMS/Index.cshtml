@@ -6,10 +6,15 @@
             <div>
                 <h3 style="color:darkseagreen">@ViewData["Msg"]</h3>
                 <div>
-                    <h3>Users</h3>
+                    <h3>Orders</h3>
                     <ul>
-                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
-                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
+                        <li><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Promotions</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewPromotions">View Promotions</a></li>
                     </ul>
                 </div>
                 <div>
@@ -20,15 +25,24 @@
                     </ul>
                 </div>
                 <div>
-                    <h3>Promotions</h3>
+                    <h3>Brands</h3>
                     <ul>
-                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewPromotions">View Promotions</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="AddBrand">Add Brand</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewBrands">Edit Brands</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h3>Orders</h3>
+                    <h3>Categories</h3>
                     <ul>
-                        <li><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="AddCategory">Add Category</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewCategories">Edit Categories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Users</h3>
+                    <ul>
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                        <li><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
                     </ul>
                 </div>
                 <div>
