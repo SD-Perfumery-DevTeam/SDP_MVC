@@ -1,4 +1,32 @@
 ﻿@{
     ViewData["Title"] = "View Categories";
 }
-@model Microsoft.SDP.SDPCore.Models.Category
+@model IEnumerable<Microsoft.SDP.SDPCore.Models.Category>
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>@ViewData["Title"]</h2>
+            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditCategory" method="get">
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.title</td>
+                                <td><button class="btn btn-sm btn-primary" name="categoryId" value="@item.categoryId" type="submit">Edit</button></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </form>
+        </section>
+    </div>
+</section>
