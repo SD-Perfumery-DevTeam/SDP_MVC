@@ -231,7 +231,7 @@ namespace SDP.Controllers
             {
                 return View(new AddPromotionView { promotion = _dbRepo.getPromotionByID(promoId) });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Problem editing Promotion object: EditPromotion view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
@@ -267,11 +267,161 @@ namespace SDP.Controllers
                     return RedirectToAction("ViewPromotions", new AddPromotionView { promotionList = list });
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Problem updating Promotion object: UpdatePromotionToDbAsync view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
+        }
+
+        // View Brands ========================================================
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult ViewBrands()
+        {
+            var list = _db.brand.ToList();
+            return View(list);
+        }
+
+        // Add Brand HTTPGET ==================================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddBrand()
+        {
+            return View();
+        }
+
+        // Add Brand HTTPPOST =================================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddBrand(Brand brand)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            _db.brand.Add(brand);
+            _db.SaveChanges();
+
+            return RedirectToAction("ViewBrands");
+        }
+
+        // Edit Brand HTTPGET =================================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditBrand(string brandId)
+        {
+            var brand = _dbRepo.GetBrand(brandId);
+            
+            return View(brand);
+        }
+
+        // Edit Brand HTTPPOST ================================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditBrand(Brand brand)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Brand brandToUpdate = _db.brand.Find(brand.brandId);
+            brandToUpdate.brandId = brand.brandId;
+            brandToUpdate.title = brand.title;
+            _db.Entry(brandToUpdate).State = EntityState.Modified;
+            _db.SaveChanges();
+
+            return RedirectToAction("ViewBrands");
+        }
+
+        // Delete Brand HTTPPOST ==============================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult DeleteBrand(string brandId)
+        {
+            Guid guidToDelete = Guid.Parse(brandId);
+
+            Brand brandToDelete = _db.brand.Find(guidToDelete);
+            _db.brand.Remove(brandToDelete);
+            _db.SaveChanges();
+
+            return RedirectToAction("ViewBrands");
+        }
+
+        // View Categories ====================================================
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult ViewCategories()
+        {
+            var list = _db.category.ToList();
+            return View(list);
+        }
+
+        // Add Category HTTPGET ===============================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddCategory()
+        {
+            return View();
+        }
+
+        // Add Category HTTPPOST ==============================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult AddCategory(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            _db.category.Add(category);
+            _db.SaveChanges();
+
+            return RedirectToAction("ViewCategories");
+        }
+
+        // Edit Category HTTPGET ==============================================
+        [HttpGet]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditCategory(string categoryId)
+        {
+            var category = _dbRepo.GetCategory(categoryId);
+
+            return View(category);
+        }
+
+        // Edit Category HTTPPOST =============================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult EditCategory(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Category categoryToUpdate = _db.category.Find(category.categoryId);
+            categoryToUpdate.categoryId = category.categoryId;
+            categoryToUpdate.title = category.title;
+            _db.Entry(categoryToUpdate).State = EntityState.Modified;
+            _db.SaveChanges();
+
+            return RedirectToAction("ViewCategories");
+        }
+
+        // Delete Category HTTPPOST ===========================================
+        [HttpPost]
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        public IActionResult DeleteCategory(string categoryId)
+        {
+            Guid guidToDelete = Guid.Parse(categoryId);
+
+            Category categoryToDelete = _db.category.Find(guidToDelete);
+            _db.category.Remove(categoryToDelete);
+            _db.SaveChanges();
+
+            return RedirectToAction("ViewCategories");
         }
     }
 }
