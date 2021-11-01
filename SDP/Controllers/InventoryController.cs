@@ -13,27 +13,28 @@ using System.Threading.Tasks;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using SDPWeb.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace SDP.Controllers
 {
     [Authorize(Roles = "Admin, SuperAdmin")]
     public class InventoryController : Controller
     {
-
         List<Product> pList;
         private Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext _db;
         private ImageService _imageService;
         ICustomer customer = null;
         private IDbRepo _dbRepo;
         private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
+        private readonly ILogger<HomeController> _logger;
 
-
-        public InventoryController(Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext db, ImageService imageService, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory)
+        public InventoryController(Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext db, ImageService imageService, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory, ILogger<HomeController> logger)
         {
             _db = db;
             _imageService = imageService;
             _dbRepo = dbRepo;
             _contextFactory = contextFactory;
+            _logger = logger;
         }
         //===================Inventory display page=======================
         [HttpGet]
@@ -47,14 +48,13 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Problem loading Index view in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
             return View(new InventoryView { inventories = list });
         }
 
         //===================this method displays the change page=======================
-
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditProduct(string productId)
@@ -69,7 +69,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Problem displaying Product object: EditProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
             List<Category> c;
@@ -81,6 +81,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem displaying Category / Brand object: EditProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
 
@@ -136,11 +137,12 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem updating Product object: UpdateProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
             return RedirectToAction("Index", "Inventory");
-
         }
+        
         //===================DeleteProduct=======================
         //this deletes the product based on product ID
         [HttpPost]
@@ -158,6 +160,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Problem deleting Product object: DeleteProduct view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
 
@@ -215,7 +218,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
-
+                _logger.LogError(ex, "Problem adding Promotion object: AddPromotionToDbAsync view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -229,6 +232,7 @@ namespace SDP.Controllers
             }
             catch (Exception)
             {
+                _logger.LogError(ex, "Problem editing Promotion object: EditPromotion view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
         }
@@ -261,15 +265,12 @@ namespace SDP.Controllers
                     var list = context.promotion.Include(m => m.product).ToList<Promotion>();
                     return RedirectToAction("ViewPromotions", new AddPromotionView { promotionList = list });
                 }
-
             }
             catch (Exception)
             {
-
+                _logger.LogError(ex, "Problem updating Promotion object: UpdatePromotionToDbAsync view (HttpPost) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
-
         }
-
     }
 }
