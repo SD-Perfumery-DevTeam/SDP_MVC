@@ -8,6 +8,8 @@
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
             <h2>@ViewData["Title"]</h2>
+
+            <div><a asp-controller="Inventory" asp-action="AddBrand" class="btn btn-primary">Add Brand</a></div>
             <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditBrand" method="get">
                 <div>
                     <table class="table table-bordered">
