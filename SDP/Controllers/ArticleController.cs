@@ -48,8 +48,17 @@ namespace SDPWeb.Controllers
         [Route("Article/{key}")]
         public IActionResult Article(string key)
         {
-            var article = _dbRepo.GetArticle(key);
-            
+            Article article;
+
+            try
+            {
+                article = _dbRepo.GetArticle(key);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in Article action method in Article controller.");
+                return RedirectToAction("Error", "Home");
+            }
             return View(article);
         }
 
