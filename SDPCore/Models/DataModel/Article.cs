@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Models
@@ -9,6 +11,29 @@ namespace Microsoft.SDP.SDPCore.Models
     public class Article
     {
         public Guid articleId { get; set; }
+
+        private string _key;
+
+        // Define a human readable key string that can be used to access an
+        // article via typed URL.
+        // Note: this is dynamically generated and not a database object.
+        // Reference: https://www.linkedin.com/learning/learning-asp-dot-net-core-mvc/
+        [NotMapped]
+        public string key
+        {
+            get
+            {
+                if (_key == null)
+                {
+                    _key = Regex.Replace(title.ToLower(), "[^a-z0-9]", "-");
+                }
+                return _key;
+            }
+            set
+            {
+                _key = value;
+            }
+        }
 
         [Required]
         [StringLength(256)]
