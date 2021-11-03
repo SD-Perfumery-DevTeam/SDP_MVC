@@ -25,7 +25,7 @@ namespace SDPWeb.Controllers
             _logger = logger;
         }
 
-        // View Categories ====================================================
+        // View Articles ======================================================
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult Index()
         {
@@ -42,6 +42,15 @@ namespace SDPWeb.Controllers
             }
 
             return View(list);
+        }
+
+        // View Single Article ================================================
+        [Route("Article/{key}")]
+        public IActionResult Article(string key)
+        {
+            var article = _dbRepo.GetArticle(key);
+            
+            return View(article);
         }
 
         // Add Category HTTPGET ===============================================
