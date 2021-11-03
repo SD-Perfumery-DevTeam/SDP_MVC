@@ -62,7 +62,7 @@ namespace SDPWeb.Controllers
             return View(article);
         }
 
-        // Add Category HTTPGET ===============================================
+        // Add Article HTTPGET ================================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult AddArticle()
@@ -70,7 +70,7 @@ namespace SDPWeb.Controllers
             return View();
         }
 
-        // Add Category HTTPPOST ==============================================
+        // Add Article HTTPPOST ===============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult AddArticle(Article article)
@@ -93,7 +93,7 @@ namespace SDPWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        // Edit Category HTTPGET ==============================================
+        // Edit Article HTTPGET ===============================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditArticle(string articleId)
@@ -112,7 +112,7 @@ namespace SDPWeb.Controllers
             return View(article);
         }
 
-        // Edit Category HTTPPOST =============================================
+        // Edit Article HTTPPOST ==============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditArticle(Article article)
@@ -140,7 +140,7 @@ namespace SDPWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        // Delete Category HTTPPOST ===========================================
+        // Delete Article HTTPPOST ============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult DeleteArticle(string articleId)
