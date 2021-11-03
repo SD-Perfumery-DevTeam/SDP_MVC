@@ -45,7 +45,7 @@ namespace SDPWeb.Controllers
         }
 
         // View Single Article ================================================
-        [Route("Article/{key}")]
+        [Route("Article/View/{key}")]
         public IActionResult Article(string key)
         {
             Article article;
@@ -96,13 +96,13 @@ namespace SDPWeb.Controllers
         // Edit Article HTTPGET ===============================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult EditArticle(string articleId)
+        public IActionResult EditArticle(string key)
         {
             Article article;
 
             try
             {
-                article = _dbRepo.GetArticle(articleId);
+                article = _dbRepo.GetArticle(key);
             }
             catch (Exception ex)
             {
@@ -126,9 +126,9 @@ namespace SDPWeb.Controllers
 
             try
             {
-                articleToUpdate = _db.article.Find(article.articleId);
-                articleToUpdate.articleId = article.articleId;
+                articleToUpdate = _dbRepo.GetArticle(article.key);
                 articleToUpdate.title = article.title;
+                articleToUpdate.text = article.text;
                 _db.Entry(articleToUpdate).State = EntityState.Modified;
                 _db.SaveChanges();
             }
@@ -143,15 +143,13 @@ namespace SDPWeb.Controllers
         // Delete Article HTTPPOST ============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult DeleteArticle(string articleId)
+        public IActionResult DeleteArticle(string key)
         {
-            Guid guidToDelete;
             Article articleToDelete;
 
             try
             {
-                guidToDelete = Guid.Parse(articleId);
-                articleToDelete = _db.article.Find(guidToDelete);
+                articleToDelete = _dbRepo.GetArticle(key);
                 _db.article.Remove(articleToDelete);
                 _db.SaveChanges();
             }
