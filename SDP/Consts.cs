@@ -10,7 +10,6 @@ namespace SDP
     {
         public enum PTypes
         {
-
             EDP,
             EDT
         };
@@ -29,11 +28,12 @@ namespace SDP
             beingDelivered,
             deliveryComplete
         };
+
         public enum OrderStatus
         {
             pendingAction,
-            beingDelivered,
-            deliveryComplete
+            Actioned,
+            Error
         };
 
         public enum Uom 
@@ -44,7 +44,6 @@ namespace SDP
             Kg,
             Oz,
         }
-
     }
 }
 

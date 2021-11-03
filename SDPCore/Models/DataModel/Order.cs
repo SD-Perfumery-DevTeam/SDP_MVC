@@ -30,6 +30,7 @@ namespace Microsoft.SDP.SDPCore.Models
         public int orderNo { get; set; }
         public IdentityUser user { get; set; }
         public Delivery delivery { get; set; }
+        public List <OrderLine> orderLine { get; set; }
         public decimal totalPrice { get; set; }
         public string paymentStatus { get; set; }
         public DateTime paymentDate { get; set; }

@@ -18,13 +18,13 @@ namespace SDP.Controllers
     public class ProductController : Controller
     {
         List<Product> pList;
-        private static ProductDbContext _db;
+        private static SDPDbContext _db;
         private IDbRepo _dbRepo;
         private ICustomer _customer = null;
         private ImageService _imageService;
 
 
-        public ProductController(ProductDbContext db, IDbRepo dbRepo, ImageService imageService)
+        public ProductController(SDPDbContext db, IDbRepo dbRepo, ImageService imageService)
         {
             _db = db;
             _dbRepo = dbRepo;
@@ -187,10 +187,8 @@ namespace SDP.Controllers
                     Value = i.brandId.ToString(),
                     Text = i.title
                 }
-
                )
             };
-
             return View(model);
         }
 

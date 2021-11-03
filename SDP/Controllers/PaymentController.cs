@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.SDP.SDPCore;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models;
-using Microsoft.SDP.SDPCore.Models.DbContexts;
 using Microsoft.SDP.SDPInfrastructure.Services;
 using SDPCore.Dtos;
-using SDPCore.Models.AccountModel;
 using SDPWeb.ViewModels;
 using Stripe;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,15 +19,17 @@ namespace SDPWeb.Controllers
     public class PaymentController : Controller
     {
         private readonly IConfiguration _config;
-        private ProductDbContext _db;
-        private readonly IDbContextFactory<ProductDbContext> _contextFactory;
+        private Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext _db;
+        private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
+        private UserManager<IdentityUser> _userManager { get; }
         private IDbRepo _dbRepo;
 
-        public PaymentController(IConfiguration config, ProductDbContext db, IDbContextFactory<ProductDbContext> contextFactory, IDbRepo dbRepo)
+        public PaymentController(IConfiguration config, Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext db, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory, UserManager<IdentityUser> userManager, IDbRepo dbRepo)
         {
             _config = config;
             _db = db;
             _contextFactory = contextFactory;
+            _userManager = userManager;
             _dbRepo = dbRepo;
         }
 
@@ -43,7 +43,6 @@ namespace SDPWeb.Controllers
                 var charges = new ChargeService();
                 var customer = cutomers.Create(new CustomerCreateOptions
                 {
-
                     Email = checkoutView.delivery.email,
                     Source = stripeToken
                 });
@@ -65,17 +64,24 @@ namespace SDPWeb.Controllers
                     checkoutView.delivery.deliveryDate = DateTime.Now;
                     using (var context = _contextFactory.CreateDbContext())
                     {
-                        orderDataTransfer = currentCutomer.cart.turnCartToOrder(context.order.Count() + 1, currentIdentityCutomer, checkoutView.delivery, checkoutView.amount, "payed", DateTime.Now, Consts.OrderStatus.pendingAction, context.product.ToList());
+                        orderDataTransfer = currentCutomer.cart.turnCartToOrder(context.order.Count() + 1, currentIdentityCutomer, checkoutView.delivery, checkoutView.amount/100, "paied", DateTime.Now, Consts.OrderStatus.pendingAction, context.product.Include(m=>m.brand).Include(m=>m.category).ToList());
                     }
-                    _db.order.Add(orderDataTransfer.order);
-                    await _db.SaveChangesAsync();
+                   
+                        foreach (var order in orderDataTransfer.order.orderLine) 
+                        {
+                             order.product = await _db.product.FindAsync(order.product.productId);
+                        }
+                        _db.order.Add(orderDataTransfer.order);
+                        await _db.SaveChangesAsync();
+                    
+                
                     currentCutomer.cart = new Cart();
                     return View(orderDataTransfer.order.orderNo);
                 }
             }
             catch (Exception)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Payment");
             }
             return RedirectToAction();
         }

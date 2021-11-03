@@ -1,7 +1,7 @@
 ﻿@{
-    ViewData["Title"] = "Edit Brand";
+    ViewData["Title"] = "Edit Article";
 }
-@model Microsoft.SDP.SDPCore.Models.Brand
+@model Microsoft.SDP.SDPCore.Models.Article
 
 <section id="section-cms">
     <div class="container">
@@ -12,7 +12,7 @@
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
 
-                <input name="brandId" value="@Model.brandId" hidden />
+                <input name="articleId" value="@Model.articleId" hidden />
 
                 @* Field 'title' in its own row. *@
                 <div class="mb-4">
@@ -21,9 +21,17 @@
                     <span asp-validation-for="title" class="text-danger"></span>
                 </div>
 
+                @* Field 'description' in its own row. *@
+                <div class="mb-4">
+                    <span class="hint" id="textarea_message"></span>
+                    <label asp-for="text" class="form-label"></label>
+                    <textarea required="required" asp-for="text" id="message_area" class="form-control message_area"></textarea>
+                    <span asp-validation-for="text" class="text-danger"></span>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Save</button>
-                <button asp-controller="Inventory" asp-action="DeleteBrand" name="brandId"
-                        value="@Model.brandId" class="btn btn-danger" id="popup">
+                <button asp-controller="Article" asp-action="DeleteArticle" name="articleId"
+                        value="@Model.articleId" class="btn btn-danger" id="popup">
                     Delete
                 </button>
             </form>

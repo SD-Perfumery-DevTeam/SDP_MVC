@@ -11,16 +11,16 @@ namespace Microsoft.SDP.SDPCore.Models
     {
         [Key]
         public Guid lineId { get; set; }
-        private Order order { get; set; }
-        private Product product { get; set; }
-        public int quantity { get; set; }
+        public Order order { get; set; }
+        public Product product { get; set; }
+        public decimal quantity { get; set; }
         public decimal discount { get; set; }
 
         public OrderLine()
         {
         }
 
-        public OrderLine( Order order, Product product, int quantity, decimal discount)
+        public OrderLine( Order order, Product product, decimal quantity, decimal discount)
         {
             this.lineId = Guid.NewGuid();
             this.order = order;

@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     string text = "Login";
@@ -23,6 +22,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SD Perfumery</title>
+    <link rel="icon" href="~/images/assets/favicon.ico" sizes="any">
+    <link rel="icon" href="~/images/assets/favicon-512px.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="~/images/assets/favicon-180px.png">
+    <link rel="manifest" href="~/images/assets/manifest.webmanifest">
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
@@ -31,7 +34,7 @@
 <body>
     <header>
         <nav>
-            <div class="container">
+            <div class="container mb-3">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <h1>SD Perfumery</h1>
                 </a>
@@ -60,23 +63,6 @@
                 </ul>
             </div>
         </nav>
-        <div class="container">
-            <div id="header-brand">
-                <!--<span id="header-cta">
-                    <i class="bi bi-telephone"></i>
-                    <a href="tel:001 284 227">Call us on 001-284-227</a>
-                </span>-->
-                <form id="header-search">
-                    <!-- Onclick attribute in the search button below has been
-        copied from Product-Index view. Remove if unecessary
-        (should probably function site wide and be implemented
-        as a listener). -->
-                    <input type="search" /><button id="btnSearch" class="sdp-style" onclick='setList(JSON.parse())'>
-                        <i class="bi bi-search" id="search"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
     </header>
     <main>
         @RenderBody()

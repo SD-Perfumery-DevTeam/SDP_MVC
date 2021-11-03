@@ -1,43 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@{
+    ViewData["Title"] = "View Orders";
+}
 @model IEnumerable<Order>
 
 <section id="section-cms">
     <div class="container">
         @await Html.PartialAsync("_AdminLinks")
         <section class="cms-area">
-            <h2>Oder Page</h2>
+            <h2>@ViewData["Title"]</h2>
 
-            <form enctype="multipart/form-data" asp-controller="CMS" asp-action="EditOrder" method="post">
+            <form enctype="multipart/form-data" asp-controller="CMS" asp-action="ViewOrder" method="post">
                 <div>
-                    <table class="table table-bordered" style="margin:0 auto">
+                    @{ 
+                        decimal totalOrders = 0;
+                        foreach(var item in Model)
+                        {
+                            totalOrders += item.totalPrice;
+                        }
+                    }
+                    <p>Total Order Value: <span>@totalOrders</span></p>
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Order Id</th>
                                 <th>Order No</th>
-                                <th>User Id</th>
-                                <th>Total Price</th>
+                                <th>User ID</th>
+                                <th>Order Value</th>
                                 <th>Payment Status</th>
-                                <th>paymentDate</th>
+                                <th>Payment Date</th>
                                 <th>Order Status</th>
                                 <th></th>
-
                             </tr>
                         </thead>
                         @foreach (var item in Model)
                         {
                             var userId = item.user == null ? "guest user" : item.user.Id;
                             <tr>
-                                <td>@item.orderId</td>
                                 <td>@item.orderNo</td>
-                                <td>@userId </td>
+                                <td>@userId</td>
                                 <td>@item.totalPrice</td>
                                 <td>@item.paymentStatus</td>
                                 <td>@item.paymentDate</td>
                                 <td>@item.orderStatus</td>
-
-                                <td><button class="btn btn-sm btn-primary" name="orderId" value="@item.orderId" type="submit">Edit</button></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" name="orderId" value="@item.orderId" type="submit">View detail</button>
+                                </td>
                             </tr>
                         }
                     </table>

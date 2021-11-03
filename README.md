@@ -12,6 +12,10 @@ clicking on the libman.json file in the SDPWeb section of the project.***
 ***If your commits try to uploade these files, please run the "git rm -rf --cached ."
 command and try again before committing.***
 
+***Please copy the nlog.config file from the root directory into your debug and release folders***
+/SDP/bin/Debug/net5.0/{nlog.config}
+/SDP/bin/Release/net5.0/{nlog.config}
+
 ```
 
 ## Change Overview

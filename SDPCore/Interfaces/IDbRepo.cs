@@ -10,14 +10,19 @@ namespace Microsoft.SDP.SDPCore.Interface
 {
     public interface IDbRepo
     {
-        public Product getProduct(string Id);
-        public Task<IdentityUser> getCustomerAsync(string Id);
-        private static ProductDbContext _db;
+        private static SDPDbContext _db;
         private static UserManager<IdentityUser> _userManager;
+
+        public Task<IdentityUser> getCustomerAsync(string Id);
+
+        public Article GetArticle(string Id);
+        public Brand GetBrand(string Id);
+        public Category GetCategory(string Id);
+        public int GetInventory(string Id);
+        public Product getProduct(string Id);
+        public IEnumerable<Product> GetProductList();
         public Promotion getPromotionBypromoCode(string promoCode);
         public Promotion getPromotionByID(string promoId);
-        public IEnumerable<Product> GetProductList();
         public IEnumerable<IdentityUser> GetCustomerList();
-        public int GetInventory(string Id);
     }
 }

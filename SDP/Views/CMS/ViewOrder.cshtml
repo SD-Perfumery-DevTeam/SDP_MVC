@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SDPWeb.ViewModels.OrderView
+
+<h3> Order Number : @Model.order.orderNo</h3>
+<form asp-action="UpdateOrder" asp-controller="CMS" method="post">
+    <input type="hidden" name="orderId" value="@Model.order.orderId" />
+    <div>
+        @foreach (var item in Enum.GetNames(typeof(Consts.OrderStatus)))
+        {
+            <label asp-for="order.orderStatus" class="form-label">@Html.RadioButtonFor(m => m.orderStatus, item, item) @item</label>
+            <br><br>
+        }
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Line Id</th>
+                    <th>Product Name</th>
+                    <th>Discount</th>
+                    <th>Quantity</th>
+                   
+                </tr>
+            </thead>
+            @foreach (var item in Model.orderLineList)
+            {
+                <tr>
+                    <td>@item.lineId</td>
+                    <td>@item.product.title</td>
+                    <td>@item.discount %</td>
+                    <td>@item.quantity</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <button class="sdp-style" type="submit">Update</button>
+</form>

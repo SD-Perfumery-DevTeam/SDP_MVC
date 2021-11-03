@@ -1,8 +1,5 @@
 /* Imports for Google Fonts */
-/* Original font imports */
-@import url('https://fonts.googleapis.com/css2?family=Antic+Didone&family=MonteCarlo&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap');
-/* Font imports from Luciano's mockup */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Kurale&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kurale&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=MonteCarlo&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 /* CSS variables for common colours */
 :root {
@@ -35,13 +32,11 @@
   --color-proposed-purple-05: hsl(270, 40%, 95%);
 
   --color-proposed-nav-link: #a3657a;
+  --color-proposed-site-heading: #4d4554;
 
   /* Font variables */
-  /* SD Perfumery logo font */
   --font-family-display: 'MonteCarlo', serif;
-  /* Original fonts */
   --font-family-body-sans-serif: 'Open Sans', sans-serif;
-  /* Fonts from Luciano's mockup */
   --font-family-display-serif: 'Kurale', serif;
   --font-family-body-serif: 'Lora', serif;
 }
@@ -221,8 +216,8 @@ header nav h1 {
   font-family: var(--font-family-display);
   font-weight: 400;
   font-size: 3rem;
+  color: var(--color-proposed-site-heading);
   line-height: 3rem;
-  color: var(--color-proposed-purple-75);
   text-shadow: -0.15rem 0 0.2rem var(--color-white);
 }
 
@@ -340,6 +335,14 @@ main #section-banner p {
   padding: 0 0 0 1rem;
 }
 
+main #section-banner .accordion-header {
+  padding: 0;
+}
+
+main #section-banner .accordion-item,  main #section-banner .accordion-button {
+  background-color: transparent;
+}
+
 main #section-carousel .carousel-inner .carousel-item {
   width: 100%;
   height: 32rem;
@@ -429,9 +432,28 @@ footer .container ul li {
   border-radius: 0.3rem;
 }
 
+/* CMS Styling */
+#section-cms .container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0;
+}
+
+#section-cms .container aside {
+  flex-grow: 1;
+  width: 18rem;
+}
+
+#section-cms .container .cms-area {
+  flex-grow: 11;
+  margin: 0 0 3rem;
+  width: 24rem;
+}
+
 /* Element Specific CSS */
-
-
 #product-list {
   margin-top: 1rem;
   display: flex;
@@ -567,69 +589,10 @@ footer .container ul li {
   margin: 1rem 0;
 }
 
-/* CMS Styling */
-
-#section-cms .container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 0;
-}
-
-#section-cms .container aside {
-  flex-grow: 1;
-  width: 18rem;
-}
-
-#section-cms .container .cms-area {
-  flex-grow: 11;
-  margin: 0 0 3rem;
-  width: 24rem;
-}
-
 .form-small input {
   height: 1.75rem;
   border: 1px solid var(--color-client-spec-1);
   border-radius: 0.3rem;
-}
-
-#confirm-email {
-  padding: 0.5em 1em 0.5em 1em;
-  margin-bottom: 10em;
-}
-
-.confirm-email-title {
-  margin-bottom: 1em;
-}
-
-.email-message > p {
-  width: 40%;
-  line-height: 1.5em;
-}
-
-.email-container {
-  background: var(--color-proposed-purple-05);
-}
-
-.email-message {
-  margin-bottom: 3%;
-}
-
-.email-contents {
-  margin-top: 5%;
-  margin-bottom: 5%;
-  padding-bottom: 4%;
-  padding-top: 4%;
-  background: var(--color-proposed-purple-10);
-  border-radius: 10%;
-}
-
-.button-confirm-email {
-  padding-top: 1.05em;
-  padding-bottom: 2.1em;
-  margin-left: 0;
 }
 
 .container .category-list, .container .product-list {

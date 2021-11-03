@@ -1,26 +1,48 @@
 ﻿<aside>
     <nav class="accordion accordion-flush" id="cms-nav-accordion">
+        @* Orders Submenu *@
         <div class="accordion-item">
-            <p class="accordion-header" id="cms-nav-heading-users">
+            <p class="accordion-header" id="cms-nav-heading-orders">
                 <button class="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#cms-nav-child-users"
+                        data-bs-target="#cms-nav-child-orders"
                         aria-expanded="false"
-                        aria-controls="cms-nav-collapse-users">
-                    Users
+                        aria-controls="cms-nav-collapse-orders">
+                    Orders
                 </button>
             </p>
-            <div id="cms-nav-child-users"
+            <div id="cms-nav-child-orders"
                  class="accordion-collapse collapse"
-                 aria-labelledby="cms-nav-heading-users"
+                 aria-labelledby="cms-nav-heading-orders"
                  data-bs-parent="#cms-nav-accordion">
                 <ul class="list-unstyled fw-normal pb-1 small">
-                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
-                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
                 </ul>
             </div>
         </div>
+        @* Promotions Submenu *@
+        <div class="accordion-item">
+            <p class="accordion-header" id="cms-nav-heading-promotions">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cms-nav-child-promotions"
+                        aria-expanded="false"
+                        aria-controls="cms-nav-collapse-promotions">
+                    Promotions
+                </button>
+            </p>
+            <div id="cms-nav-child-promotions"
+                 class="accordion-collapse collapse"
+                 aria-labelledby="cms-nav-heading-promotions"
+                 data-bs-parent="#cms-nav-accordion">
+                <ul class="list-unstyled fw-normal pb-1 small">
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewPromotions">View Promotions</a></li>
+                </ul>
+            </div>
+        </div>
+        @* Products Submenu *@
         <div class="accordion-item">
             <p class="accordion-header" id="cms-nav-heading-products">
                 <button class="accordion-button collapsed"
@@ -42,45 +64,91 @@
                 </ul>
             </div>
         </div>
+        @* Brands Submenu *@
         <div class="accordion-item">
-            <p class="accordion-header" id="cms-nav-heading-promotions">
+            <p class="accordion-header" id="cms-nav-heading-brands">
                 <button class="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#cms-nav-child-promotions"
+                        data-bs-target="#cms-nav-child-brands"
                         aria-expanded="false"
-                        aria-controls="cms-nav-collapse-promotions">
-                    Promotions
+                        aria-controls="cms-nav-collapse-brands">
+                    Brands
                 </button>
             </p>
-            <div id="cms-nav-child-promotions"
+            <div id="cms-nav-child-brands"
                  class="accordion-collapse collapse"
-                 aria-labelledby="cms-nav-heading-promotions"
+                 aria-labelledby="cms-nav-heading-brands"
                  data-bs-parent="#cms-nav-accordion">
                 <ul class="list-unstyled fw-normal pb-1 small">
-                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewPromotions">View Promotions</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Inventory" asp-action="AddBrand">Add Brand</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewBrands">View / Edit Brands</a></li>
                 </ul>
             </div>
         </div>
-
-        @*I added this but the styling is just copied over*@
+        @* Categories Submenu *@
         <div class="accordion-item">
-            <p class="accordion-header" id="cms-nav-heading-promotions">
+            <p class="accordion-header" id="cms-nav-heading-categories">
                 <button class="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
-                        data-bs-target="#cms-nav-child-promotions"
+                        data-bs-target="#cms-nav-child-categories"
                         aria-expanded="false"
-                        aria-controls="cms-nav-collapse-promotions">
-                    Orders
+                        aria-controls="cms-nav-collapse-categories">
+                    Categories
                 </button>
             </p>
-            <div id="cms-nav-child-promotions"
+            <div id="cms-nav-child-categories"
                  class="accordion-collapse collapse"
-                 aria-labelledby="cms-nav-heading-promotions"
+                 aria-labelledby="cms-nav-heading-categories"
                  data-bs-parent="#cms-nav-accordion">
                 <ul class="list-unstyled fw-normal pb-1 small">
-                    <li class="pt-3"><a class="link-dark rounded" asp-controller="CMS" asp-action="ViewAllOrders">View Orders</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Inventory" asp-action="AddCategory">Add Category</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Inventory" asp-action="ViewCategories">View / Edit Categories</a></li>
+                </ul>
+            </div>
+        </div>
+        @* Articles Submenu *@
+        <div class="accordion-item">
+            <p class="accordion-header" id="cms-nav-heading-articles">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cms-nav-child-articles"
+                        aria-expanded="false"
+                        aria-controls="cms-nav-collapse-articles">
+                    Articles
+                </button>
+            </p>
+            <div id="cms-nav-child-articles"
+                 class="accordion-collapse collapse"
+                 aria-labelledby="cms-nav-heading-articles"
+                 data-bs-parent="#cms-nav-accordion">
+                <ul class="list-unstyled fw-normal pb-1 small">
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Article" asp-action="AddArticle">Add Article</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Article" asp-action="Index">View / Edit Articles</a></li>
+                </ul>
+            </div>
+        </div>
+        @* Users Submenu*@
+        <div class="accordion-item">
+            <p class="accordion-header" id="cms-nav-heading-users">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#cms-nav-child-users"
+                        aria-expanded="false"
+                        aria-controls="cms-nav-collapse-users">
+                    Users
+                </button>
+            </p>
+            <div id="cms-nav-child-users"
+                 class="accordion-collapse collapse"
+                 aria-labelledby="cms-nav-heading-users"
+                 data-bs-parent="#cms-nav-accordion">
+                <ul class="list-unstyled fw-normal pb-1 small">
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Account" asp-action="MyAccount">My Account</a></li>
+                    <li class="pt-3"><a class="link-dark rounded" asp-controller="Account" asp-action="RoleManage">Manage Roles</a></li>
                 </ul>
             </div>
         </div>

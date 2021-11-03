@@ -37,18 +37,18 @@ namespace Global
                 
             });
             services.AddMemoryCache();
-            services.AddDbContext<ProductDbContext>(options =>
+            services.AddDbContext<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext>(options =>
             {
                 options.UseSqlServer(conString);
             });
 
-            services.AddDbContextFactory<ProductDbContext>(
+            services.AddDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext>(
               options =>
-                  options.UseSqlServer(conString),ServiceLifetime.Scoped);
+                  options.UseSqlServer(conString), ServiceLifetime.Scoped);
 
 
             services.AddIdentity<IdentityUser, IdentityRole>()
-              .AddEntityFrameworkStores<ProductDbContext>()
+              .AddEntityFrameworkStores<SDPDbContext>()
               .AddDefaultTokenProviders();
             
             services.AddScoped<IDbRepo, DbRepo>();//database repo
