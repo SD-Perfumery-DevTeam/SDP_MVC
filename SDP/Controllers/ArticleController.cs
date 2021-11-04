@@ -73,7 +73,7 @@ namespace SDPWeb.Controllers
         // Add Article HTTPPOST ===============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult AddArticle(Article article)
+        public async Task<IActionResult> AddArticleAsync(Article article)
         {
             if (!ModelState.IsValid)
             {
@@ -83,7 +83,7 @@ namespace SDPWeb.Controllers
             try
             {
                 _db.article.Add(article);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (Exception ex)
             {

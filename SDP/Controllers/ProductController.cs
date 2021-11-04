@@ -89,9 +89,6 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.Id.ToString();
-
-
-
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");

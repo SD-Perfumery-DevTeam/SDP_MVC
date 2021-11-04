@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SDPCore.Models.AccountModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,9 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
         public DbSet<OrderLine> orderLine { get; set; }
         public DbSet<Product> product { get; set; }
         public DbSet<Promotion> promotion { get; set; }
+        public DbSet<UserSetting> userSetting { get; set; }
         /*  
-          public DbSet<Customer> customers { get; set; }
+          
           public DbSet<RegisteredCustomer> registeredCustomers { get; set; }
         */
 
