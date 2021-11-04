@@ -181,26 +181,33 @@ header {
 header nav {
   min-height: 5.2rem;
   background-color: var(--color-client-spec-1);
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
 }
 
 header nav .container {
-  padding: 0.5rem 0 0.7rem 0;
+  padding: 0.5rem 1rem 0.7rem 1rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: baseline;
+  justify-content: space-between;
   font-family: var(--font-family-display-serif);
   font-size: 1.2rem;
   line-height: 1rem;
 }
 
-header nav .container i {
+header nav .container .navbar-links {
+  display: flex;
+  align-items: baseline;
+}
+
+header nav .container .navbar-links i {
   font-size: 1.9rem;
+  vertical-align: -0.2rem;
+  padding-left: 0.5rem;
   position: relative;
 }
 
-header nav .container #cart:after {
+header nav .container .navbar-links #cart:after {
   content: attr(cart-count);
   position: absolute;
   top: 0.8rem;
