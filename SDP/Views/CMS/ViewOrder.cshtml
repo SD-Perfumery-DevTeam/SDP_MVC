@@ -5,14 +5,15 @@
 }
 @model SDPWeb.ViewModels.OrderView
 
-<h3> Order Number : @Model.order.orderNo</h3>
+<h3 class="order-number"> Order Number : @Model.order.orderNo</h3>
 <form asp-action="UpdateOrder" asp-controller="CMS" method="post">
     <input type="hidden" name="orderId" value="@Model.order.orderId" />
-    <div>
+    <div class="order-status">
         @foreach (var item in Enum.GetNames(typeof(Consts.OrderStatus)))
         {
-            <label asp-for="order.orderStatus" class="form-label">@Html.RadioButtonFor(m => m.orderStatus, item, item) @item</label>
-            <br><br>
+            <label asp-for="order.orderStatus" class="form-label rad-but">@Html.RadioButtonFor(m => m.orderStatus, item, item ) @item</label>
+            <br />
+            
         }
     </div>
     <div>
@@ -37,5 +38,5 @@
             }
         </table>
     </div>
-    <button class="sdp-style" type="submit">Update</button>
+    <button class="btn btn-primary" type="submit">Update</button>
 </form>
