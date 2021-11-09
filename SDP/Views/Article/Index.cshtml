@@ -10,12 +10,14 @@
             <h2>@ViewData["Title"]</h2>
 
             <div><a asp-controller="Article" asp-action="AddArticle" class="btn btn-primary">Add Article</a></div>
+            <p>To navigate to an article, use the URL 'sdperfumery.lk/article/view/{URL Stub}'.</p>
             <form enctype="multipart/form-data" asp-controller="Article" asp-action="EditArticle" method="get">
                 <div>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Title</th>
+                                <th>URL Stub</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -23,6 +25,7 @@
                         {
                             <tr>
                                 <td>@item.title</td>
+                                <td><a href="~/article/view/@item.key">@item.key</a></td>
                                 <td><button class="btn btn-sm btn-primary" name="key" value="@item.key" type="submit">Edit</button></td>
                             </tr>
                         }
