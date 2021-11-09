@@ -436,16 +436,30 @@ namespace SDP.Controllers
         // Add Category HTTPPOST ==============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult AddCategory(Category category)
+        public async Task<IActionResult> AddCategory(AddEditCategory addEditCategory, IFormFile ufile)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
+            // Use the image service to add an image file to the Category object.
+            if (ufile != null && ufile.Length > 0)
+            {
+                try
+                {
+                    await _imageService.addImageToFileAsync(ufile, addEditCategory.category, _db.category.ToList());
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Unable to parse imgUrl string for AddCategory action method (post) in Inventory controller.");
+                    return RedirectToAction("Error", "Home");
+                }
+            }
+
             try
             {
-                _db.category.Add(category);
+                _db.category.Add(addEditCategory.category);
                 _db.SaveChanges();
             }
             catch (Exception ex)
@@ -478,20 +492,35 @@ namespace SDP.Controllers
         // Edit Category HTTPPOST =============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult EditCategory(Category category)
+        public async Task<IActionResult> EditCategory(AddEditCategory addEditCategory, IFormFile ufile)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
+            // Use the image service to add an image file to the Category object.
+            if (ufile != null && ufile.Length > 0)
+            {
+                try
+                {
+                    await _imageService.addImageToFileAsync(ufile, addEditCategory.category, _db.category.ToList());
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Unable to parse imgUrl string for EditCategory action method (post) in Inventory controller.");
+                    return RedirectToAction("Error", "Home");
+                }
+            }
+
             Category categoryToUpdate;
 
             try
             {
-                categoryToUpdate = _db.category.Find(category.categoryId);
-                categoryToUpdate.categoryId = category.categoryId;
-                categoryToUpdate.title = category.title;
+                categoryToUpdate = _db.category.Find(addEditCategory.category.categoryId);
+                categoryToUpdate.categoryId = addEditCategory.category.categoryId;
+                categoryToUpdate.imgUrl = addEditCategory.category.imgUrl;
+                categoryToUpdate.title = addEditCategory.category.title;
                 _db.Entry(categoryToUpdate).State = EntityState.Modified;
                 _db.SaveChanges();
             }
