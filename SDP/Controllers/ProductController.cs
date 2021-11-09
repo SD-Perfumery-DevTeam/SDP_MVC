@@ -80,9 +80,10 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
+        [Route("Product/ProductDisplay/{key}")]
+        [Route("Product/ProductDisplay")]
         //===============single product display=========================
-        public IActionResult ProductDisplay(string value)
+        public IActionResult ProductDisplay(string key)
         {
             try
             {
