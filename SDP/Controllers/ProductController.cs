@@ -82,7 +82,9 @@ namespace SDP.Controllers
         }
 
         //===============single product display=========================
-        public IActionResult ProductDisplay(string value)
+        [Route("Product/ProductDisplay/{key}")]
+        [Route("Product/ProductDisplay")]
+        public IActionResult ProductDisplay(string key)
         {
             if (HttpContext.Session.GetString("Id") == null)
             {
@@ -94,10 +96,10 @@ namespace SDP.Controllers
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
             // Identify the product based on the string 'value passed in
-            Product product = _dbRepo.getProduct(value);
+            Product product = _dbRepo.getProduct(key);
             var lProduct = _db.product.ToList();
 
-            HttpContext.Session.SetString("ProductID", value);
+            HttpContext.Session.SetString("ProductID", key);
 
             try
             {
