@@ -15,7 +15,11 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
         private IConfiguration _configuration { get; }
         private string _APIkey; //this is the sendgrid api key grabbed from appsetting.json file, see below constructor
 
-        // Strings for convenience in email message
+        // Create HTML strings for re-use across email messages
+
+        // Note: Address still needs to be supplied by the client.
+        private string physicalAddress = "SD Perfumery. [PLACEHOLDER FOR ADDRESS]";
+
         private string disclaimer = "You have recieved this email because you " +
             "are a customer at SD Perfumery. If you no longer wish to recieve " +
             "these emails, you may unsubscribe by changing your email preferences " +
@@ -39,7 +43,8 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             // This is the content shown to email clients viewing in plain text.
             var plainTextContent = "You have requested a change of password at " +
                 "SD Perfumery - please navigate to the URL " + changepasswordLink +
-                " to complete the password change process. " + disclaimer;
+                " to complete the password change process. " + disclaimer + " " +
+                physicalAddress;
 
             // This is the content shown to email clients viewing in HTML.
             var htmlContent = "<h1>SD Perfumery</h1>" +
@@ -47,7 +52,8 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                 "<p>You have requested a change of password at SD Perfumery.</p>" +
                 "<p><a href='" + changepasswordLink + "'>Please follow this link " +
                 "to complete the password change process.</a></p>" +
-                "<p><small>" + disclaimer + "</small></p>";
+                "<p><small>" + disclaimer + "</small></p>" + 
+                "<p><small>" + physicalAddress + "</small></p>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
@@ -70,7 +76,7 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             // This is the content shown to email clients viewing in plain text.
             var plainTextContent = "To complete the customer account creation " +
                 "process at SD Perfumery, please navigate to the URL " + confirmationLink +
-                ". " + disclaimer;
+                ". " + disclaimer + " " + physicalAddress;
 
             // This is the content shown to email clients viewing in HTML.
             var htmlContent = "<h1>SD Perfumery</h1>" +
@@ -78,7 +84,8 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                 "<p>Thank-you for registering as a customer at SD Perfumery.</p>" +
                 "<p><a href='" + confirmationLink + "'>Please follow this link " +
                 "to complete the account creation process.</a></p>" +
-                "<p><small>" + disclaimer + "</small></p>";
+                "<p><small>" + disclaimer + "</small></p>" +
+                "<p><small>" + physicalAddress + "</small></p>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
@@ -106,7 +113,7 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                     promotionName + " - " + discount + "% off " + productName +
                     " from " + startDate + " to " + endDate + ". Use promo " +
                     "code " + promotionCode + " at checkout to benefit from " +
-                    "this great offer. " + disclaimer;
+                    "this great offer. " + disclaimer + " " + physicalAddress;
 
                 // This is the content shown to email clients viewing in HTML.
                 var htmlContent =
@@ -118,7 +125,8 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                     "<p> at checkout between </p>" +
                     "<p>" + startDate + " and " + endDate + "</p>" +
                     "<p> to benefit from this special price.</p>" +
-                    "<p><small>" + disclaimer + "</small></p>";
+                    "<p><small>" + disclaimer + "</small></p>" +
+                    "<p><small>" + physicalAddress + "</small></p>";
 
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                 var response = await client.SendEmailAsync(msg);
