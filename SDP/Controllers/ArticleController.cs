@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
+using Microsoft.SDP.SDPInfrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,14 @@ namespace SDPWeb.Controllers
     {
         private SDPDbContext _db;
         private IDbRepo _dbRepo;
+        private ImageService _imageService;
         private readonly ILogger<ArticleController> _logger;
 
-        public ArticleController(SDPDbContext db, IDbRepo dbRepo, ILogger<ArticleController> logger)
+        public ArticleController(SDPDbContext db, IDbRepo dbRepo, ImageService imageService, ILogger<ArticleController> logger)
         {
             _db = db;
             _dbRepo = dbRepo;
+            _imageService = imageService;
             _logger = logger;
         }
 
