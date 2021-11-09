@@ -53,7 +53,7 @@
 
                 @foreach (var item in Model.categories)
                 {
-                    
+
                     <div id="category-card">
                         <h4>@item.title</h4>
                         <img src="~/images/category/@item.imgUrl" alt="Dynamic Category 1">
@@ -67,6 +67,5 @@
 </div>
 
 <!-- Recommended Products ================================================= -->
-@await Html.PartialAsync("_RecommendedProducts")
-
+@await Component.InvokeAsync("RecommendedProducts")
 <script src="~/js/site.js" asp-append-version="true" defer></script>

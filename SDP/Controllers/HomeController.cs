@@ -44,9 +44,10 @@ namespace SDP.Controllers
                     }
                 }
             }
-
             return View(homeView);
         }
+
+        
 
         public IActionResult Privacy()
         {
