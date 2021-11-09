@@ -11,5 +11,8 @@ namespace SDPWeb.ViewModels
     {
         public Category category { get; set; }
         public IFormFile image { get; set; }
+
+        // Only used for viewing all categories.
+        public IEnumerable<Category> categoryList { get; set; }
     }
 }

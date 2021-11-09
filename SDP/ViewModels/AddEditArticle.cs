@@ -11,5 +11,8 @@ namespace SDPWeb.ViewModels
     {
         public Article article { get; set; }
         public IFormFile image { get; set; }
+
+        // Only used for viewing all articles.
+        public IEnumerable<Article> articleList { get; set; }
     }
 }
