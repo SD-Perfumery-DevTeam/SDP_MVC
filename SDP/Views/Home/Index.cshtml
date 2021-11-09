@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home";
 }
-
+@model SDPWeb.ViewModels.HomeView
 <!-- Banner =============================================================== -->
 
 <div class="container">
@@ -48,24 +48,21 @@
     <section id="section-categories">
         <h3>Categories</h3>
         <hr />
-        <div class="category-list">
-            <div id="category-card">
-                <h4>Dynamic Category 1</h4>
-                <img src="~/images/category/category-img-4.JPG" alt="Dynamic Category 1">
+        <form asp-action="CategoryDisplay" asp-controller="Product" method="post">
+            <div class="category-list">
+
+                @foreach (var item in Model.categories)
+                {
+                    
+                    <div id="category-card">
+                        <h4>@item.title</h4>
+                        <img src="~/images/category/@item.imgUrl" alt="Dynamic Category 1">
+                        <br />
+                        <button class="sdp-style" type="submit" name="categoryId" value="@item.categoryId">View Category</button>
+                    </div>
+                }
             </div>
-            <div class="category-card">
-                <h4>Dynamic Category 2</h4>
-                <img src="~/images/category/category-img3.JPG" alt="Dynamic Category 2">
-            </div>
-            <div class="category-card">
-                <h4>Dynamic Category 3</h4>
-                <img src="~/images/category/category-img3.JPG" alt="Dynamic Category 3">
-            </div>
-            <div class="category-card">
-                <h4>Dynamic Category 4</h4>
-                <img src="~/images/category/category-img-4.JPG" alt="Dynamic Category 4">
-            </div>
-        </div>
+        </form>
     </section>
 </div>
 

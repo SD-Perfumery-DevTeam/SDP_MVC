@@ -49,7 +49,6 @@ namespace SDPWeb.Controllers
         public IActionResult Article(string key)
         {
             Article article;
-
             try
             {
                 article = _dbRepo.GetArticle(key);

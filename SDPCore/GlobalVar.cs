@@ -1,5 +1,4 @@
-﻿
-using Microsoft.SDP.SDPCore.Interface;
+﻿using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
 using System;

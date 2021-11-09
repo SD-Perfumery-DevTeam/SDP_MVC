@@ -67,6 +67,8 @@ namespace SDP.Controllers
                 var result = await _signInManager.PasswordSignInAsync(LM.Email, LM.Password, LM.RememberMe, false);
                 if (result.Succeeded)
                 {
+                    try
+                    {
                         var user =await _userManager.FindByNameAsync(LM.Email);
                         var userTask =  _userManager.FindByNameAsync(LM.Email);
                         using (var context = _contextFactory.CreateDbContext())  //check if the use is Active
@@ -88,8 +90,6 @@ namespace SDP.Controllers
 
                         HttpContext.Session.SetString("LoggedIN", "true");
                         return RedirectToAction("Index", "Home");
-                    try
-                    {
 
                     }
                     catch (Exception ex)
@@ -132,7 +132,7 @@ namespace SDP.Controllers
                     if (result.Succeeded)//this part sends the confrimation email
                     {
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                        var confirmationLink = Url.Action("ConfirmEmail",
+                        var confirmationLink = Url.Action("ConfirmEmailNotif",
                             "Account", new { userId = newUser.Id, token = token }, Request.Scheme);
 
                         if (await _emailSender.sendConfirmationEmailAsyncAsync(user.Email, newUser, confirmationLink))//below code add role to new users
@@ -147,11 +147,12 @@ namespace SDP.Controllers
                             {
                                 var roleResult = await _userManager.AddToRoleAsync(newUser, role.Name);
                             }
-                            return View(new SignupView()); // place holder for check email page
+                            return RedirectToAction("ConfirmEmailMsg", "Account"); 
                         }
 
-                        return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Home");
                     }
+                   
                     foreach (var e in result.Errors)
                     {
                         ModelState.AddModelError("", e.Description);
@@ -183,7 +184,6 @@ namespace SDP.Controllers
                 {
                     return View();
                 }
-
             }
             catch (Exception ex)
             {
@@ -447,6 +447,12 @@ namespace SDP.Controllers
             }
 
             else return RedirectToAction("MyAccount", new { msg = "Cannot delete a Super Admin" });
+        }
+
+
+        public ActionResult ConfirmEmailMsg() 
+        {
+            return View();
         }
     }
 }

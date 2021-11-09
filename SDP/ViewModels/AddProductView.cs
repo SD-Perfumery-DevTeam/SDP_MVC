@@ -15,7 +15,6 @@ namespace SDP.ViewModels
         public IEnumerable<SelectListItem> brands { get; set; }
         public IEnumerable<SelectListItem> inventories { get; set; }
 
-      
         public Inventory inventory { get; set; }
         public Product product { get; set; }
         public IFormFile Image { get; set; }

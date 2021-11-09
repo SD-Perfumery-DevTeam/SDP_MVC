@@ -26,4 +26,8 @@
     <ProjectReference Include="..\SDPInfrastructure\SDPInfrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Components\" />
+  </ItemGroup>
+
 </Project>
