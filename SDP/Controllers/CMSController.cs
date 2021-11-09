@@ -99,21 +99,21 @@ namespace SDP.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateOrderAsync(string orderId, OrderView orderView)
         {
-            Order order = null;
-            Delivery delivery = null;
-            using (var context = _contextFactory.CreateDbContext())
-            {
-                order = context.order.Include(m => m.delivery).Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
-                order.orderStatus = orderView.orderStatus;
-                delivery = context.delivery.Where(m => m.deliveryId.ToString() == order.delivery.deliveryId.ToString()).FirstOrDefault();
-                delivery.deliverystatus = orderView.deliveryStatus;
-                context.order.Update(order);
-                context.delivery.Update(delivery);
-                await context.SaveChangesAsync();
-            }
           
             try
             {
+                Order order = null;
+                Delivery delivery = null;
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                    order = context.order.Include(m => m.delivery).Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
+                    order.orderStatus = orderView.orderStatus;
+                    delivery = context.delivery.Where(m => m.deliveryId.ToString() == order.delivery.deliveryId.ToString()).FirstOrDefault();
+                    delivery.deliverystatus = orderView.deliveryStatus;
+                    context.order.Update(order);
+                    context.delivery.Update(delivery);
+                    await context.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {

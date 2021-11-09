@@ -74,7 +74,7 @@ function displayCardFunc(prod) {
             </div>
             <div>
                 <h5>Rs. ${prod.price}</h5>
-                <button class="sdp-style" type="submit" name="value" value="${prod.productId}">View Details</button>
+                <button class="sdp-style" type="submit" name="key" value="${prod.productId}">View Details</button>
             </div>
         </div>
     `;
