@@ -16,13 +16,18 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
         {
             var fileName = Path.GetFileName(imgFile.FileName);
             string[] fileNameAry = fileName.Split(".");
+
             foreach (var a in aList)
             {
-                if (a.imgUrl.Equals(fileName.Trim()))
+                if (a.imgUrl != null)
                 {
-                    fileName = fileNameAry[fileNameAry.Length - 2] + "_new." + fileNameAry[fileNameAry.Length - 1];
+                    if (a.imgUrl.Equals(fileName.Trim()))
+                    {
+                        fileName = fileNameAry[fileNameAry.Length - 2] + "_new." + fileNameAry[fileNameAry.Length - 1];
+                    }
                 }
             }
+
 
             if (fileNameAry[fileNameAry.Length - 1].Trim().ToLower() != "png" && fileNameAry[fileNameAry.Length - 1].Trim().ToLower() != "jpg")
             {
@@ -43,11 +48,15 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
         {
             var fileName = Path.GetFileName(imgFile.FileName);
             string[] fileNameAry = fileName.Split(".");
+            
             foreach (var c in cList)
             {
-                if (c.imgUrl.Equals(fileName.Trim()))
+                if (c.imgUrl != null)
                 {
-                    fileName = fileNameAry[fileNameAry.Length - 2] + "_new." + fileNameAry[fileNameAry.Length - 1];
+                    if (c.imgUrl.Equals(fileName.Trim()))
+                    {
+                        fileName = fileNameAry[fileNameAry.Length - 2] + "_new." + fileNameAry[fileNameAry.Length - 1];
+                    }
                 }
             }
 
@@ -97,6 +106,7 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
         {
             var fileName = Path.GetFileName(imgFile.FileName);
             string[] fileNameAry = fileName.Split(".");
+
             foreach (var p in pList)
             {
                 if (p.imgUrl.Equals(fileName.Trim()))
