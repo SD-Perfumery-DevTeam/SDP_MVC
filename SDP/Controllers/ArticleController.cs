@@ -38,15 +38,15 @@ namespace SDPWeb.Controllers
 
             try
             {
-                list = _db.article.ToList();
+                list = _db.article.ToList<Article>();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Problem in Index action method in Article controller.");
+                _logger.LogError(ex, "Problem in Idex action method in Article controller.");
                 return RedirectToAction("Error", "Home");
             }
 
-            return View(list);
+            return View(new AddEditArticle { articleList = list });
         }
 
         // View Single Article ================================================
@@ -116,18 +116,18 @@ namespace SDPWeb.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditArticle(string key)
         {
-            Article article;
+            AddEditArticle returnArticle;
 
             try
             {
-                article = _dbRepo.GetArticle(key);
+                returnArticle = new AddEditArticle { article = _dbRepo.GetArticle(key) };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Problem in EditArticle action method (get) in Article controller.");
                 return RedirectToAction("Error", "Home");
             }
-            return View(article);
+            return View(returnArticle);
         }
 
         // Edit Article HTTPPOST ==============================================

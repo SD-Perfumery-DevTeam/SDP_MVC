@@ -414,7 +414,7 @@ namespace SDP.Controllers
 
             try
             {
-                list = _db.category.ToList();
+                list = _db.category.ToList<Category>();
             }
             catch (Exception ex)
             {
@@ -422,7 +422,7 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
-            return View(list);
+            return View(new AddEditCategory { categoryList = list });
         }
 
         // Add Category HTTPGET ===============================================
@@ -475,18 +475,18 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditCategory(string categoryId)
         {
-            Category category;
+            AddEditCategory returnCategory;
 
             try
             {
-                category = _dbRepo.GetCategory(categoryId);
+                returnCategory = new AddEditCategory { category = _dbRepo.GetCategory(categoryId) };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Problem in EditCategory action method (get) in Inventory controller.");
                 return RedirectToAction("Error", "Home");
             }
-            return View(category);
+            return View(returnCategory);
         }
 
         // Edit Category HTTPPOST =============================================
