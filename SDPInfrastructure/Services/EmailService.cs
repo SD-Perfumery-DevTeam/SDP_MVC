@@ -36,7 +36,10 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                 " to complete the password change process.";
 
             // This is the content shown to email clients viewing in HTML.
-            var htmlContent = "<a href=" + changepasswordLink + "> click here to change your password</a>";
+            var htmlContent = "<h1>SD Perfumery</h1>" +
+                "<h2>Password Change Requested</h2>" +
+                "<p>You have requested a change of password at SD Perfumery.</p>" +
+                "<p><a href='" + changepasswordLink + "'>Please follow this link to complete the password change process.</a></p>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
@@ -61,7 +64,10 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                 "process at SD Perfumery, please navigate to the URL " + confirmationLink;
 
             // This is the content shown to email clients viewing in HTML.
-            var htmlContent = "<a href=" + confirmationLink + "> click here to confirm email </a>";
+            var htmlContent = "<h1>SD Perfumery</h1>" +
+                "<h2>Please Confirm Your Email</h2>" +
+                "<p>Thank-you for registering as a customer at SD Perfumery.</p>" +
+                "<p><a href='" + confirmationLink + "'>Please follow this link to complete the account creation process.</a></p>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
@@ -92,7 +98,14 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                     "this great offer.";
 
                 // This is the content shown to email clients viewing in HTML.
-                var htmlContent = promotionName + discount + productName + promotionCode + startDate + endDate;
+                var htmlContent =
+                    "<h1>" + promotionName + " at SD Perfumery</h1>" +
+                    "<h2>" + discount + "% off" + productName + "</h2>" +
+                    "<p>We are offering " + discount + "% off " + productName + " for a limited time only - enter the promo code </p>" +
+                    "<p>" + promotionCode + "</p>" +
+                    "<p> at checkout between </p>" +
+                    "<p>" + startDate + " and " + endDate + "</p>" +
+                    "<p>to benefit from this special price.</p>";
 
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                 var response = await client.SendEmailAsync(msg);
