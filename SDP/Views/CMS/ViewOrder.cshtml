@@ -7,13 +7,13 @@
     <div class="container">
         @await Html.PartialAsync("_AdminLinks");
         <section class="cms-area">
-            <h3> Order Number : @Model.order.orderNo</h3>
+            <h3 class="pb-2"> Order Number : @Model.order.orderNo</h3>
             <form asp-action="UpdateOrder" asp-controller="CMS" method="post">
                 <input type="hidden" name="orderId" value="@Model.order.orderId" />
-                <div>
+                <div class="pb-3">
                     @foreach (var item in Enum.GetNames(typeof(Consts.OrderStatus)))
                     {
-                        <label asp-for="order.orderStatus" class="form-label">@Html.RadioButtonFor(m => m.orderStatus, item, item) @item</label>
+                        <label asp-for="order.orderStatus" class="form-label pt-2">@Html.RadioButtonFor(m => m.orderStatus, item, item) @item</label>
                         <br />
                     }
                 </div>
@@ -45,7 +45,7 @@
 
                     <br />
 
-                    <h3>Delivery Detail</h3>
+                    <h3 class="pb-3">Delivery Detail</h3>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -79,10 +79,10 @@
                 </div>
                 @foreach (var item in Enum.GetNames(typeof(Consts.DeliveryStatus)))
                 {
-                    <label asp-for="order.delivery.deliverystatus" class="form-label">@Html.RadioButtonFor(m => m.deliveryStatus, item, item) @item</label>
+                    <label asp-for="order.delivery.deliverystatus" class="form-label pt-2">@Html.RadioButtonFor(m => m.deliveryStatus, item, item) @item</label>
                     <br />
                 }
-                <button class="sdp-style" type="submit">Update</button>
+                <button class="btn btn-primary mt-2" type="submit">Update</button>
             </form>
         </section>
     </div>
