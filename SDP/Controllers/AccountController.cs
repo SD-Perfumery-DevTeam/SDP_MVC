@@ -67,14 +67,11 @@ namespace SDP.Controllers
                 var result = await _signInManager.PasswordSignInAsync(LM.Email, LM.Password, LM.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    try
-                    {
-
                         var user =await _userManager.FindByNameAsync(LM.Email);
                         var userTask =  _userManager.FindByNameAsync(LM.Email);
                         using (var context = _contextFactory.CreateDbContext())  //check if the use is Active
                         {
-                            var setting = context.userSetting.Include(m => m.user).ToList().Where(m => m.user.Id.ToString() == user.Id).FirstOrDefault();
+                            var setting = context.userSettings.Include(m => m.user).ToList().Where(m => m.user.Id.ToString() == user.Id).FirstOrDefault();
                             if (!setting.isActive)
                             {
                                 return RedirectToAction("Login", new { errorMsg = "Invalid Login infomation" });
@@ -91,6 +88,9 @@ namespace SDP.Controllers
 
                         HttpContext.Session.SetString("LoggedIN", "true");
                         return RedirectToAction("Index", "Home");
+                    try
+                    {
+
                     }
                     catch (Exception ex)
                     {
@@ -122,11 +122,11 @@ namespace SDP.Controllers
                 try
                 {
                     var newUser = new IdentityUser { UserName = user.Email, Email = user.Email };
-                    var userSetting = new UserSetting(null, user.opIn, true);
+                    var userSetting = new UserSettings(null, user.opIn, true);
                     var result = await _userManager.CreateAsync(newUser, user.Password);
 
                     userSetting.user = await _userManager.FindByIdAsync(newUser.Id);
-                    _db.userSetting.Add(userSetting);
+                    _db.userSettings.Add(userSetting);
                     await _db.SaveChangesAsync();
 
                     if (result.Succeeded)//this part sends the confrimation email
@@ -427,12 +427,12 @@ namespace SDP.Controllers
                     //var user = await _userManager.FindByIdAsync(Id);
                     using (var context = _contextFactory.CreateDbContext()) 
                     {
-                        var setting = context.userSetting.Include(m => m.user).ToList().Where(m => m.user.Id.ToString() == Id).FirstOrDefault();
+                        var setting = context.userSettings.Include(m => m.user).ToList().Where(m => m.user.Id.ToString() == Id).FirstOrDefault();
                        
                         if (setting != null)
                         {
                             setting.isActive = false;
-                            context.userSetting.Update(setting);
+                            context.userSettings.Update(setting);
                             await context.SaveChangesAsync();
                         }
                       

@@ -2,6 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    int flag = 1;
 }
 @model SDPWeb.ViewModels.OrderView
 
@@ -12,30 +13,73 @@
         @foreach (var item in Enum.GetNames(typeof(Consts.OrderStatus)))
         {
             <label asp-for="order.orderStatus" class="form-label">@Html.RadioButtonFor(m => m.orderStatus, item, item) @item</label>
-            <br><br>
+            <br />
         }
     </div>
     <div>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Line Id</th>
+                    <th></th>
                     <th>Product Name</th>
                     <th>Discount</th>
+                    <th>Size</th>
                     <th>Quantity</th>
-                   
+
                 </tr>
             </thead>
+            
             @foreach (var item in Model.orderLineList)
             {
-                <tr>
-                    <td>@item.lineId</td>
-                    <td>@item.product.title</td>
-                    <td>@item.discount %</td>
-                    <td>@item.quantity</td>
-                </tr>
+        <tr>
+            <td>@flag</td>
+            <td>@item.product.title</td>
+            <td>@item.discount %</td>
+            <td>@item.product.packageQty @item.product.packageUom</td>
+            <td>@item.quantity</td>
+        </tr>
+                flag++;
             }
         </table>
+
+        <br />
+
+        <h3>Delivery etail</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Phone Number</th>
+                    <th>Address Lineone</th>
+                    <th>Address Linetwo</th>
+                    <th>Country</th>
+                    <th>State</th>
+                    <th>Suburb</th>
+                    <th>Delivery Id</th>
+                </tr>
+            </thead>
+            @{
+                var order = Model.order;
+            }
+
+            <tr>
+
+                <td>@order.delivery.firstName @order.delivery.lastName</td>
+                <td>@order.delivery.phone</td>
+                <td>@order.delivery.addressLine1</td>
+                <td>@order.delivery.addressLine2</td>
+                <td>@order.delivery.country</td>
+                <td>@order.delivery.state</td>
+                <td>@order.delivery.suburb</td>
+                <td>@order.delivery.deliveryId</td>
+            </tr>
+
+        </table>
     </div>
+    @foreach (var item in Enum.GetNames(typeof(Consts.DeliveryStatus)))
+    {
+        <label asp-for="order.delivery.deliverystatus" class="form-label">@Html.RadioButtonFor(m => m.deliveryStatus, item, item) @item</label>
+        <br />
+    }
     <button class="sdp-style" type="submit">Update</button>
 </form>

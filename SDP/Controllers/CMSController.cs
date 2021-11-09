@@ -83,7 +83,7 @@ namespace SDP.Controllers
             {
                 using (var context = _contextFactory.CreateDbContext()) 
                 {
-                   order = context.order.Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
+                   order = context.order.Include(m => m.delivery).Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
                    var orderLineList = await context.orderLine.Include(m => m.product).Include(m => m.order).ToListAsync();
                    lineList = orderLineList.Where(m => m.order.orderId.ToString() == orderId).ToList();
                 }
@@ -95,18 +95,26 @@ namespace SDP.Controllers
             return View(new OrderView { orderLineList = lineList, order = order });
         }
 
-
+        //============ update order and delivery=================
         [HttpPost]
         public async Task<IActionResult> UpdateOrderAsync(string orderId, OrderView orderView)
         {
             try
             {
                 Order order = null;
+                Delivery delivery = null;
                 using (var context = _contextFactory.CreateDbContext())
                 {
                     order = context.order.Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
                     order.orderStatus = orderView.orderStatus;
                     context.order.Update(order);
+                    await context.SaveChangesAsync();
+                }
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                    delivery = context.delivery.Where(m => m.deliveryId.ToString() == orderView.order.delivery.deliveryId.ToString()).FirstOrDefault();
+                    delivery.deliverystatus= orderView.deliveryStatus;
+                    context.delivery.Update(delivery);
                     await context.SaveChangesAsync();
                 }
             }

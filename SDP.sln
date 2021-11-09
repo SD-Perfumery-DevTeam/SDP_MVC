@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDPWeb", "SDP\SDPWeb.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDPInfrastructure", "SDPInfrastructure\SDPInfrastructure.csproj", "{4BDD124C-126C-4E08-BB65-CD22FB4A4C6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDPCore", "SDPCore\SDPCore.csproj", "{B991435D-A81F-4943-8258-231439AA3041}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SDPCore", "SDPCore\SDPCore.csproj", "{B991435D-A81F-4943-8258-231439AA3041}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDPTest", "SDPTest\SDPTest.csproj", "{A2434E21-E881-41F9-BB37-A7EECB58C907}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{B991435D-A81F-4943-8258-231439AA3041}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B991435D-A81F-4943-8258-231439AA3041}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B991435D-A81F-4943-8258-231439AA3041}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2434E21-E881-41F9-BB37-A7EECB58C907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2434E21-E881-41F9-BB37-A7EECB58C907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2434E21-E881-41F9-BB37-A7EECB58C907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2434E21-E881-41F9-BB37-A7EECB58C907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
