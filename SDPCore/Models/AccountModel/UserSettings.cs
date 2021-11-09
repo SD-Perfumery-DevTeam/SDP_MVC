@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace SDPCore.Models.AccountModel
 {
-    public class UserSetting
+    public class UserSettings
     {
-        public UserSetting()
+        public UserSettings()
         {
         }
 
-        public UserSetting(IdentityUser user,bool promoSubscribed, bool isActive )
+        public UserSettings(IdentityUser user,bool promoSubscribed, bool isActive )
         {
-            this.userSettingId = Guid.NewGuid();
+            this.userSettingsId = Guid.NewGuid();
             this.user = user;
             this.isActive = isActive;
             this.promoSubscribed = promoSubscribed;
         }
         
-        public Guid userSettingId { get; set; }
+        public Guid userSettingsId { get; set; }
         public IdentityUser user { get; set; }
         public bool isActive { get; set; } = true;
         public string firstName { get; set; }
