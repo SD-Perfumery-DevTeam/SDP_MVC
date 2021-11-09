@@ -82,9 +82,7 @@ namespace SDP.Controllers
         }
 
         //===============single product display=========================
-        [Route("Product/ProductDisplay/{key}")]
-        [Route("Product/ProductDisplay")]
-        public IActionResult ProductDisplay(string key)
+        public IActionResult ProductDisplay(string value)
         {
             try
             {
