@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "View Articles";
 }
-@model IEnumerable<Microsoft.SDP.SDPCore.Models.Article>
+@model IEnumerable<SDPWeb.ViewModels.AddEditArticle>
 
 <section id="section-cms">
     <div class="container">
@@ -24,9 +24,9 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.title</td>
-                                <td><a href="~/article/view/@item.key">@item.key</a></td>
-                                <td><button class="btn btn-sm btn-primary" name="key" value="@item.key" type="submit">Edit</button></td>
+                                <td>@item.article.title</td>
+                                <td><a href="~/article/view/@item.article.key">@item.article.key</a></td>
+                                <td><button class="btn btn-sm btn-primary" name="key" value="@item.article.key" type="submit">Edit</button></td>
                             </tr>
                         }
                     </table>
