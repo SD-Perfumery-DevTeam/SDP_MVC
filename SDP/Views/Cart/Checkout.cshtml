@@ -56,7 +56,7 @@
                     <label asp-for="delivery.email" class="form-label"></label>
                     <div class="input-group">
                         <div class="input-group-text"><i class="bi bi-envelope"></i></div>
-                        <input type="email" asp-for=delivery.email id="email" class="form-control" placeholder="@placeHolderEmail" value="@customerEmail">
+                        <input required="required" type="email" asp-for=delivery.email id="email" class="form-control" placeholder="@placeHolderEmail" value="@customerEmail">
                     </div>
                     <span asp-validation-for="delivery.email" class="text-danger"></span>
                 </div>
@@ -76,7 +76,7 @@
                     <label asp-for="delivery.addressLine1" class="form-label"></label>
                     <div class="input-group">
                         <div class="input-group-text"><i class="bi bi-geo-alt"></i></div>
-                        <input type="text" id="address-1" class="form-control" asp-for="delivery.addressLine1 " placeholder="Address Line 1">
+                        <input required="required" type="text" id="address-1" class="form-control" asp-for="delivery.addressLine1 " placeholder="Address Line 1">
                     </div>
                     <span asp-validation-for="delivery.addressLine1 " class="text-danger"></span>
                 </div>
@@ -90,17 +90,17 @@
             <div class="row mb-4">
                 <div class="col-md-4 col-sm-12 mb-3">
                     <label asp-for="delivery.suburb" class="form-label"></label>
-                    <input type="text" id="city" class="form-control" asp-for="delivery.suburb" placeholder="Suburb">
+                    <input required="required" type="text" id="city" class="form-control" asp-for="delivery.suburb" placeholder="Suburb">
                     <span asp-validation-for="delivery.suburb" class="text-danger"></span>
                 </div>
                 <div class="col-md-4 col-sm-12 mb-3">
                     <label asp-for="delivery.state" class="form-label"></label>
-                    <input type="text" id="state" class="form-control" asp-for="delivery.state" placeholder="State">
+                    <input required="required" type="text" id="state" class="form-control" asp-for="delivery.state" placeholder="State">
                     <span asp-validation-for="delivery.state" class="text-danger"></span>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <label asp-for="delivery.country" class="form-label"></label>
-                    <input type="text" id="Country" class="form-control" asp-for="delivery.country" placeholder="Country">
+                    <input required="required" type="text" id="Country" class="form-control" asp-for="delivery.country" placeholder="Country">
                     <span asp-validation-for="delivery.country" class="text-danger"></span>
                 </div>
             </div>

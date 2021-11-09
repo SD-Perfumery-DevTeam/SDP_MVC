@@ -36,54 +36,57 @@ namespace SDPWeb.Controllers
         [HttpPost]
         public async Task<ActionResult> PaymentAsync(CheckoutView checkoutView,string stripeToken)
         {
-            try
+            if (ModelState.IsValid)
             {
-                StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];
-                var cutomers = new CustomerService();
-                var charges = new ChargeService();
-                var customer = cutomers.Create(new CustomerCreateOptions
+                try
                 {
-                    Email = checkoutView.delivery.email,
-                    Source = stripeToken
-                });
-
-                var charge = charges.Create(new ChargeCreateOptions
-                {
-                    Amount = (long)checkoutView.amount,
-                    Description = checkoutView.key.descirption,
-                    Currency = checkoutView.key.currency,
-                    Customer = customer.Id.ToString(),
-                    ReceiptEmail = customer.Email
-                });
-
-                if (charge.Paid)
-                {
-                    OrderDataTransfer orderDataTransfer = null;
-                    var currentIdentityCutomer = await _dbRepo.getCustomerAsync(HttpContext.Session.GetString("Id"));
-                    var currentCutomer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
-                    checkoutView.delivery.deliveryDate = DateTime.Now;
-                    using (var context = _contextFactory.CreateDbContext())
+                    StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];
+                    var cutomers = new CustomerService();
+                    var charges = new ChargeService();
+                    var customer = cutomers.Create(new CustomerCreateOptions
                     {
-                        orderDataTransfer = currentCutomer.cart.turnCartToOrder(context.order.Count() + 1, currentIdentityCutomer, checkoutView.delivery, checkoutView.amount/100, "paied", DateTime.Now, Consts.OrderStatus.pendingAction, context.product.Include(m=>m.brand).Include(m=>m.category).ToList());
-                    }
-                   
-                        foreach (var order in orderDataTransfer.order.orderLine) 
+                        Email = checkoutView.delivery.email,
+                        Source = stripeToken
+                    });
+
+                    var charge = charges.Create(new ChargeCreateOptions
+                    {
+                        Amount = (long)checkoutView.amount,
+                        Description = checkoutView.key.descirption,
+                        Currency = checkoutView.key.currency,
+                        Customer = customer.Id.ToString(),
+                        ReceiptEmail = customer.Email
+                    });
+
+                    if (charge.Paid)
+                    {
+                        OrderDataTransfer orderDataTransfer = null;
+                        var currentIdentityCutomer = await _dbRepo.getCustomerAsync(HttpContext.Session.GetString("Id"));
+                        var currentCutomer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
+                        checkoutView.delivery.deliveryDate = DateTime.Now;
+                        using (var context = _contextFactory.CreateDbContext())
                         {
-                             order.product = await _db.product.FindAsync(order.product.productId);
+                            orderDataTransfer = currentCutomer.cart.turnCartToOrder(context.order.Count() + 1, currentIdentityCutomer, checkoutView.delivery, checkoutView.amount / 100, "paied", DateTime.Now, Consts.OrderStatus.pendingAction, context.product.Include(m => m.brand).Include(m => m.category).ToList());
+                        }
+
+                        foreach (var order in orderDataTransfer.order.orderLine)
+                        {
+                            order.product = await _db.product.FindAsync(order.product.productId);
                         }
                         _db.order.Add(orderDataTransfer.order);
                         await _db.SaveChangesAsync();
-                    
-                
-                    currentCutomer.cart = new Cart();
-                    return View(orderDataTransfer.order.orderNo);
+
+
+                        currentCutomer.cart = new Cart();
+                        return View(orderDataTransfer.order.orderNo);
+                    }
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Error", "Payment");
                 }
             }
-            catch (Exception)
-            {
-                return RedirectToAction("Error", "Payment");
-            }
-            return RedirectToAction();
+            return RedirectToAction("Error", "Payment");
         }
     }
 }
