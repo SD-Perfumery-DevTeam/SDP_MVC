@@ -143,7 +143,7 @@ namespace SDP.Controllers
             }
             return RedirectToAction("Index", "Inventory");
         }
-        
+
         // Delete Product =====================================================
         //this deletes the product based on product ID
         [HttpPost]
@@ -305,7 +305,7 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult AddBrand(Brand brand)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View();
             }
@@ -387,7 +387,7 @@ namespace SDP.Controllers
                 // 1. Check that there are no associated products.
                 using (var context = _contextFactory.CreateDbContext())
                 {
-                     assocRecordsExist = context.product.Any(p => p.brand == brandToDelete);
+                    assocRecordsExist = context.product.Any(p => p.brand == brandToDelete);
                 }
 
                 // 2. If possible, delete the brand.

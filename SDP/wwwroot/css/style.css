@@ -382,6 +382,7 @@ main #section-product-list .product-wrapper {
   display: grid;
 }
 
+
 footer {
   box-sizing: border-box;
   margin-top: auto;
@@ -635,3 +636,64 @@ footer .container ul li {
   max-height: 12rem;
   max-width: 8rem;
 }
+
+button.category-button {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+#category-flex {
+    display: flex !important;
+    flex-wrap: wrap !important;
+}
+
+#category-item {
+    flex-basis: 200px !important;
+    margin-right: 5px;
+    background-color: white;
+    border-style: solid;
+    overflow: hidden;
+    border-radius: 50%;
+    border-color: var(--color-proposed-purple-05);
+}
+
+    #category-item > img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+#category-item > h4{
+    text-align: center;
+    font-family: var(--font-family-body-sans-serif);
+    color: var(--color-client-spec-4);
+}
+
+#fragrance-item{
+    flex-basis:200px;
+    margin-right: 5px;
+}
+
+.fragrance-brand {
+    color: hsl(269, 0%, 53%);
+    font-family: var(--font-family-display-serif);
+}
+
+#category-list{
+    background: var(--color-client-spec-2);
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+label.category-label{
+    margin: 1em 0 1em 0;
+}
+
+label.brand-label {
+    margin: 1em 0 1em 0;
+}
+
+
+
+
+
