@@ -11,9 +11,9 @@
 
             <form enctype="multipart/form-data" asp-controller="CMS" asp-action="ViewOrder" method="post">
                 <div>
-                    @{ 
+                    @{
                         decimal totalOrders = 0;
-                        foreach(var item in Model)
+                        foreach (var item in Model)
                         {
                             totalOrders += item.totalPrice;
                         }
@@ -28,25 +28,28 @@
                                 <th>Payment Status</th>
                                 <th>Payment Date</th>
                                 <th>Order Status</th>
+                                <th>Delivery Status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         @foreach (var item in Model)
                         {
                             var userId = item.user == null ? "guest user" : item.user.Id;
-                            <tr>
-                                <td>@item.orderNo</td>
-                                <td>@userId</td>
-                                <td>@item.totalPrice</td>
-                                <td>@item.paymentStatus</td>
-                                <td>@item.paymentDate</td>
-                                <td>@item.orderStatus</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary" name="orderId" value="@item.orderId" type="submit">View detail</button>
-                                </td>
-                            </tr>
+                    <tr>
+                        <td>@item.orderNo</td>
+                        <td>@userId</td>
+                        <td>@item.totalPrice</td>
+                        <td>@item.paymentStatus</td>
+                        <td>@item.paymentDate</td>
+                        <td>@item.orderStatus</td>
+                        <td>@item.delivery.deliverystatus</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" name="orderId" value="@item.orderId" type="submit">View detail</button>
+                        </td>
+                    </tr>
                         }
                     </table>
+                    
                 </div>
             </form>
         </section>

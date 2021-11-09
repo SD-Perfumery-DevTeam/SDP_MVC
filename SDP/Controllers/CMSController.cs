@@ -81,11 +81,11 @@ namespace SDP.Controllers
             Order order = null;
             try
             {
-                using (var context = _contextFactory.CreateDbContext()) 
+                using (var context = _contextFactory.CreateDbContext())
                 {
-                   order = context.order.Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
-                   var orderLineList = await context.orderLine.Include(m => m.product).Include(m => m.order).ToListAsync();
-                   lineList = orderLineList.Where(m => m.order.orderId.ToString() == orderId).ToList();
+                    order = context.order.Include(m => m.delivery).Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
+                    var orderLineList = await context.orderLine.Include(m => m.product).Include(m => m.order).ToListAsync();
+                    lineList = orderLineList.Where(m => m.order.orderId.ToString() == orderId).ToList();
                 }
             }
             catch (Exception ex)
@@ -95,20 +95,25 @@ namespace SDP.Controllers
             return View(new OrderView { orderLineList = lineList, order = order });
         }
 
-
+        //============ update order and delivery=================
         [HttpPost]
         public async Task<IActionResult> UpdateOrderAsync(string orderId, OrderView orderView)
         {
+            Order order = null;
+            Delivery delivery = null;
+            using (var context = _contextFactory.CreateDbContext())
+            {
+                order = context.order.Include(m => m.delivery).Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
+                order.orderStatus = orderView.orderStatus;
+                delivery = context.delivery.Where(m => m.deliveryId.ToString() == order.delivery.deliveryId.ToString()).FirstOrDefault();
+                delivery.deliverystatus = orderView.deliveryStatus;
+                context.order.Update(order);
+                context.delivery.Update(delivery);
+                await context.SaveChangesAsync();
+            }
+          
             try
             {
-                Order order = null;
-                using (var context = _contextFactory.CreateDbContext())
-                {
-                    order = context.order.Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
-                    order.orderStatus = orderView.orderStatus;
-                    context.order.Update(order);
-                    await context.SaveChangesAsync();
-                }
             }
             catch (Exception ex)
             {

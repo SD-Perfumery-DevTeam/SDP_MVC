@@ -44,8 +44,8 @@ namespace SDP.Controllers
                           .Where(m => (_dbRepo.GetInventory(m.productId.ToString())>0))
                           .Skip(pageNumber * 20)
                           .Take(20);
-                
 
+                ViewData["Title"] = "All Products";
                 totalPage = _db.product.Count() / 20;
             }
             catch (Exception ex)
@@ -80,37 +80,33 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
+        [Route("Product/ProductDisplay/{key}")]
+        [Route("Product/ProductDisplay")]
         //===============single product display=========================
-        public IActionResult ProductDisplay(string value)
+        public IActionResult ProductDisplay(string key)
         {
-            if (HttpContext.Session.GetString("Id") == null)
-            {
-                GuestCustomer guest = new GuestCustomer(_dbRepo);
-                GlobalVar.customerList.Add(guest);
-                string Id = guest.Id.ToString();
-
-
-
-                HttpContext.Session.SetString("Id", Id);
-            }
-            ViewData["Id"] = HttpContext.Session.GetString("Id");
-
-            // Identify the product based on the string 'value passed in
-            Product product = _dbRepo.getProduct(value);
-            var lProduct = _db.product.ToList();
-
-            HttpContext.Session.SetString("ProductID", value);
-
             try
             {
+                if (HttpContext.Session.GetString("Id") == null)
+                {
+                    GuestCustomer guest = new GuestCustomer(_dbRepo);
+                    GlobalVar.customerList.Add(guest);
+                    string Id = guest.Id.ToString();
+                    HttpContext.Session.SetString("Id", Id);
+                }
+                ViewData["Id"] = HttpContext.Session.GetString("Id");
+
+                // Identify the product based on the string 'value passed in
+                Product product = _dbRepo.getProduct(key);
+                var lProduct = _db.product.ToList();
+
+                HttpContext.Session.SetString("ProductID", key);
                 return View(new Catalog { product = product, brand = product.brand });
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
             }
-
         }
 
         //===============add product to cart=========================
@@ -217,6 +213,55 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
             return RedirectToAction("Index", "Product");
+        }
+
+
+        //===================display all product in category========================
+        public async Task<IActionResult> CategoryDisplay(string categoryId, int pageNumber = 0)
+        {
+            IEnumerable<Product> products;
+            int totalPage;
+            try
+            {
+                products = _dbRepo.GetProductList().Where(m => m.isActive).Where(m => m.category.categoryId.ToString() == categoryId)
+                         .Where(m => (_dbRepo.GetInventory(m.productId.ToString()) > 0))
+                         .Skip(pageNumber * 20)
+                         .Take(20);
+                ViewData["Title"] = string.IsNullOrWhiteSpace(_dbRepo.GetCategory(categoryId).title)? "Our Products" : _dbRepo.GetCategory(categoryId).title;
+                totalPage = _db.product.Count() / 20;
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+
+            if (HttpContext.Session.GetString("Id") == null)
+            {
+                GuestCustomer guest = new GuestCustomer(_dbRepo);
+                GlobalVar.customerList.Add(guest);
+                string Id = guest.Id.ToString();
+                HttpContext.Session.SetString("Id", Id);
+            }
+            ViewData["Id"] = HttpContext.Session.GetString("Id");
+
+            try
+            {
+                
+                var brands = _db.brand.ToList();
+                return View("Index", new Catalog
+                {
+                    products = products,
+                    brands = brands,
+                    categories = _db.category.ToList(),
+                    totalPage = totalPage,
+                    customer = _customer
+                });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
     }
 }

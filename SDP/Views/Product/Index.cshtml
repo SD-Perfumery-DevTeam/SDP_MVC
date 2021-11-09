@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "All Products";
+
 }
 @model SDP.ViewModels.Catalog
 <!-- Product Display ====================================================== -->
@@ -47,8 +47,6 @@
 <section id="section-product-list">
     <div class="container product_con">
 
-
-
         @using (Html.BeginForm("ProductDisplay", "Product"))
         {
             <div class="row rowone flex-box" id="product-list"></div>
@@ -71,7 +69,7 @@
 </section>
 
 <!-- Recommended Products ================================================= -->
-@await Html.PartialAsync("_RecommendedProducts")
+@await Component.InvokeAsync("RecommendedProducts")
 
 <script>
     var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));

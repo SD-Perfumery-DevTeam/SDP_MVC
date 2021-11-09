@@ -14,6 +14,8 @@ using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
+using SDPCore.Models.AccountModel;
+using System.Linq;
 
 namespace SDP.Controllers
 {
@@ -26,11 +28,13 @@ namespace SDP.Controllers
         private IConfiguration _configuration { get; }
         private IEmailSender _emailSender { get; }
         private string _APIkey; //this is the sendgrid api key grabbed from appsetting.json file, see below constructor
-        private IDbRepo _dbRepo ;
+        private IDbRepo _dbRepo;
         private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
+        private SDPDbContext _db;
+
 
         public AccountController(UserManager<IdentityUser> um, SignInManager<IdentityUser> sm,
-            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory)
+            RoleManager<IdentityRole> roleManager, IConfiguration configuration, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory, SDPDbContext db)
         {
             this._userManager = um;
             this._signInManager = sm;
@@ -40,13 +44,14 @@ namespace SDP.Controllers
             this._APIkey = _configuration.GetValue<string>("APIKeys:SDP-SENDGRID-API");
             this._dbRepo = dbRepo;
             this._contextFactory = contextFactory;
+            this._db = db;
         }
 
 
         //====================user to Login==========================
         public IActionResult Login(string errorMsg)
         {
-           
+
             ViewData["Error"] = errorMsg;
             return View();
         }
@@ -64,27 +69,37 @@ namespace SDP.Controllers
                 {
                     try
                     {
-
-                        var user = _userManager.FindByNameAsync(LM.Email);
-                        RegisteredCustomer rc = new RegisteredCustomer(_dbRepo) {Id= user.Result.Id, UserName = user.Result.UserName, Email = user.Result.Email };
+                        var user =await _userManager.FindByNameAsync(LM.Email);
+                        var userTask =  _userManager.FindByNameAsync(LM.Email);
+                        using (var context = _contextFactory.CreateDbContext())  //check if the use is Active
+                        {
+                            var setting = context.userSettings.Include(m => m.user).ToList().Where(m => m.user.Id.ToString() == user.Id).FirstOrDefault();
+                            if (!setting.isActive)
+                            {
+                                return RedirectToAction("Login", new { errorMsg = "Invalid Login infomation" });
+                            }
+                        }
+                       
+                        RegisteredCustomer rc = new RegisteredCustomer(_dbRepo) { Id = userTask.Result.Id, UserName = userTask.Result.UserName, Email = userTask.Result.Email };
 
                         rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();//transfers the GuestCustomers Cart to registered customer
 
-                        HttpContext.Session.SetString("Id", user.Result.Id.ToString());
+                        HttpContext.Session.SetString("Id", userTask.Result.Id.ToString());
 
                         GlobalVar.customerList.Add(rc);
 
                         HttpContext.Session.SetString("LoggedIN", "true");
                         return RedirectToAction("Index", "Home");
+
                     }
                     catch (Exception ex)
                     {
                         return RedirectToAction("Error", "Home");
                     }
                 }
-                else 
+                else
                 {
-                    return RedirectToAction("Login", new { errorMsg ="Invalid Login infomation" } );
+                    return RedirectToAction("Login", new { errorMsg = "Invalid Login infomation" });
                 }
             }
             return View();
@@ -101,37 +116,51 @@ namespace SDP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Signup(SignupView user)
         {
+
             if (ModelState.IsValid)
             {
-                var newUser = new IdentityUser { UserName = user.Email, Email = user.Email };
-                var result = await _userManager.CreateAsync(newUser, user.Password);
-                if (result.Succeeded)//this part sends the confrimation email
+                try
                 {
-                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-                    var confirmationLink = Url.Action("ConfirmEmail",
-                        "Account", new { userId = newUser.Id, token = token }, Request.Scheme);
-                   
-                   
-                    if (await _emailSender.sendConfirmationEmailAsyncAsync(user.Email, newUser, confirmationLink))//below code add role to new users
+                    var newUser = new IdentityUser { UserName = user.Email, Email = user.Email };
+                    var userSetting = new UserSettings(null, user.opIn, true);
+                    var result = await _userManager.CreateAsync(newUser, user.Password);
+
+                    userSetting.user = await _userManager.FindByIdAsync(newUser.Id);
+                    _db.userSettings.Add(userSetting);
+                    await _db.SaveChangesAsync();
+
+                    if (result.Succeeded)//this part sends the confrimation email
                     {
-                        var role = await _roleManager.FindByNameAsync("Customer");
-                        if (role == null || newUser== null)
+                        var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                        var confirmationLink = Url.Action("ConfirmEmailNotif",
+                            "Account", new { userId = newUser.Id, token = token }, Request.Scheme);
+
+                        if (await _emailSender.sendConfirmationEmailAsyncAsync(user.Email, newUser, confirmationLink))//below code add role to new users
                         {
-                            return RedirectToAction("Error", "Home");
+                            var role = await _roleManager.FindByNameAsync("Customer");
+                            if (role == null || newUser == null)
+                            {
+                                return RedirectToAction("Error", "Home");
+                            }
+
+                            if (!(await _userManager.IsInRoleAsync(newUser, role.Name)))
+                            {
+                                var roleResult = await _userManager.AddToRoleAsync(newUser, role.Name);
+                            }
+                            return RedirectToAction("ConfirmEmailMsg", "Account"); 
                         }
 
-                        if (!(await _userManager.IsInRoleAsync(newUser, role.Name)))
-                        {
-                            var roleResult = await _userManager.AddToRoleAsync(newUser, role.Name);
-                        }
-                        return View(new SignupView()); // place holder for check email page
+                            return RedirectToAction("Index", "Home");
                     }
-
-                    return RedirectToAction("Index", "Home");
+                   
+                    foreach (var e in result.Errors)
+                    {
+                        ModelState.AddModelError("", e.Description);
+                    }
                 }
-                foreach (var e in result.Errors)
+                catch (Exception ex)
                 {
-                    ModelState.AddModelError("", e.Description);
+                    return RedirectToAction("Error", "Home");
                 }
             }
             return View(user);
@@ -140,18 +169,25 @@ namespace SDP.Controllers
         //====================user to Confrim Email==========================
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            if (userId == null || token == null) return View("Signup");
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
+            try
             {
-                ViewBag.ErrorMessage = userId + "invalid Id";
-                return RedirectToAction("Error", "Home");
-            }
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+                if (userId == null || token == null) return View("Signup");
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    ViewBag.ErrorMessage = userId + "invalid Id";
+                    return RedirectToAction("Error", "Home");
+                }
+                var result = await _userManager.ConfirmEmailAsync(user, token);
 
-            if (result.Succeeded)
+                if (result.Succeeded)
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Error", "Home");
             }
 
             ViewBag.ErrorMessage = userId + "Email not confrimed ";
@@ -195,8 +231,8 @@ namespace SDP.Controllers
             IdentityUser user = new IdentityUser();
             ManageRoleModel manageRoleModel = new ManageRoleModel();
             var _user = await _userManager.FindByIdAsync(Id);
-         
-            
+
+
             //update Role of user
             if (searchToken == "true")
             {
@@ -214,8 +250,8 @@ namespace SDP.Controllers
                 }
                 return View(new ManageRoleModel());
 
-            }   
-            
+            }
+
 
             //get user by email
             if (Email != null)
@@ -244,14 +280,14 @@ namespace SDP.Controllers
             }
 
             manageRoleModel.user = user;
-           
+
             return View(manageRoleModel);
         }
 
         //==============user to manage their account================
-        
+
         [Authorize]
-        public async Task<IActionResult> MyAccount(string msg) 
+        public async Task<IActionResult> MyAccount(string msg)
         {
             var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
 
@@ -269,7 +305,7 @@ namespace SDP.Controllers
                 if (password != "" && await _userManager.CheckPasswordAsync(_user, password))
                 {
                     var token = await _userManager.GeneratePasswordResetTokenAsync(_user);
-                    return RedirectToAction("ActualChangePassword", new {Email = _user.Email, token=  token});
+                    return RedirectToAction("ActualChangePassword", new { Email = _user.Email, token = token });
                 }
                 ViewData["Error MSG"] = "password incorrect"; //error msg 
             }
@@ -290,9 +326,9 @@ namespace SDP.Controllers
         [HttpPost]
         public async Task<IActionResult> PasswordChange(string Email)
         {
-          
+
             var result = await _userManager.FindByEmailAsync(Email);
-            if (result!= null)
+            if (result != null)
             {
                 var token = await _userManager.GeneratePasswordResetTokenAsync(result);
                 var changepasswordLink = Url.Action("ActualChangePassword",
@@ -302,7 +338,7 @@ namespace SDP.Controllers
             else
             {
                 ViewData["Msg"] = "user does not exist";
-                return View(); 
+                return View();
             }
             ViewData["Msg"] = "Please check your email inbox and spam folder";
             return View();
@@ -312,12 +348,12 @@ namespace SDP.Controllers
         //==============Page for actual password change================
         public IActionResult ActualChangePassword(string Email, string token)
         {
-            return View(new PasswordChange { Email = Email, token = token});
+            return View(new PasswordChange { Email = Email, token = token });
         }
         [HttpPost]
         public async Task<IActionResult> ActualChangePassword(string Email, string Password, string token, PasswordChange pc)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Email);
                 var result = await _userManager.ResetPasswordAsync(user, token, Password);
@@ -327,7 +363,7 @@ namespace SDP.Controllers
                     return RedirectToAction("Login");
                 }
                 ViewData["Msg"] = "Password not changed try again please";
-                
+
             }
             return View(pc);
         }
@@ -343,7 +379,7 @@ namespace SDP.Controllers
 
                 var result = await _userManager.RemoveFromRoleAsync(userForRoleDelete, roleName.Trim());
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 return RedirectToAction("Error", "Home");
             }
@@ -388,7 +424,20 @@ namespace SDP.Controllers
                     GlobalVar.customerList.Add(gc);//register new guest customer
 
                     HttpContext.Session.SetString("Id", gc.Id.ToString());
-                    var result = await _userManager.DeleteAsync(await _userManager.FindByIdAsync(Id));
+                    //var user = await _userManager.FindByIdAsync(Id);
+                    using (var context = _contextFactory.CreateDbContext()) 
+                    {
+                        var setting = context.userSettings.Include(m => m.user).ToList().Where(m => m.user.Id.ToString() == Id).FirstOrDefault();
+                       
+                        if (setting != null)
+                        {
+                            setting.isActive = false;
+                            context.userSettings.Update(setting);
+                            await context.SaveChangesAsync();
+                        }
+                      
+                    }
+
                     return RedirectToAction("Login");
                 }
                 catch (Exception ex)
@@ -398,6 +447,12 @@ namespace SDP.Controllers
             }
 
             else return RedirectToAction("MyAccount", new { msg = "Cannot delete a Super Admin" });
+        }
+
+
+        public ActionResult ConfirmEmailMsg() 
+        {
+            return View();
         }
     }
 }

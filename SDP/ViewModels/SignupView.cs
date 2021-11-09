@@ -15,5 +15,7 @@ namespace SDP.ViewModels
         [Compare("Password", ErrorMessage = "Password and confirm password do not match")]
         [Display(Name = "Re - type Password")]
         public string ReenterPassword { get; set; }
+        [Display(Name = "Recive promotion email")]
+        public bool opIn { get; set; }
     }
 }

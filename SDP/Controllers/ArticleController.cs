@@ -25,7 +25,7 @@ namespace SDPWeb.Controllers
             _logger = logger;
         }
 
-        // View Categories ====================================================
+        // View Articles ======================================================
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult Index()
         {
@@ -44,7 +44,24 @@ namespace SDPWeb.Controllers
             return View(list);
         }
 
-        // Add Category HTTPGET ===============================================
+        // View Single Article ================================================
+        [Route("Article/View/{key}")]
+        public IActionResult Article(string key)
+        {
+            Article article;
+            try
+            {
+                article = _dbRepo.GetArticle(key);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Problem in Article action method in Article controller.");
+                return RedirectToAction("Error", "Home");
+            }
+            return View(article);
+        }
+
+        // Add Article HTTPGET ================================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult AddArticle()
@@ -52,10 +69,10 @@ namespace SDPWeb.Controllers
             return View();
         }
 
-        // Add Category HTTPPOST ==============================================
+        // Add Article HTTPPOST ===============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult AddArticle(Article article)
+        public async Task<IActionResult> AddArticleAsync(Article article)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +82,7 @@ namespace SDPWeb.Controllers
             try
             {
                 _db.article.Add(article);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -75,16 +92,16 @@ namespace SDPWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        // Edit Category HTTPGET ==============================================
+        // Edit Article HTTPGET ===============================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult EditArticle(string articleId)
+        public IActionResult EditArticle(string key)
         {
             Article article;
 
             try
             {
-                article = _dbRepo.GetArticle(articleId);
+                article = _dbRepo.GetArticle(key);
             }
             catch (Exception ex)
             {
@@ -94,7 +111,7 @@ namespace SDPWeb.Controllers
             return View(article);
         }
 
-        // Edit Category HTTPPOST =============================================
+        // Edit Article HTTPPOST ==============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditArticle(Article article)
@@ -108,9 +125,9 @@ namespace SDPWeb.Controllers
 
             try
             {
-                articleToUpdate = _db.article.Find(article.articleId);
-                articleToUpdate.articleId = article.articleId;
+                articleToUpdate = _dbRepo.GetArticle(article.key);
                 articleToUpdate.title = article.title;
+                articleToUpdate.text = article.text;
                 _db.Entry(articleToUpdate).State = EntityState.Modified;
                 _db.SaveChanges();
             }
@@ -122,18 +139,16 @@ namespace SDPWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        // Delete Category HTTPPOST ===========================================
+        // Delete Article HTTPPOST ============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult DeleteArticle(string articleId)
+        public IActionResult DeleteArticle(string key)
         {
-            Guid guidToDelete;
             Article articleToDelete;
 
             try
             {
-                guidToDelete = Guid.Parse(articleId);
-                articleToDelete = _db.article.Find(guidToDelete);
+                articleToDelete = _dbRepo.GetArticle(key);
                 _db.article.Remove(articleToDelete);
                 _db.SaveChanges();
             }

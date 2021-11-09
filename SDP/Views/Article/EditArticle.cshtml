@@ -12,7 +12,7 @@
                 @Html.AntiForgeryToken()
                 <div asp-validation-summary="All" class="text-danger"></div>
 
-                <input name="articleId" value="@Model.articleId" hidden />
+                <input name="key" value="@Model.key" hidden />
 
                 @* Field 'title' in its own row. *@
                 <div class="mb-4">
@@ -30,8 +30,8 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save</button>
-                <button asp-controller="Article" asp-action="DeleteArticle" name="articleId"
-                        value="@Model.articleId" class="btn btn-danger" id="popup">
+                <button asp-controller="Article" asp-action="DeleteArticle" name="key"
+                        value="@Model.key" class="btn btn-danger" id="popup">
                     Delete
                 </button>
             </form>

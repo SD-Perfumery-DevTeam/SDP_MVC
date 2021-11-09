@@ -25,9 +25,9 @@ namespace Microsoft.SDP.SDPCore.Models.DbContexts
             return await _userManager.FindByIdAsync(Id) ;
         }
 
-        public Article GetArticle(string Id)
+        public Article GetArticle(string key)
         {
-            return !string.IsNullOrWhiteSpace(Id) ? _db.article.ToList().Find(m => m.articleId == Guid.Parse(Id)) : null;
+            return !string.IsNullOrWhiteSpace(key) ? _db.article.ToList().Find(m => m.key == key) : null;
         }
 
         public Brand GetBrand(string Id)

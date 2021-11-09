@@ -1,0 +1,10 @@
+﻿@model Microsoft.SDP.SDPCore.Models.Article
+@{
+    ViewData["Title"] = Model.title;
+}
+
+<div class="container">
+    <h1>@Model.title</h1>
+    <img src="~/images/article/@Model.imgUrl"/>
+    <div class="my-3">@Model.text</div>
+</div>
