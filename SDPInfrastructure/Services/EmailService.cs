@@ -30,10 +30,12 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             var subject = "SD Perfumery - Password Change Requested";
             var to = new EmailAddress(Email, "SD Perfumery Customer");
 
+            // This is the content shown to email clients viewing in plain text.
             var plainTextContent = "You have requested a change of password at " +
                 "SD Perfumery - please navigate to the URL " + changepasswordLink +
                 " to complete the password change process.";
 
+            // This is the content shown to email clients viewing in HTML.
             var htmlContent = "<a href=" + changepasswordLink + "> click here to change your password</a>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
@@ -54,9 +56,11 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
             var subject = "SD Perfumery - Please Confirm Your Email";
             var to = new EmailAddress(Email, "SD Perfumery Customer");
 
+            // This is the content shown to email clients viewing in plain text.
             var plainTextContent = "To complete the customer account creation " +
                 "process at SD Perfumery, please navigate to the URL " + confirmationLink;
 
+            // This is the content shown to email clients viewing in HTML.
             var htmlContent = "<a href=" + confirmationLink + "> click here to confirm email </a>";
 
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
@@ -80,12 +84,14 @@ namespace Microsoft.SDP.SDPInfrastructure.Services
                 var subject = promotionName + " - " + discount + "% OFF - " + productName + " at SD Perfumery";
                 var to = new EmailAddress(email, "SD Perfumery Customer");
 
+                // This is the content shown to email clients viewing in plain text.
                 var plainTextContent = "Current promotion at SD Perfumery - " +
                     promotionName + " - " + discount + "% off " + productName +
                     " from " + startDate + " to " + endDate + ". Use promo " +
                     "code " + promotionCode + " at checkout to benefit from " +
                     "this great offer.";
 
+                // This is the content shown to email clients viewing in HTML.
                 var htmlContent = promotionName + discount + productName + promotionCode + startDate + endDate;
 
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
