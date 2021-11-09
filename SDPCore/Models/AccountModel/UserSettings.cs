@@ -14,7 +14,6 @@ namespace SDPCore.Models.AccountModel
         public UserSettings()
         {
         }
-
         public UserSettings(IdentityUser user,bool promoSubscribed, bool isActive )
         {
             this.userSettingsId = Guid.NewGuid();
