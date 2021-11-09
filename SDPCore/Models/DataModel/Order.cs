@@ -2,6 +2,7 @@
 using Microsoft.SDP.SDPCore.Interface;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.SDP.SDPCore.Consts;
@@ -10,6 +11,21 @@ namespace Microsoft.SDP.SDPCore.Models
 {
     public class Order
     {
+        [Required]
+        public Guid orderId { get; set; }
+        [Required]
+        public int orderNo { get; set; }
+        public IdentityUser user { get; set; }
+        public Delivery delivery { get; set; }
+        public List <OrderLine> orderLine { get; set; }
+        [Required]
+        public decimal totalPrice { get; set; }
+        [Required]
+        public string paymentStatus { get; set; }
+        public DateTime paymentDate { get; set; }
+        [Required]
+        public OrderStatus orderStatus { get; set; }
+
         public Order()
         {
         }
@@ -25,15 +41,5 @@ namespace Microsoft.SDP.SDPCore.Models
             this.paymentDate = paymentDate;
             this.orderStatus = orderStatus;
         }
-
-        public Guid orderId { get; set; }
-        public int orderNo { get; set; }
-        public IdentityUser user { get; set; }
-        public Delivery delivery { get; set; }
-        public List <OrderLine> orderLine { get; set; }
-        public decimal totalPrice { get; set; }
-        public string paymentStatus { get; set; }
-        public DateTime paymentDate { get; set; }
-        public OrderStatus orderStatus { get; set; }
     }
 }
