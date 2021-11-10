@@ -8,6 +8,7 @@ namespace SDPWeb.ViewModels
 {
     public class HomeView
     {
+        public List<Promotion> promotions { get; set; }
         public List<Category> categories { get; set; }
     }
 }

@@ -31,12 +31,15 @@ namespace SDP.Controllers
         public IActionResult Index()
         {
             var homeView = new HomeView();
-            var list = _db.category.ToList();
+            var categorList = _db.category.ToList();
+            var promoList = _db.promotion.Include(m=>m.product).ToList();
+           
 
             homeView.categories = new List<Category>();
+            homeView.promotions = new List<Promotion>();
             foreach (Product p in _dbRepo.GetProductList()) 
             {
-                foreach (var item in list) 
+                foreach (var item in categorList) 
                 {
                     if (p.category.categoryId == item.categoryId && !homeView.categories.Contains(item))
                     {
@@ -44,6 +47,20 @@ namespace SDP.Controllers
                     }
                 }
             }
+            foreach (Promotion p in promoList)
+            {
+
+                if (p.isActive && p.startDate<= DateTime.Now && p.endDate>= DateTime.Now )
+                {
+                    homeView.promotions.Add(p);
+                }
+                if (homeView.promotions.Count>= 3)
+                {
+                    break;
+                }
+            }
+            
+
             return View(homeView);
         }
 
