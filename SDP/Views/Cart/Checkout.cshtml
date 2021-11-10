@@ -43,7 +43,10 @@
                 }
             </ul>
         }
-        <h4>Total: @Model.amount LKR</h4>
+        @{
+            var amount = @Model.amount / 100;
+         }
+    <h4>Total: @amount LKR</h4>
         @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", Model)
     </form>
 
