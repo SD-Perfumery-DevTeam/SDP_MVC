@@ -133,7 +133,7 @@ namespace SDPWeb.Controllers
         // Edit Article HTTPPOST ==============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public async Task<IActionResult> EditArticle(AddEditArticle addEditArticle, IFormFile ufile)
+        public async Task<IActionResult> EditArticle(AddEditArticle addEditArticle, IFormFile ufile, string Url)
         {
             if (!ModelState.IsValid)
             {
@@ -153,6 +153,7 @@ namespace SDPWeb.Controllers
                     return RedirectToAction("Error", "Home");
                 }
             }
+            else addEditArticle.article.imgUrl = Url;
 
             Article articleToUpdate;
 

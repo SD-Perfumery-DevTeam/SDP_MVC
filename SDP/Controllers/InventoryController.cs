@@ -492,7 +492,7 @@ namespace SDP.Controllers
         // Edit Category HTTPPOST =============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public async Task<IActionResult> EditCategory(AddEditCategory addEditCategory, string categoryId, IFormFile ufile)
+        public async Task<IActionResult> EditCategory(AddEditCategory addEditCategory, string categoryId, IFormFile ufile, string Url)
         {
             if (!ModelState.IsValid)
             {
@@ -512,6 +512,7 @@ namespace SDP.Controllers
                     return RedirectToAction("Error", "Home");
                 }
             }
+            else addEditCategory.category.imgUrl = Url;
 
             Category categoryToUpdate;
 
