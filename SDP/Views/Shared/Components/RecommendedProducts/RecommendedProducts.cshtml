@@ -4,23 +4,26 @@
         <h3>Recommended Fragrances</h3>
         <hr />
         <div class="product-list">
-            @foreach (var product in Model)
-            {
-                <div class="recommended-card">
-                    <div class="info">
-                        <h4>@product.title</h4>
-                        <p>@product.brand.title</p>
-                        <p>@product.productGender</p>
-                        <p>@product.productType @product.packageQty@product.packageUom</p>
-                        <p class="cta">
-                            <span class="price">Rs. @product.price</span>
-                            <button class="sdp-style">Shop Now</button>
-                        </p>
+            
+                @foreach (var product in Model)
+                {
+                    <div class="recommended-card">
+                        <div class="info">
+                            <h4>@product.title</h4>
+                            <p>@product.brand.title</p>
+                            <p>@product.productGender</p>
+                            <p>@product.productType @product.packageQty@product.packageUom</p>
+                            <p class="cta">
+                                <span class="price">Rs. @product.price</span>
+                                <form asp-action="ProductDisplay" asp-controller="Product" method="post">
+                                    <button class="sdp-style" value="@product.productId" name="key">Shop Now</button>
+                                </form>
+                            </p>
+                        </div>
+                        <img src="~/images/product/@product.imgUrl">
                     </div>
-                    <img src="~/images/product/@product.imgUrl">
-                </div>
-            }
-
+                }
+            
         </div>
     </section>
 </div>

@@ -84,7 +84,7 @@
                         <p>Rs. @Decimal.Round(total, 2)</p>
                     </div>
 
-                    <form asp-action="Checkout" asp-controller="Cart" method="post">
+                    <form asp-action="DeliveryForm" asp-controller="Cart" method="get">
                         <input type="hidden"  name="amount" value="@(Decimal.Round(total, 2)*100)"/>
                         <button class="sdp-style my-4" type="submit">Checkout</button>
                     </form>

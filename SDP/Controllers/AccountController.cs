@@ -89,6 +89,7 @@ namespace SDP.Controllers
                         GlobalVar.customerList.Add(rc);
 
                         HttpContext.Session.SetString("LoggedIN", "true");
+                        HttpContext.Session.SetString("Email", LM.Email);
                         return RedirectToAction("Index", "Home");
 
                     }

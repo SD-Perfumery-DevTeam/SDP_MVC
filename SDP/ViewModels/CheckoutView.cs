@@ -11,6 +11,7 @@ namespace SDPWeb.ViewModels
     {
         public decimal amount { get; set; }
         public Key key { get; set; }
+        
         public Delivery delivery { get; set; }
     }
 }

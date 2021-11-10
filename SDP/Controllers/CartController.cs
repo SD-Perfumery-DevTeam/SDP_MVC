@@ -8,6 +8,7 @@ using SDPWeb.ViewModels;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
 using System.Linq;
 using SDPCore.Models.AccountModel;
+using Newtonsoft.Json;
 
 namespace SDP.Controllers
 {
@@ -31,17 +32,17 @@ namespace SDP.Controllers
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
-                GlobalVar.customerList.Add(guest); 
-                string Id = guest.Id.ToString(); 
+                GlobalVar.customerList.Add(guest);
+                string Id = guest.Id.ToString();
                 HttpContext.Session.SetString("Id", Id);
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
             customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
-            return View(new CartView { cart = customer.cart, productList = _dbRepo.GetProductList().ToList() } );
+            return View(new CartView { cart = customer.cart, productList = _dbRepo.GetProductList().ToList() });
         }
         //===================Action for checking validity of promocode=======================
         [HttpPost]
-        public IActionResult promoCodeCheck(string promoCode) 
+        public IActionResult promoCodeCheck(string promoCode)
         {
             if (string.IsNullOrEmpty(promoCode))
             {
@@ -58,7 +59,7 @@ namespace SDP.Controllers
                     ViewData["Error"] = "Only one promotion allowed per order";
                     return View("Index", new CartView { cart = customer.cart, productList = _dbRepo.GetProductList().ToList() });
                 }
-            
+
                 var productAppliedTo = _dbRepo.getProduct(appliedId);
                 //validating promocode info  
                 if (customer != null)
@@ -90,7 +91,7 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            
+
         }
 
         //===================Remove from cart=======================
@@ -99,7 +100,7 @@ namespace SDP.Controllers
             try
             {
                 customer = ViewService.getCustomerFromList(HttpContext.Session.GetString("Id"));
-               
+
 
                 if (HttpContext.Session.GetString("count") != null)
                 {
@@ -113,11 +114,38 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
+
         }
-        [HttpPost]
-        public IActionResult Checkout(decimal amount)
+       
+         [HttpPost]
+        public IActionResult Checkout(string Json, string stripeToken)
         {
-            return View(new CheckoutView {amount = amount, delivery= new Delivery(), key = new Key()});
+            return RedirectToAction("Payment","Payment", new { checkoutViewJson = Json, stripeToken = stripeToken });
+        }
+
+        [HttpGet]
+        public IActionResult Checkout(string checkoutViewJson)
+        {
+            ViewData["Json"] = checkoutViewJson;
+            CheckoutView checkoutView = JsonConvert.DeserializeObject<CheckoutView>(checkoutViewJson);
+            return View(checkoutView);
+        }
+        [HttpGet]
+        public IActionResult DeliveryForm(decimal amount)
+        {
+            return View(new CheckoutView { amount = amount, delivery = new Delivery(), key = new Key() });
+        }
+
+        [HttpPost]
+        public IActionResult DeliveryForm(CheckoutView checkoutView)
+        {
+            if (ModelState.IsValid)
+            {
+                checkoutView.key = new Key("pk_test_51JlMhVBxws1IZQJgbiaytkXHv77Q4SRWC3vSTaVsEZAbo2vSCOSLzdgbXx6cULFTdfeEm4k72wsR8bTKEXED0vGb00bdtUZmao", "payment", checkoutView.amount, "LKR", HttpContext.Session.GetString("Email")==null? "" : HttpContext.Session.GetString("Email"));
+                string checkoutViewJson = JsonConvert.SerializeObject(checkoutView);
+                return RedirectToAction("Checkout", "Cart",new { checkoutViewJson = checkoutViewJson });
+            }
+            return RedirectToAction("DeliveryForm", "Cart");
         }
     }
 }

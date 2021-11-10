@@ -20,7 +20,6 @@ namespace SDPWeb.Controllers
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-
             List<Product> products = _db.product.Include(m=>m.brand).ToList();
             List<Product> reconmmendedProducts = new List<Product>();
             foreach (var index in getRandomNum(products))

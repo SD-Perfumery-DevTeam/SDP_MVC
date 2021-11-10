@@ -7,6 +7,7 @@ using Microsoft.SDP.SDPCore;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models;
 using Microsoft.SDP.SDPInfrastructure.Services;
+using Newtonsoft.Json;
 using SDPCore.Dtos;
 using SDPWeb.ViewModels;
 using Stripe;
@@ -33,13 +34,16 @@ namespace SDPWeb.Controllers
             _dbRepo = dbRepo;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> PaymentAsync(CheckoutView checkoutView,string stripeToken)
+  
+       
+
+
+         [HttpGet]
+        public async Task<ActionResult> PaymentAsync(string checkoutViewJson, string stripeToken)
         {
-            if (ModelState.IsValid)
-            {
                 try
                 {
+                    CheckoutView checkoutView = JsonConvert.DeserializeObject<CheckoutView>(checkoutViewJson);
                     StripeConfiguration.ApiKey = _config["Stripe:SecretKey"];
                     var cutomers = new CustomerService();
                     var charges = new ChargeService();
@@ -80,12 +84,13 @@ namespace SDPWeb.Controllers
                         currentCutomer.cart = new Cart();
                         return View(orderDataTransfer.order.orderNo);
                     }
-                }
+           
+            }
                 catch (Exception)
                 {
                     return RedirectToAction("Error", "Payment");
                 }
-            }
+           
             return RedirectToAction("Error", "Payment");
         }
     }
