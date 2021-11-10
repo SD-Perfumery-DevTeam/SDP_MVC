@@ -27,8 +27,9 @@
                     <label asp-for="article.imgUrl" class="form-label"></label>
                     <div class="custom-file">
                         <div class="form-text mt-0 mb-2">Upload PNG / JPG image format.</div>
-                        <input required="required" asp-for="image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
-                        <div class="custom-file-label form-text">Choose Image File...</div>
+                        <input type="hidden" name="Url" value="@Model.article.imgUrl" />
+                        <input asp-for="image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
+                        <div class="custom-file-label form-text">@Model.article.imgUrl</div>
                     </div>
                     <span asp-validation-for="article.imgUrl" class="text-danger"></span>
                 </div>

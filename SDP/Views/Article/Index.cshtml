@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "View Articles";
 }
-@model IEnumerable<Microsoft.SDP.SDPCore.Models.Article>
+@model SDPWeb.ViewModels.AddEditArticle
 
 <section id="section-cms">
     <div class="container">
@@ -10,7 +10,7 @@
             <h2>@ViewData["Title"]</h2>
 
             <div><a asp-controller="Article" asp-action="AddArticle" class="btn btn-primary">Add Article</a></div>
-            <p>To navigate to an article, use the URL suffix '/article/view/{URL Stub}'.</p>
+            <p>To navigate to an article, use the URL suffix <em>'/article/view/{URL Stub}'</em>.</p>
             <form enctype="multipart/form-data" asp-controller="Article" asp-action="EditArticle" method="get">
                 <div>
                     <table class="table table-bordered">
@@ -21,7 +21,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.articleList)
                         {
                             <tr>
                                 <td>@item.title</td>

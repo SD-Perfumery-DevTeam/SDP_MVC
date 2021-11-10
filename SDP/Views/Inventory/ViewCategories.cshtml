@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "View Categories";
 }
-@model IEnumerable<Microsoft.SDP.SDPCore.Models.Category>
+@model SDPWeb.ViewModels.AddEditCategory
 
 <section id="section-cms">
     <div class="container">
@@ -19,7 +19,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.categoryList)
                         {
                             <tr>
                                 <td>@item.title</td>
