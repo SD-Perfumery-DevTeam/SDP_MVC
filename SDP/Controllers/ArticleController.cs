@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
+using Microsoft.SDP.SDPInfrastructure.Services;
+using SDPWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +19,14 @@ namespace SDPWeb.Controllers
     {
         private SDPDbContext _db;
         private IDbRepo _dbRepo;
+        private ImageService _imageService;
         private readonly ILogger<ArticleController> _logger;
 
-        public ArticleController(SDPDbContext db, IDbRepo dbRepo, ILogger<ArticleController> logger)
+        public ArticleController(SDPDbContext db, IDbRepo dbRepo, ImageService imageService, ILogger<ArticleController> logger)
         {
             _db = db;
             _dbRepo = dbRepo;
+            _imageService = imageService;
             _logger = logger;
         }
 
@@ -33,15 +38,15 @@ namespace SDPWeb.Controllers
 
             try
             {
-                list = _db.article.ToList();
+                list = _db.article.ToList<Article>();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Problem in Index action method in Article controller.");
+                _logger.LogError(ex, "Problem in Idex action method in Article controller.");
                 return RedirectToAction("Error", "Home");
             }
 
-            return View(list);
+            return View(new AddEditArticle { articleList = list });
         }
 
         // View Single Article ================================================
@@ -72,16 +77,30 @@ namespace SDPWeb.Controllers
         // Add Article HTTPPOST ===============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public async Task<IActionResult> AddArticleAsync(Article article)
+        public async Task<IActionResult> AddArticleAsync(AddEditArticle addEditArticle, IFormFile ufile)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
+            // Use the image service to add an image file to the Category object.
+            if (ufile != null && ufile.Length > 0)
+            {
+                try
+                {
+                    await _imageService.addImageToFileAsync(ufile, addEditArticle.article, _db.article.ToList());
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Unable to parse imgUrl string for AddArticle action method (post) in Article controller.");
+                    return RedirectToAction("Error", "Home");
+                }
+            }
+
             try
             {
-                _db.article.Add(article);
+                _db.article.Add(addEditArticle.article);
                 await _db.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -97,37 +116,53 @@ namespace SDPWeb.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditArticle(string key)
         {
-            Article article;
+            AddEditArticle returnArticle;
 
             try
             {
-                article = _dbRepo.GetArticle(key);
+                returnArticle = new AddEditArticle { article = _dbRepo.GetArticle(key) };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Problem in EditArticle action method (get) in Article controller.");
                 return RedirectToAction("Error", "Home");
             }
-            return View(article);
+            return View(returnArticle);
         }
 
         // Edit Article HTTPPOST ==============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public IActionResult EditArticle(Article article)
+        public async Task<IActionResult> EditArticle(AddEditArticle addEditArticle, IFormFile ufile, string Url)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
+            // Use the image service to add an image file to the Category object.
+            if (ufile != null && ufile.Length > 0)
+            {
+                try
+                {
+                    await _imageService.addImageToFileAsync(ufile, addEditArticle.article, _db.article.ToList());
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Unable to parse imgUrl string for EditArticle action method (post) in Article controller.");
+                    return RedirectToAction("Error", "Home");
+                }
+            }
+            else addEditArticle.article.imgUrl = Url; // If the image field is left, use the previous image.
+
             Article articleToUpdate;
 
             try
             {
-                articleToUpdate = _dbRepo.GetArticle(article.key);
-                articleToUpdate.title = article.title;
-                articleToUpdate.text = article.text;
+                articleToUpdate = _dbRepo.GetArticle(addEditArticle.article.key);
+                articleToUpdate.title = addEditArticle.article.title;
+                articleToUpdate.imgUrl = addEditArticle.article.imgUrl;
+                articleToUpdate.text = addEditArticle.article.text;
                 _db.Entry(articleToUpdate).State = EntityState.Modified;
                 _db.SaveChanges();
             }

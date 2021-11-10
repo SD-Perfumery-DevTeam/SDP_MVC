@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Add Article";
 }
-@model Microsoft.SDP.SDPCore.Models.Article
+@model SDPWeb.ViewModels.AddEditArticle
 
 <section id="section-cms">
     <div class="container">
@@ -14,17 +14,29 @@
 
                 @* Field 'title' in its own row. *@
                 <div class="mb-4">
-                    <label asp-for="title" class="form-label"></label>
-                    <input required="required" asp-for="title" class="form-control" maxlength="256" />
-                    <span asp-validation-for="title" class="text-danger"></span>
+                    <label asp-for="article.title" class="form-label"></label>
+                    <input required="required" asp-for="article.title" class="form-control" maxlength="256" />
+                    <span asp-validation-for="article.title" class="text-danger"></span>
+                </div>
+
+                @* Field 'imgUrl' in its own row. *@
+                <div id="disp_tmp_path" class="d-none" hidden></div>
+                <div class="mb-4">
+                    <label asp-for="article.imgUrl" class="form-label"></label>
+                    <div class="custom-file">
+                        <div class="form-text mt-0 mb-2">Upload PNG / JPG image format.</div>
+                        <input required="required" asp-for="image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
+                        <div class="custom-file-label form-text">Choose Image File...</div>
+                    </div>
+                    <span asp-validation-for="article.imgUrl" class="text-danger"></span>
                 </div>
 
                 @* Field 'description' in its own row. *@
                 <div class="mb-4">
                     <span class="hint" id="textarea_message"></span>
-                    <label asp-for="text" class="form-label"></label>
-                    <textarea required="required" asp-for="text" id="message_area" class="form-control message_area"></textarea>
-                    <span asp-validation-for="text" class="text-danger"></span>
+                    <label asp-for="article.text" class="form-label"></label>
+                    <textarea required="required" asp-for="article.text" id="message_area" class="form-control message_area"></textarea>
+                    <span asp-validation-for="article.text" class="text-danger"></span>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Add Article</button>
