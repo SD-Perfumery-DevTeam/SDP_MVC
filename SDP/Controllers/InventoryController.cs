@@ -492,7 +492,7 @@ namespace SDP.Controllers
         // Edit Category HTTPPOST =============================================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
-        public async Task<IActionResult> EditCategory(AddEditCategory addEditCategory, IFormFile ufile)
+        public async Task<IActionResult> EditCategory(AddEditCategory addEditCategory, string categoryId, IFormFile ufile)
         {
             if (!ModelState.IsValid)
             {
@@ -517,8 +517,7 @@ namespace SDP.Controllers
 
             try
             {
-                categoryToUpdate = _db.category.Find(addEditCategory.category.categoryId);
-                categoryToUpdate.categoryId = addEditCategory.category.categoryId;
+                categoryToUpdate = _dbRepo.GetCategory(categoryId);
                 categoryToUpdate.imgUrl = addEditCategory.category.imgUrl;
                 categoryToUpdate.title = addEditCategory.category.title;
                 _db.Entry(categoryToUpdate).State = EntityState.Modified;
