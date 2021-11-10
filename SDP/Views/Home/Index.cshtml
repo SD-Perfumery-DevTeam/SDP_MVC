@@ -57,15 +57,19 @@
                 {
                     if (carouselflag == 1)
                     {
-                        <div class="carousel-item active">
-                            <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
-                        </div>
+                        <a href="/Product/ProductDisplay/@promtion.product.productId">
+                            <div class="carousel-item active">
+                                <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
+                            </div>
+                        </a>
                     }
                     else
                     {
-                        <div class="carousel-item">
-                            <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
-                        </div>
+                        <a href="/Product/ProductDisplay/@promtion.product.productId">
+                            <div class="carousel-item">
+                                <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
+                            </div>
+                        </a>
                     }
                     carouselflag++;
 
