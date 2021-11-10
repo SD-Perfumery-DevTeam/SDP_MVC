@@ -153,7 +153,7 @@ namespace SDPWeb.Controllers
                     return RedirectToAction("Error", "Home");
                 }
             }
-            else addEditArticle.article.imgUrl = Url;
+            else addEditArticle.article.imgUrl = Url; // If the image field is left, use the previous image.
 
             Article articleToUpdate;
 

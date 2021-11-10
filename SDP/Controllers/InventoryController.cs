@@ -36,6 +36,7 @@ namespace SDP.Controllers
             _contextFactory = contextFactory;
             _logger = logger;
         }
+
         // Inventory Display Page =============================================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -512,7 +513,7 @@ namespace SDP.Controllers
                     return RedirectToAction("Error", "Home");
                 }
             }
-            else addEditCategory.category.imgUrl = Url;
+            else addEditCategory.category.imgUrl = Url; // If the image field is left, use the previous image.
 
             Category categoryToUpdate;
 
