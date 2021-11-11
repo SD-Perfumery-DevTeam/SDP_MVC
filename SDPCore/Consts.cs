@@ -33,6 +33,7 @@ namespace Microsoft.SDP.SDPCore
             [Display(Name = "Delivered")]
             deliveryComplete
         };
+
         public enum OrderStatus
         {
             [Display(Name = "Pending Action")]
@@ -40,6 +41,7 @@ namespace Microsoft.SDP.SDPCore
             Actioned,
             Error
         };
+
         public enum Uom 
         {
             ml,

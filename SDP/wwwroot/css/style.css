@@ -426,17 +426,29 @@ footer .container ul li {
   margin: 0.5rem 0 2rem 0;
 }
 
-.form-small input, .form-small button.sdp-style {
+.form-small input[type=text], .form-small input[type=password], .form-small button.sdp-style {
   display: block;
   box-sizing: border-box;
   width: 100%;
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.5rem 0 0.25rem 0;
 }
 
-.form-small input {
+.form-small .form-group, .form-small .form-check {
+  margin-top: 1.25rem;
+}
+
+.form-small .form-check label {
+  margin-top: 0.25rem;
+}
+
+.form-small input[type=text], .form-small input[type=password] {
   height: 1.75rem;
   border: 1px solid var(--color-client-spec-1);
   border-radius: 0.3rem;
+}
+
+.form-small button.sdp-style {
+  margin-top: 1.5rem;
 }
 
 /* CMS Styling */
@@ -596,7 +608,7 @@ footer .container ul li {
   margin: 1rem 0;
 }
 
-.form-small input {
+.form-small input[type=text], .form-small input[type=password] {
   height: 1.75rem;
   border: 1px solid var(--color-client-spec-1);
   border-radius: 0.3rem;
