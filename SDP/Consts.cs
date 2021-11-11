@@ -13,6 +13,7 @@ namespace SDP
             EDP,
             EDT
         };
+
         public enum Genders
         {
             [Display(Name = "Men's")]
@@ -22,15 +23,20 @@ namespace SDP
             [Display(Name = "Unisex")]
             other
         };
+
         public enum DeliveryStatus
         {
+            [Display(Name = "Action Required")]
             pendingAction,
+            [Display(Name = "Out for Delivery")]
             beingDelivered,
+            [Display(Name = "Delivered")]
             deliveryComplete
         };
 
         public enum OrderStatus
         {
+            [Display(Name = "Pending Action")]
             pendingAction,
             Actioned,
             Error
