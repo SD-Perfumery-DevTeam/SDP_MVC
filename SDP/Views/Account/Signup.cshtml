@@ -1,8 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Sign Up";
 }
-
 @model SDP.ViewModels.SignupView
+
 <!-- Sign Up Form ========================================================= -->
 
 <div class="container">
@@ -16,25 +16,29 @@
         <form class="form-small" method="post">
             @Html.AntiForgeryToken()
             <h3>Sign Up</h3>
-            <div asp-validation-summary="All" class="text-danger"></div>
+            <small><div asp-validation-summary="All" class="text-danger"></div></small>
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input asp-for="Email" id="username" maxlength="256" />
+                <input type="text" asp-for="Email" id="username" maxlength="256" class="form-control"/>
+                <small><span asp-validation-for="Email" class="form-text text-danger"></span></small>
             </div>
             <div class="form-group">
                 <label asp-for="Password"></label>
-                <input asp-for="Password" id="password" />
+                <input type="password" asp-for="Password" id="password" class="form-control"/>
+                <small><span asp-validation-for="Password" class="form-text text-danger"></span></small>
             </div>
             <div class="form-group">
                 <label asp-for="ReenterPassword"></label>
-                <input asp-for="ReenterPassword" class="form-control" />
+                <input type="password" asp-for="ReenterPassword" class="form-control" />
+                <small><span asp-validation-for="ReenterPassword" id="confirm-password" class="form-text text-danger"></span></small>
             </div>
-            <div class="form-group">
-                <label asp-for="opIn"></label>
-                <input asp-for="opIn" />
+            <div class="form-check">
+                <input type="checkbox" asp-for="opIn" class="form-check-input" />
+                <label asp-for="opIn" class="form-check-label"></label>
             </div>
             <button class="btn-big sdp-style" type="submit">Sign me up!</button>
-            <small><a href="#">I already have an account..</a></small>
+
+            <small><a asp-area="" asp-controller="Account" asp-action="Login">I already have an account..</a></small>
         </form>
     </div>
 </section>
