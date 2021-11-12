@@ -385,6 +385,7 @@ namespace SDP.Controllers
                 ViewData["Msg"] = "Password not changed try again please";
 
             }
+            ViewData["Msg"] = "Password or Email format incorrect";
             return View(pc);
         }
 
