@@ -2,18 +2,18 @@
     ViewData["Title"] = "Account Preferences";
 }
 
-@model Microsoft.AspNetCore.Identity.IdentityUser
+@model SDPWeb.ViewModels.OrderView
 
 <section id="section-cms">
     <div class="container">
         <section class="cms-area">
-           
+
             <h2>Account Preferences</h2>
             <p>@ViewData["Error MSG"]</p>
-            <h3>@Model.Email</h3>
+            <h3>@Model.user.Email</h3>
 
             <div class="mb-4">
-                
+
                 <form method="post">
                     <label class="form-label" for="current-password">Change Password</label>
                     <div class="form-text mt-0 mb-2">
@@ -23,7 +23,7 @@
                         <div class="col-6">
                             <div class="input-group">
                                 <input class="form-control" id="current-password" type="password" name="password" />
-                                <button class="btn btn-warning" name="userId" value="@Model.Id" type="submit">Reset Password</button>
+                                <button class="btn btn-warning" name="userId" value="@Model.user.Id" type="submit">Reset Password</button>
                             </div>
                         </div>
                     </div>
@@ -48,14 +48,53 @@
                          data-bs-parent="#account-delete-accordion">
                         <form asp-action="DeleteMyAccount" asp-controller="Account" method="post" id="popup">
                             <div class="form-text mt-3 mb-5">
-                                This action is not reversible and will delete the account associated with email address @Model.Email. Please be certain this is what you wish to do before proceeding.
+                                This action is not reversible and will delete the account associated with email address @Model.user.Email. Please be certain this is what you wish to do before proceeding.
                             </div>
-                            <button class="btn btn-danger " name="Id" value="@Model.Id" type="submit">Delete Account</button>
-                            <div class="form-text mt-5 mb-2">Account ID: @Model.Id</div>
+                            <button class="btn btn-danger " name="Id" value="@Model.user.Id" type="submit">Delete Account</button>
+                            <div class="form-text mt-5 mb-2">Account ID: @Model.user.Id</div>
                         </form>
                     </div>
                 </div>
             </div>
+
+            <div class="container">
+               
+                    <div>
+                        @{
+                            decimal totalOrders = 0;
+                            foreach (var item in Model.orders)
+                            {
+                                totalOrders += item.totalPrice;
+                            }
+                        }
+                        <p>Total Order Value: <span>@totalOrders</span></p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Order No</th>
+                                    <th>Order Value</th>
+                                    <th>Payment Status</th>
+                                    <th>Payment Date</th>
+                                    <th>Order Status</th>
+                                    <th>Delivery Status</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model.orders)
+                            {
+                                var userId = item.user == null ? "guest user" : item.user.Id;
+                                <tr>
+                                    <td>@item.orderNo</td>
+                                    <td>@item.totalPrice</td>
+                                    <td>@item.paymentStatus</td>
+                                    <td>@item.paymentDate</td>
+                                    <td>@item.orderStatus</td>
+                                    <td>@item.delivery.deliverystatus</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                
+            </div>
         </section>
-    </div>
-</section>
+
+        

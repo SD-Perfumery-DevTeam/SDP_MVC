@@ -34,10 +34,6 @@ namespace SDPWeb.Controllers
             _dbRepo = dbRepo;
         }
 
-
-
-
-
         [HttpGet]
         public async Task<ActionResult> PaymentAsync(string checkoutViewJson, string stripeToken)
         {

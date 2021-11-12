@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.SDP.SDPCore.Models.DbContexts;
 using SDPCore.Models.AccountModel;
 using System.Linq;
+using SDPWeb.ViewModels;
 
 namespace SDP.Controllers
 {
@@ -117,7 +118,6 @@ namespace SDP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Signup(SignupView user)
         {
-
             if (ModelState.IsValid)
             {
                 try
@@ -291,15 +291,34 @@ namespace SDP.Controllers
         public async Task<IActionResult> MyAccount(string msg)
         {
             var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
-
+            OrderView orderView = new OrderView();
+            orderView.orders = new List<Order>();
+            foreach (var order in _db.order.Include(m => m.user).Include(m => m.delivery).ToList())
+            {
+                if (order.user != null && order.user.Id == _user.Id)
+                {
+                    orderView.orders.Add(order);
+                }
+            }
+            orderView.user = _user;
             ViewData["Error MSG"] = msg;
-            return View(_user);
+
+            return View(orderView);
+            try
+            {
+               
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> MyAccount(string userId, string password)
         {
             IdentityUser _user;
+           
             try
             {
                 _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));

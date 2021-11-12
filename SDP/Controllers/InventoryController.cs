@@ -117,7 +117,6 @@ namespace SDP.Controllers
                 {
                     if (await _imageService.addImageToFileAsync(ufile, AP.product, context.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
                 }
-
             }
             else AP.product.imgUrl = Url;
 

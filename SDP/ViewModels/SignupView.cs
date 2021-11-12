@@ -4,17 +4,20 @@ namespace SDP.ViewModels
 {
     public class SignupView
     {
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Confirm Password is required")]
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password and confirm password do not match")]
         [Display(Name = "Re - type Password")]
         public string ReenterPassword { get; set; }
+
         [Display(Name = "Recive promotion email")]
         public bool opIn { get; set; }
     }
