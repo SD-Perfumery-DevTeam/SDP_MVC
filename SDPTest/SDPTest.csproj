@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SDPInfrastructure\SDPInfrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

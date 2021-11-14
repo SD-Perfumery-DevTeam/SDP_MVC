@@ -28,12 +28,14 @@ namespace Microsoft.SDP.SDPCore.Models
             else cartList.Add(product.productId.ToString(), new CartValuePair { quantity =count, discount = 0 });
         }
 
-        public void removeProductToCart(string productId)
+        public string removeProductToCart(string productId)
         {
             if (cartList.ContainsKey(productId))
             {
                 cartList.Remove(productId);
+                return "deleted";
             }
+            return "nothing was deleted";
         }
 
         public OrderDataTransfer turnCartToOrder(int orderNo, IdentityUser user, Delivery delivery, decimal totalPrice, string paymentStatus, DateTime paymentDate, OrderStatus orderStatus, List<Product> productList ) //turns the cart into order and orderlines using dto

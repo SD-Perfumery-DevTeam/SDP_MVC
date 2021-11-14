@@ -11,6 +11,7 @@ function reDisplay()
     var list = productDbJson.filter(filterByBrand);
     list.forEach(displayCardFunc);
 }
+
 function filterByBrand(product) {
     return document.getElementById(product.brand.title).checked;
 }
