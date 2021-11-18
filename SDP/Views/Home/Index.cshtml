@@ -57,19 +57,19 @@
                 {
                     if (carouselflag == 1)
                     {
-                        <a href="/Product/ProductDisplay/@promtion.product.productId">
-                            <div class="carousel-item active">
+                        <div class="carousel-item active">
+                            <a href="/Product/ProductDisplay/@promtion.product.productId">
                                 <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     }
                     else
                     {
-                        <a href="/Product/ProductDisplay/@promtion.product.productId">
-                            <div class="carousel-item">
+                        <div class="carousel-item">
+                            <a href="/Product/ProductDisplay/@promtion.product.productId">
                                 <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
-                            </div>
-                        </a>
+                            </a>
+                        </div>
                     }
                     carouselflag++;
 
@@ -100,8 +100,8 @@
                 @foreach (var item in Model.categories)
                 {
 
-                    <div id="category-card">
-                        <h4>@item.title</h4>
+                    <div id="category-card" style="max-width:150px">
+                        <h4 style="text-wrap:normal">@item.title </h4>
                         <img src="~/images/category/@item.imgUrl" alt="Dynamic Category 1">
                         <br />
                         <button class="sdp-style" type="submit" name="categoryId" value="@item.categoryId">View Category</button>

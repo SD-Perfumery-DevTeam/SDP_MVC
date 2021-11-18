@@ -7,9 +7,9 @@
             
                 @foreach (var product in Model)
                 {
-                    <div class="recommended-card">
+                    <div class="recommended-card" style="max-width:340px">
                         <div class="info">
-                            <h4>@product.title</h4>
+                            <h4 style="text-wrap:normal">@product.title</h4>
                             <p>@product.brand.title</p>
                             <p>@product.productGender</p>
                             <p>@product.productType @product.packageQty@product.packageUom</p>

@@ -33,7 +33,6 @@
     <form asp-action="Checkout" asp-controller="Cart" method="POST">
         <input type="hidden" name="Json" value="@ViewData["Json"]" />
 
-
         @if (cart != null)
         {
             <ul style="list-style:none">
@@ -49,7 +48,6 @@
     <h4>Total: @amount LKR</h4>
         @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", Model)
     </form>
-
 </div>
 
 

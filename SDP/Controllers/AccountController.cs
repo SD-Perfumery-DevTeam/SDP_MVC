@@ -141,7 +141,7 @@ namespace SDP.Controllers
                             var role = await _roleManager.FindByNameAsync("Customer");
                             if (role == null || newUser == null)
                             {
-                                return RedirectToAction("Error", "Home");
+                                return RedirectToAction("Error", "Account");
                             }
 
                             if (!(await _userManager.IsInRoleAsync(newUser, role.Name)))
@@ -161,7 +161,7 @@ namespace SDP.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Error", "Home");
+                    return RedirectToAction("Error", "Account");
                 }
             }
             return View(user);
@@ -290,23 +290,23 @@ namespace SDP.Controllers
         [Authorize]
         public async Task<IActionResult> MyAccount(string msg)
         {
-            var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
-            OrderView orderView = new OrderView();
-            orderView.orders = new List<Order>();
-            foreach (var order in _db.order.Include(m => m.user).Include(m => m.delivery).ToList())
-            {
-                if (order.user != null && order.user.Id == _user.Id)
-                {
-                    orderView.orders.Add(order);
-                }
-            }
-            orderView.user = _user;
-            ViewData["Error MSG"] = msg;
-
-            return View(orderView);
+          
             try
             {
-               
+                var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
+                OrderView orderView = new OrderView();
+                orderView.orders = new List<Order>();
+                foreach (var order in _db.order.Include(m => m.user).Include(m => m.delivery).ToList())
+                {
+                    if (order.user != null && order.user.Id == _user.Id)
+                    {
+                        orderView.orders.Add(order);
+                    }
+                }
+                orderView.user = _user;
+                ViewData["Error MSG"] = msg;
+
+                return View(orderView);
             }
             catch (Exception ex)
             {
@@ -469,9 +469,18 @@ namespace SDP.Controllers
 
             else return RedirectToAction("MyAccount", new { msg = "Cannot delete a Super Admin" });
         }
-
+        public ActionResult ConfirmEmailNotif()
+        {
+            return View();
+        }
 
         public ActionResult ConfirmEmailMsg() 
+        {
+            return View();
+        }
+
+        
+        public IActionResult Error()
         {
             return View();
         }
