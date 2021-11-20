@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = Model.product.title + " by " + Model.brand.title;
+    string iD = (string)ViewData["ProductID"];
+    @model SDP.ViewModels.Catalog
+}
+
+<div id="section-product-display">
+    <div class="container">
+        <h2>@Model.product.title</h2>
+        <h3>@Model.brand.title</h3>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <img src="~/images/product/@Model.product.imgUrl" alt="@Model.product.title by @Model.brand.title" />
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <h4>Description</h4>
+                <p>@Model.product.description</p>
+                <h4>Buy it now</h4>
+                <div class="product-display-cta">
+                    <p class="product-display-price">Rs. @Model.product.price</p>
+                    <form method="post" asp-controller="Product" asp-action="AddToCart">
+                        <input name="quantity" type="number" value=1 min="1">
+                        <button class="sdp-style" type="submit">Add To Cart</button>
+                    </form>
+                </div>
+
+                <h4>The finer details</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Type</th>
+                            <th>Gender</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>@Model.brand.title</td>
+                        <td>@Model.product.productType</td>
+                        <td>@Model.product.productGender</td>
+                        <td>@Model.product.packageQty@Model.product.packageUom</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recommended Products ================================================= -->
+@await Component.InvokeAsync("RecommendedProducts")

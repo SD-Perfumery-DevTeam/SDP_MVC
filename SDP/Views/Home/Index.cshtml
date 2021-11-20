@@ -1,0 +1,117 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+@model SDPWeb.ViewModels.HomeView
+
+@{
+
+}
+<!-- Banner =============================================================== -->
+
+<div class="container">
+    <section id="section-banner">
+        <h2>Welcome to SD Perfumery</h2>
+        <p>We hope you can find the perfect fragrance to treat yourself or someone you hold close.</p>
+        <p>
+            Don't miss out on our amazing prices and specials - <a asp-action="Signup" asp-controller="Account">create an account</a>
+            and have special offers delivered straight to your inbox.
+        </p>
+        <p>In need of further assistance? Call us on <a href="tel:001 284 227">001-284-227</a> for help with your order.</p>
+    </section>
+</div>
+
+<!-- Carousel ============================================================= -->
+
+<div class="container">
+    @if (Model.promotions != null && Model.promotions.Count > 0)
+    {
+        <section id="section-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                @{
+                    int buttonflag = 1, aria = 1, data = 0;
+                }
+
+                @foreach (var promtion in Model.promotions)
+                {
+                    if (buttonflag == 1)
+                    {
+                        <button type="button" data-bs-target="#section-carousel" class="active" data-bs-slide-to="@data" aria-label="Slide @aria"></button>
+                    }
+                    else
+                    {
+                        <button type="button" data-bs-target="#section-carousel" data-bs-slide-to="@data" aria-label="Slide @aria"></button>
+                    }
+                    buttonflag++;
+                    aria++;
+                    data++;
+                }
+
+            </div>
+
+            <div class="carousel-inner">
+                @{
+                    int carouselflag = 1;
+                }
+
+                @foreach (var promtion in Model.promotions)
+                {
+                    if (carouselflag == 1)
+                    {
+                        <a href="/Product/ProductDisplay/@promtion.product.productId">
+                            <div class="carousel-item active">
+                                <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Product/ProductDisplay/@promtion.product.productId">
+                            <div class="carousel-item">
+                                <img src="~/images/promotion/@promtion.imgUrl" alt="Alternate Text" />
+                            </div>
+                        </a>
+                    }
+                    carouselflag++;
+
+                }
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#section-carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#section-carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </section>
+    }
+</div>
+
+<!-- Categories =========================================================== -->
+
+<div class="container">
+    <section id="section-categories">
+        <h3>Categories</h3>
+        <hr />
+        <form asp-action="CategoryDisplay" asp-controller="Product" method="post">
+            <div class="category-list">
+
+                @foreach (var item in Model.categories)
+                {
+
+                    <div id="category-card">
+                        <h4>@item.title</h4>
+                        <img src="~/images/category/@item.imgUrl" alt="Dynamic Category 1">
+                        <br />
+                        <button class="sdp-style" type="submit" name="categoryId" value="@item.categoryId">View Category</button>
+                    </div>
+                }
+            </div>
+        </form>
+    </section>
+</div>
+
+<!-- Recommended Products ================================================= -->
+@await Component.InvokeAsync("RecommendedProducts")
+<script src="~/js/site.js" asp-append-version="true" defer></script>

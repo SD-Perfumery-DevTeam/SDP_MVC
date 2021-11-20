@@ -1,0 +1,169 @@
+var content = "";
+
+const productCon = document.querySelectorAll(".product_con");
+const row = document.querySelector("#product-list");
+
+productDbJson.forEach(displayCardFunc);
+
+function reDisplay()
+{
+    row.innerHTML = "";
+    var list = productDbJson.filter(filterByBrand);
+    list.forEach(displayCardFunc);
+}
+
+function filterByBrand(product) {
+    return document.getElementById(product.brand.title).checked;
+}
+
+
+function displayCardFunc(prod) {
+    //Switch case to display a different string for EDP / EDT perfumes.
+    let type;
+    switch (prod.productType) {
+        case 0:
+            type = "EDP"
+            break;
+        case 1:
+             type = "EDT"
+            break;
+    }
+
+    // Switch case to display a different string for mens / womens productGender.
+    let gender;
+    switch (prod.productGender) {
+        case 0: // mens
+            gender = " (M)"
+            break;
+        case 1: // womens
+            gender = " (W)"
+            break;
+        case 2: // neither
+            gender = ""
+            break;
+    }
+
+    // Switch case to display the unit of measurement. (ml/g/L/Kg/Oz)
+    let uom;
+    switch (prod.packageUom) {
+        case 0:
+            uom = "ml"
+            break;
+        case 1:
+            uom = "g"
+            break;
+        case 2:
+            uom = "L"
+            break;
+        case 3:
+            uom = "Kg"
+            break;
+        case 4:
+            uom = "Oz"
+            break;
+    }
+    
+    content =
+    `
+        <div>
+            <img src="../images/product/${prod.imgUrl}" alt="${prod.title}">
+            <div class="product-summary">
+                <h4>${prod.title}${gender}</h4>
+                <p>by ${prod.brand.title}</p>
+                <p><small>${type}</small></p>
+                <p><small>${prod.packageQty}${uom}</small></p>
+            </div>
+            <div>
+                <h5>Rs. ${prod.price}</h5>
+                <button class="sdp-style" type="submit" name="key" value="${prod.productId}">View Details</button>
+            </div>
+        </div>
+    `;
+    let node = document.createElement("div");
+    node.setAttribute("class", "product");
+    row.appendChild(node);
+    node.innerHTML = content;
+}
+
+
+function comparePrice(a, b) {
+
+    if (a.price < b.price) {
+        return -1;
+    }
+    if (a.price > b.price) {
+        return 1;
+    }
+    return 0;
+}
+
+function comparePrice2(a, b) {
+
+    if (a.price > b.price) {
+        return -1;
+    }
+    if (a.price < b.price) {
+        return 1;
+    }
+    return 0;
+}
+
+function compareName(a, b) {
+    if (a.title < b.title) {
+        return -1;
+    }
+    if (a.title > b.title) {
+        return 1;
+    }
+    return 0;
+}
+function compareName2(a, b) {
+    if (a.title > b.title) {
+        return -1;
+    }
+    if (a.title < b.title) {
+        return 1;
+    }
+    return 0;
+}
+
+function sortByPriceHL() {
+    productDbJson.sort(comparePrice);
+    row.innerHTML = "";
+    productDbJson.forEach(displayCardFunc);
+}
+function sortByPriceLH() {
+    productDbJson.sort(comparePrice2);
+    row.innerHTML = "";
+    productDbJson.forEach(displayCardFunc);
+}
+function sortByNameAZ() {
+    productDbJson.sort(compareName);
+    row.innerHTML = "";
+    productDbJson.forEach(displayCardFunc);
+}
+function sortByNameZA() {
+    productDbJson.sort(compareName2);
+    row.innerHTML = "";
+    productDbJson.forEach(displayCardFunc);
+}
+
+function sortBy(byWat) {
+    var text = byWat.options[byWat.selectedIndex].value;
+    if (text === "priceH-L") {
+        sortByPriceHL();
+        console.log("changed");
+    }
+    else if (text === "priceL-H") {
+        sortByPriceLH();
+    }
+    else if (text === "nameA-Z") {
+        sortByNameAZ();
+    }
+    else if (text === "nameZ-A") {
+        sortByNameZA();
+    }
+}
+
+
+

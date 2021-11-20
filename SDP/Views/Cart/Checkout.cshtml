@@ -1,0 +1,55 @@
+﻿@model SDPWeb.ViewModels.CheckoutView
+@using SDPWeb.ViewModels
+@using Microsoft.SDP.SDPCore.Interface
+@using Microsoft.AspNetCore.Http
+@using SDPCore.Models.AccountModel
+@using SDPInfrastructure.Services
+@inject IDbRepo _dbRepo
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+
+    string customerEmail = "";
+    string placeHolderEmail = customerEmail == "" ? "Email Address" : customerEmail;
+    if (HttpContextAccessor.HttpContext.Session.GetString("LoggedIN") == "true")
+    {
+        var customer = await _dbRepo.getCustomerAsync(HttpContextAccessor.HttpContext.Session.GetString("Id"));
+        customerEmail = customer.Email;
+    }
+    Guid guid = Guid.NewGuid();
+    Cart cart = null;
+    List<Product> displayList = new List<Product>();
+    try
+    {
+        cart = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList(HttpContextAccessor.HttpContext.Session.GetString("Id")).cart;
+    }
+    catch (Exception ex)
+    {
+    }
+
+}
+
+<div style=" width:70%; margin: auto">
+    <form asp-action="Checkout" asp-controller="Cart" method="POST">
+        <input type="hidden" name="Json" value="@ViewData["Json"]" />
+
+
+        @if (cart != null)
+        {
+            <ul style="list-style:none">
+                @foreach (var pair in cart.cartList)
+                {
+                    <li> <img style="width:100px; height:100px;" src="~/images/product/@_dbRepo.getProduct(pair.Key).imgUrl" alt="@_dbRepo.getProduct(pair.Key).title" />@_dbRepo.getProduct(pair.Key).title @_dbRepo.getProduct(pair.Key).price LKR X @pair.Value.quantity  </li>
+                }
+            </ul>
+        }
+        @{
+            var amount = @Model.amount / 100;
+         }
+    <h4>Total: @amount LKR</h4>
+        @await Html.PartialAsync("~/Views/Partials/PaymentPartial.cshtml", Model)
+    </form>
+
+</div>
+
+

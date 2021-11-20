@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Log in";
+}
+@model SDP.ViewModels.LoginView
+
+<!-- Login Form =========================================================== -->
+
+<div class="container">
+    <section id="section-banner">
+        <h2>User Log in</h2>
+        <p>Please sign in below to continue.</p>
+        <p>
+            Not already a customer?
+            <a asp-action="Signup" asp-controller="Account">Sign up now</a>
+            to make the most of our amazing prices.
+        </p>
+    </section>
+</div>
+<section>
+    <div class="container">
+        <form method="post" class="form-small">
+            <h3>Log In</h3>
+            <h3 style="color:darkred">@ViewData["Error"]</h3>
+            @Html.AntiForgeryToken()
+            <small><span asp-validation-summary="All" class="text-danger"></span></small>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input type="text" asp-for="Email" id="username" maxlength="256" class="form-control">
+                <small><span asp-validation-for="Email" class="form-text text-danger"></span></small>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input type="password" asp-for="Password" id="password" class="form-control"/>
+                <small><span asp-validation-for="Password" class="form-text text-danger"></span></small>
+            </div>
+
+            <button class="btn-big sdp-style" type="submit">Log In</button>
+            <small><a asp-action="PasswordChange" asp-controller="Account">I have forgotten my password..</a></small>
+        </form>
+    </div>
+</section>

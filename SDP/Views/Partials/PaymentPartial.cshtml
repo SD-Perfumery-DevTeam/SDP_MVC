@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+@model SDPWeb.ViewModels.CheckoutView
+<div class="delivery_form">
+
+
+    <input asp-for="key.publicKey" value="@Model.key.publicKey" type="hidden" />
+    <input asp-for="key.descirption"  value="@Model.key.descirption" type="hidden" />
+    <input asp-for="key.currency" value="@Model.key.currency" type="hidden" />
+
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key=@Model.key.publicKey
+            data-amount=@Model.amount
+            data-name="SD-Perfumery"
+            data-description=@Model.key.descirption
+            data-image="/images/assets/logo-sdp.png"
+            data-email="@Model.key.email"
+            data-locale="en"
+            data-zip-code="true"
+            data-label="Pay with card using stripe" 
+            data-currency="LKR" >
+    </script>
+</div>
+
+<style>
+    .delivery_form button {
+        color: white;
+        border: none;
+        width: 100%;
+        margin: 10px 0px 10px 0px;
+        cursor: pointer;
+    }
+</style>

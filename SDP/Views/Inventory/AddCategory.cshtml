@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Add Category";
+}
+@model SDPWeb.ViewModels.AddEditCategory
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>@ViewData["Title"]</h2>
+            <form enctype="multipart/form-data" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                @* Field 'title' in its own row. *@
+                <div class="mb-4">
+                    <label asp-for="category.title" class="form-label"></label>
+                    <input required="required" asp-for="category.title" class="form-control" maxlength="256" />
+                    <span asp-validation-for="category.title" class="text-danger"></span>
+                </div>
+
+                @* Field 'imgUrl' in its own row. *@
+                <div id="disp_tmp_path" class="d-none" hidden></div>
+                <div class="mb-4">
+                    <label asp-for="category.imgUrl" class="form-label"></label>
+                    <div class="custom-file">
+                        <div class="form-text mt-0 mb-2">Upload PNG / JPG image format.</div>
+                        <input required="required" asp-for="image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
+                        <div class="custom-file-label form-text">Choose Image File...</div>
+                    </div>
+                    <span asp-validation-for="category.imgUrl" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Category</button>
+            </form>
+        </section>
+    </div>
+</section>

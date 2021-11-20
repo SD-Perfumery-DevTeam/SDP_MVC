@@ -1,0 +1,96 @@
+﻿@{
+    int flag = 1;
+}
+@model SDPWeb.ViewModels.OrderView
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks");
+        <section class="cms-area">
+            <h3 class="pb-2"> Order Number : @Model.order.orderNo</h3>
+            <form asp-action="UpdateOrder" asp-controller="CMS" method="post">
+                <input type="hidden" name="orderId" value="@Model.order.orderId" />
+                <div class="pb-3">
+                    @foreach (var item in Enum.GetNames(typeof(Consts.OrderStatus)))
+                    {
+                        <label asp-for="order.orderStatus" class="form-label pt-2">@Html.RadioButtonFor(m => m.orderStatus, item, item) @item</label>
+                        <br />
+                    }
+                </div>
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Product Name</th>
+                                <th>Discount</th>
+                                <th>Size</th>
+                                <th>Quantity</th>
+
+                            </tr>
+                        </thead>
+
+                        @foreach (var item in Model.orderLineList)
+                        {
+                            <tr>
+                                <td>@flag</td>
+                                <td>@item.product.title</td>
+                                <td>@item.discount %</td>
+                                <td>@item.product.packageQty @item.product.packageUom</td>
+                                <td>@item.quantity</td>
+                            </tr>
+                            flag++;
+                        }
+                    </table>
+
+                    <br />
+
+                    <h3 class="pb-3">Delivery Detail</h3>
+                    
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Address</th>
+                                <th>Suburb</th>
+                                <th>State</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+
+                        @{
+                            var order = Model.order;
+                        }
+                    <tr>
+
+                        <td>@order.delivery.firstName @order.delivery.lastName</td>
+                        <td>@order.delivery.email</td>
+                        <td>@order.delivery.phone</td>
+                        <td>
+                            <p class="pt-1">@order.delivery.addressLine1</p>
+                            <p class="pt-1">@order.delivery.addressLine2</p>
+                        </td>
+                        <td>@order.delivery.suburb</td>
+                        <td>@order.delivery.state</td>
+                        <td>@order.delivery.country</td>
+
+
+
+
+                    </tr>
+
+                    </table>
+                </div>
+                @foreach (var item in Enum.GetNames(typeof(Consts.DeliveryStatus)))
+                {
+                    <label asp-for="order.delivery.deliverystatus" class="form-label pt-2">@Html.RadioButtonFor(m => m.deliveryStatus, item, item) @item</label>
+                    <br />
+                }
+                <button class="btn btn-primary mt-2" type="submit">Update</button>
+            </form>
+        </section>
+    </div>
+</section>

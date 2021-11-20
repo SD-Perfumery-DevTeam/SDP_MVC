@@ -1,0 +1,82 @@
+﻿@{
+
+}
+@model SDP.ViewModels.Catalog
+<!-- Product Display ====================================================== -->
+<div class="container">
+    <section id="section-banner">
+        <h2>@ViewData["Title"]</h2>
+        <nav class="accordion accordion-flush" id="sort-filter-accordion">
+            <div class="accordion-item">
+                <p class="accordion-header" id="sort-filter-heading">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#sort-filter-child"
+                            aria-expanded="false"
+                            aria-controls="sort-filter-collapse">
+                        Sort / Filter @ViewData["Title"]
+                    </button>
+                </p>
+                <div id="sort-filter-child" class="accordion-collapse collapse" aria-labelledby="sort-filter-heading" data-bs-parent="#sort-filter-accordion">
+                    @* Sort and filter controls *@
+                    <p>Sort</p>
+                    <div class="sort">
+                        <select class="sdp-style" onchange="sortBy(this);" style="margin: 0 0 1.5rem 1rem;">
+                            <option>View By</option>
+                            <option value="priceL-H">Price: Highest to Lowest</option>
+                            <option value="priceH-L">Price: Lowest to Highest</option>
+                            <option value="nameA-Z">Product Name: A - Z</option>
+                            <option value="nameZ-A">Product Name: Z - A</option>
+                        </select>
+                    </div>
+                    <p>Filter</p>
+                    <div style="margin-left: 1rem; display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));">
+                        @foreach (var brand in Model.brands)
+                        {
+                            <label style="margin-right: 0.5rem;"><input type="checkbox" name="brand" id="@brand.title" value="@brand.title" /> @brand.title</label>
+                        }
+                    </div>
+                    <button class="sdp-style" type="button" onclick="reDisplay()" style="margin: 1rem;">Apply filter</button>
+                </div>
+            </div>
+        </nav>
+    </section>
+</div>
+
+<section id="section-product-list">
+    <div class="container product_con">
+
+        @using (Html.BeginForm("ProductDisplay", "Product"))
+        {
+            <div class="row rowone flex-box" id="product-list"></div>
+        }
+
+        @* These may be better displayed as links? Buttons currently do not indicate current page. *@
+        @using (Html.BeginForm("Index", "Product"))
+        {
+            <div class="page-numbers">
+                <button id="btn_prev" class="sdp-style">prev</button>
+                @for (int i = 0; i < Model.totalPage; i++)
+                {
+                    int pageNum = i + 1;
+                    <button class="sdp-style" type="submit" name="pageNumber" value=@i> @pageNum </button>
+                }
+                <button id="btn_next" class="sdp-style">next</button>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- Recommended Products ================================================= -->
+@await Component.InvokeAsync("RecommendedProducts")
+
+<script>
+    var productDbJson = @Html.Raw(Json.Serialize(Model.products.ToList()));
+</script>
+
+
+<script src="~/js/sort.js" asp-append-version="true"></script>
+@*<script src="~/js/pagination.js" asp-append-version="true"></script>*@
+
+

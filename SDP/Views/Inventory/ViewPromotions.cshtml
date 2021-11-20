@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Promotions";
+}
+@model SDPWeb.ViewModels.AddPromotionView
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>@ViewData["Title"]</h2>
+            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditPromotion" method="post">
+                <div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Promotion Title</th>
+                                <th>Product Name</th>
+                                <th>Discount</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Active</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.promotionList)
+                        {
+                            <tr>
+                                <td>@item.title</td>
+                                <td>@item.product.title</td>
+                                <td>@item.discount %</td>
+                                <td>@item.startDate</td>
+                                <td>@item.endDate</td>
+                                <td>@item.isActive</td>
+                                <td><button class="btn btn-sm btn-primary" name="promoId" value="@item.promoId" type="submit">Edit</button></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </form>
+        </section>
+    </div>
+</section>

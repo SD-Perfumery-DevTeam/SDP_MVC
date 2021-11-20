@@ -1,0 +1,94 @@
+﻿@model SDPWeb.ViewModels.AddPromotionView
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>Add Promotion for - @Model.promotion.product.title</h2>
+
+            <h3>@ViewData["Error"]</h3>
+            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="AddPromotionToDb" method="post">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <input required="required" name="productId" value="@Model.promotion.product.productId" hidden />
+
+
+                <div class="mb-4">
+                    <span class="hint" id="textarea_message"></span>
+                    <label class="form-label">Promotion Title</label>
+                    <input required="required" maxlength=16 asp-for="promotion.title" class="form-control" />
+                    <span asp-validation-for="promotion.title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="hint" id="textarea_message"></span>
+                    <label class="form-label">Promotion Code</label>
+                    <input required="required" type="text" maxlength=16 asp-for="promotion.promoCode" class="form-control" />
+                    <span asp-validation-for="promotion.promoCode" class="text-danger"></span>
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Enter the discount(the number indicates how many % off the original price)</label>
+                    <div class="input-group">
+                        <input required="required" type="number" min="1" max="100" asp-for="promotion.discount" class="form-control" />
+                    </div>
+                    <span asp-validation-for="promotion.discount" class="text-danger"></span>
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">Start Date</label>
+                    <div class="input-group">
+                        <input type="date" asp-for="promotion.startDate" value="@DateTime.Now" />
+                    </div>
+                    <span asp-validation-for="promotion.startDate" class="text-danger"></span>
+                </div>
+
+                <div class="col-6">
+                    <label class="form-label">End Date</label>
+                    <div class="input-group">
+                        <input type="date" asp-for="promotion.endDate" value="@DateTime.Now" />
+                    </div>
+                    <span asp-validation-for="promotion.endDate" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <span class="hint" id="textarea_message"></span>
+                    <label asp-for="promotion.description" class="form-label"></label>
+                    <textarea required="required" asp-for="promotion.description" id="message_area" class="form-control message_area" maxlength="2048"></textarea>
+                    <span asp-validation-for="promotion.description" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="promotion.imgUrl" class="form-label"></label>
+                    <div class="custom-file">
+                        <div class="form-text mt-0 mb-2">Upload PNG / JPG image format.</div>
+                        <input type="hidden" name="Url" value="Model.promotion.imgUrl" />
+                        <input asp-for="Image" type="file" class="form-control custom-file-input" name="ufile" maxlength="2048" />
+                        <div class="custom-file-label form-text">@Model.promotion.imgUrl</div>
+                    </div>
+                    <span asp-validation-for="promotion.imgUrl" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="promotion.isActive" class="form-label"></label>
+                    @Html.DropDownListFor(m => m.promotion.isActive, new SelectList(
+                        new[]
+                        {
+                            new {Value = "True", Text = "Active"},
+                            new {Value = "False", Text = "Inactive"},
+                        },
+                        "Value",
+                        "Text",
+                        Model.promotion
+                    ))
+                </div>
+
+                @section Scripts{
+                    <script type="text/javascript" src="~/js/addproduct.js"></script>
+                }
+                <button type="submit" class="btn btn-primary">Add Promotion</button>
+            </form>
+        </section>
+    </div>
+</section>

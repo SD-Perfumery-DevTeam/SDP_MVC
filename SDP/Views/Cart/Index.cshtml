@@ -1,0 +1,97 @@
+﻿@model SDPWeb.ViewModels.CartView
+
+@{
+    Microsoft.SDP.SDPCore.Interface.ICustomer customer = Microsoft.SDP.SDPInfrastructure.Services.ViewService.getCustomerFromList((string)ViewData["Id"]);
+    decimal total = 0;
+    decimal subTotal = 0;
+    Product product = null;
+    bool emptyCart = customer.cart.getCartList().Count > 0 ? false : true;
+}
+
+<div class="container">
+    <section id="section-banner">
+        <h2>Shopping cart</h2>
+        @if (emptyCart)
+        {
+            <p>
+                Cart is currently empty - <a asp-area="" asp-controller="Product" asp-action="Index">take me back to the store</a>
+            </p>
+        }
+        else
+        {
+            <p>You have selected the following items.</p>
+        }
+    </section>
+</div>
+
+<section>
+    <div class="container">
+        <div class="cart-contents">
+            <h2>@ViewData["Msg"]</h2>
+            <h2 style="color:red">@ViewData["Error"]</h2>
+
+            @if (customer != null && !emptyCart)
+            {
+                <ul>
+                    <li class="cart-promo-cta">
+                        <form asp-controller="Cart" asp-action="promoCodeCheck" method="post">
+                            <div>
+                                <input name="promoCode" type="text" placeholder="Enter promo code" />
+                                <button class="sdp-style" type="submit">Add Promo Code</button>
+                            </div>
+                        </form>
+                    </li>
+                    @foreach (var pair in customer.cart.getCartList())
+                    {
+
+                        @foreach (var item in Model.productList)
+                        {
+                            if (item.productId.ToString() == pair.Key)
+                            {
+                                product = item;
+                            }
+                        }
+
+                        subTotal = (1 - pair.Value.discount * (decimal)0.01) * product.price * pair.Value.quantity;
+                        total = total + subTotal;
+
+                        <li class="cart-item">
+                            <img src="~/images/product/@product.imgUrl" alt="@product.title" />
+                            <div class="cart-item-desc">
+                                <h4 class="desc">@product.title - @product.brand.title</h4>
+
+                                @{
+                                    decimal priceDiscountApplied = 0;
+                                    priceDiscountApplied = Decimal.Round(product.price * (1 - pair.Value.discount * (decimal)0.01), 2);
+                                }
+                                <p>Rs. @priceDiscountApplied</p>
+                            </div>
+                            <div class="cart-item-qty">
+                                <h5 class="desc">Quantity</h5>
+                                <p>@pair.Value.quantity</p>
+                            </div>
+                            <div class="cart-item-total">
+                                <h5 class="desc">Item Total</h5>
+                                <p>Rs. @Decimal.Round(subTotal, 2)</p>
+                            </div>
+                            <small><a asp-action="RemoveFromCart" asp-controller="Cart" asp-route-id="@product.productId" name="productId" value="@product.productId" style="height:38px;">Remove Item</a></small>
+                        </li>
+                    }
+                </ul>
+                <div class="cart-total">
+                    <div class="cart-total-box">
+                        <h4>Order Total</h4>
+                        <p>Rs. @Decimal.Round(total, 2)</p>
+                    </div>
+
+                    <form asp-action="DeliveryForm" asp-controller="Cart" method="get">
+                        <input type="hidden"  name="amount" value="@(Decimal.Round(total, 2)*100)"/>
+                        <button class="sdp-style my-4" type="submit">Checkout</button>
+                    </form>
+                    <small><a asp-area="" asp-controller="Product" asp-action="Index">Continue Shopping</a></small>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

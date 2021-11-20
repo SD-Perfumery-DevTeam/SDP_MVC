@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Inventory";
+}
+@model SDP.ViewModels.InventoryView
+
+<section id="section-cms">
+    <div class="container">
+        @await Html.PartialAsync("_AdminLinks")
+        <section class="cms-area">
+            <h2>@ViewData["Title"]</h2>
+            <div><a asp-controller="Product" asp-action="AddProduct" class="btn btn-primary">Add Product</a></div>
+
+            <form enctype="multipart/form-data" asp-controller="Inventory" asp-action="EditProduct" method="post">
+                <div>
+                    <table class="table table-bordered" style="margin:0 auto">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Product ID</th>
+                                <th>Stock Qty</th>
+                                <th>Image</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model.inventories)
+                        {
+                            <tr>
+                                <td>@item.product.title</td>
+                                <td>@item.product.productId</td>
+                                <td>@item.stockQty</td>
+                                <td><img src="~/images/product/@item.product.imgUrl" alt="Alternate Text" style="max-width: 100px; max-height: 100px" /></td>
+
+                                <td><button class="btn btn-sm btn-primary" name="productId" value="@item.product.productId.ToString()" type="submit">Edit</button></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </form>
+        </section>
+    </div>
+</section>
