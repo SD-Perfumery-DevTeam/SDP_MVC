@@ -65,7 +65,7 @@ namespace SDP.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(LM.Email, LM.Password, LM.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(LM.Email, LM.Password, false, false);
                 if (result.Succeeded)
                 {
                     try
@@ -180,7 +180,6 @@ namespace SDP.Controllers
                     return RedirectToAction("Error", "Home");
                 }
                 var result = await _userManager.ConfirmEmailAsync(user, token);
-
                 if (result.Succeeded)
                 {
                     return View();
@@ -273,15 +272,12 @@ namespace SDP.Controllers
                 {
                     manageRoleModel.roleList.Add(new SelectListItem { Text = role.Name, Value = role.Id });
                 }
-
                 if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     manageRoleModel.currentRoleList.Add(role);
                 }
             }
-
             manageRoleModel.user = user;
-
             return View(manageRoleModel);
         }
 
@@ -469,9 +465,31 @@ namespace SDP.Controllers
 
             else return RedirectToAction("MyAccount", new { msg = "Cannot delete a Super Admin" });
         }
-        public ActionResult ConfirmEmailNotif()
+        public async Task<ActionResult> ConfirmEmailNotifAsync(string userId, string token)
         {
-            return View();
+            try
+            {
+                if (userId == null || token == null) return View("Signup");
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    ViewBag.ErrorMessage = userId + "invalid Id";
+                    return RedirectToAction("Error", "Home");
+                }
+                var result = await _userManager.ConfirmEmailAsync(user, token);
+
+                if (result.Succeeded)
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            ViewBag.ErrorMessage = userId + "Email not confrimed ";
+            return RedirectToAction("Error", "Home");
         }
 
         public ActionResult ConfirmEmailMsg() 

@@ -180,7 +180,6 @@ namespace SDPWeb.Controllers
         public IActionResult DeleteArticle(string key)
         {
             Article articleToDelete;
-
             try
             {
                 articleToDelete = _dbRepo.GetArticle(key);

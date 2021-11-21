@@ -148,10 +148,11 @@ button.sdp-style, select.sdp-style {
   transition: 0.2s;
 }
 
+
 .btn-big {
-  height: 2.5rem;
-  font-size: 1rem;
-  color: var(--color-proposed-purple-90);
+    height: 2.5rem;
+    font-size: 1rem;
+    color: var(--color-proposed-purple-90);
 }
 
 button.sdp-style:hover, select.sdp-style:hover {
@@ -650,6 +651,7 @@ footer .container ul li {
 }
 
 button.category-button {
+    margin-left: 20px;
     margin-top: 2em;
     margin-bottom: 1em;
 }
@@ -705,7 +707,9 @@ label.brand-label {
     margin: 1em 0 1em 0;
 }
 
-
+.category-img {
+    height:100PX;
+}
 
 
 

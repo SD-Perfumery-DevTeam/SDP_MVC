@@ -94,21 +94,19 @@
     <section id="section-categories">
         <h3>Categories</h3>
         <hr />
-        <form asp-action="CategoryDisplay" asp-controller="Product" method="post">
-            <div class="category-list">
-
-                @foreach (var item in Model.categories)
-                {
-
+        <div class="category-list">
+            @foreach (var item in Model.categories)
+            {
+                <form asp-action="CategoryDisplay" asp-controller="Product" method="post">
                     <div id="category-card" style="max-width:150px">
-                        <h4 style="text-wrap:normal">@item.title </h4>
-                        <img src="~/images/category/@item.imgUrl" alt="Dynamic Category 1">
+                        <input type="hidden" value="@item.categoryId" name="categoryId" />
+                        <h4 style="text-wrap:normal; text-align:center">@item.title </h4>
+                        <input src="~/images/category/@item.imgUrl" class="category-img" type="image" style="border:solid 1px white; border-radius:25px" />
                         <br />
-                        <button class="sdp-style" type="submit" name="categoryId" value="@item.categoryId">View Category</button>
                     </div>
-                }
-            </div>
-        </form>
+                </form>
+            }
+        </div>
     </section>
 </div>
 
