@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Interface
 {
-    public interface ICustomer
+    public interface ICustomer 
     {
         string Id { get; set; }
         Cart cart { get; set; }

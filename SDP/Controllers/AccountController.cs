@@ -65,7 +65,7 @@ namespace SDP.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(LM.Email, LM.Password, LM.RememberMe, false);
+                var result = await _signInManager.PasswordSignInAsync(LM.Email, LM.Password, false, false);
                 if (result.Succeeded)
                 {
                     try
@@ -141,7 +141,7 @@ namespace SDP.Controllers
                             var role = await _roleManager.FindByNameAsync("Customer");
                             if (role == null || newUser == null)
                             {
-                                return RedirectToAction("Error", "Home");
+                                return RedirectToAction("Error", "Account");
                             }
 
                             if (!(await _userManager.IsInRoleAsync(newUser, role.Name)))
@@ -161,7 +161,7 @@ namespace SDP.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return RedirectToAction("Error", "Home");
+                    return RedirectToAction("Error", "Account");
                 }
             }
             return View(user);
@@ -290,20 +290,23 @@ namespace SDP.Controllers
         [Authorize]
         public async Task<IActionResult> MyAccount(string msg)
         {
-            var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
-            OrderView orderView = new OrderView();
-            orderView.orders = new List<Order>();
-            foreach (var order in _db.order.Include(m => m.user).Include(m => m.delivery).ToList())
+          
+            try
             {
-                if (order.user != null && order.user.Id == _user.Id)
+                var _user = await _userManager.FindByIdAsync(HttpContext.Session.GetString("Id"));
+                OrderView orderView = new OrderView();
+                orderView.orders = new List<Order>();
+                foreach (var order in _db.order.Include(m => m.user).Include(m => m.delivery).ToList())
                 {
-                    orderView.orders.Add(order);
+                    if (order.user != null && order.user.Id == _user.Id)
+                    {
+                        orderView.orders.Add(order);
+                    }
                 }
-            }
-            orderView.user = _user;
-            ViewData["Error MSG"] = msg;
+                orderView.user = _user;
+                ViewData["Error MSG"] = msg;
 
-            return View(orderView);
+                return View(orderView);
             try
             {
                
@@ -469,9 +472,40 @@ namespace SDP.Controllers
 
             else return RedirectToAction("MyAccount", new { msg = "Cannot delete a Super Admin" });
         }
+        public async Task<ActionResult> ConfirmEmailNotifAsync(string userId, string token)
+        {
+            try
+            {
+                if (userId == null || token == null) return View("Signup");
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    ViewBag.ErrorMessage = userId + "invalid Id";
+                    return RedirectToAction("Error", "Home");
+                }
+                var result = await _userManager.ConfirmEmailAsync(user, token);
 
+                if (result.Succeeded)
+                {
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            ViewBag.ErrorMessage = userId + "Email not confrimed ";
+            return RedirectToAction("Error", "Home");
+        }
 
         public ActionResult ConfirmEmailMsg() 
+        {
+            return View();
+        }
+
+        
+        public IActionResult Error()
         {
             return View();
         }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.SDP.SDPCore.Models
 {
-    public class RegisteredCustomer : IdentityUser , ICustomer
+    public class RegisteredCustomer :  IdentityUser , ICustomer
     {
         public Cart cart { get; set; }
         public List<Order> orderList { get; set; }
