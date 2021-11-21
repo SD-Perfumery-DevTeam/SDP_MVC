@@ -55,7 +55,7 @@ namespace SDP.Controllers
             return View(new InventoryView { inventories = list });
         }
 
-        // This method displays the change page ===============================
+        // This method displays the change product page ===============================
         [HttpPost]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult EditProduct(string productId)
