@@ -150,10 +150,12 @@ namespace SDP.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public async Task<IActionResult> DeleteProduct(string ProductId)
         {
-
             try
             {
+                // Get Id of the Viewing Product
                 Guid productID = Guid.Parse(ProductId);
+
+                // Remove the Product from the Database
                 _db.product.Remove(_db.product.Find(productID));
                 _db.inventory.Remove(_db.inventory.Include(m => m.product).ToList().Where(i => i.product.productId ==
                 _db.product.Find(productID).productId).FirstOrDefault(x => x.product.productId.Equals(productID)));
@@ -165,6 +167,7 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
+            // Return to Inventory Page
             return RedirectToAction("Index", "Inventory");
         }
 

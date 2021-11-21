@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Models
 {
-
-    // Example commit
-
-    //this is the product model.... duh...
+    // This is the product model.... duh...
     [Serializable]
     public class Product
     {

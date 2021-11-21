@@ -52,7 +52,7 @@ namespace SDP.Controllers
         //====================user to Login==========================
         public IActionResult Login(string errorMsg)
         {
-
+            // Display Error page
             ViewData["Error"] = errorMsg;
             return View();
         }
@@ -65,32 +65,45 @@ namespace SDP.Controllers
 
             if (ModelState.IsValid)
             {
+                // get sign in details from the user input
                 var result = await _signInManager.PasswordSignInAsync(LM.Email, LM.Password, false, false);
+
+                // if the SignInResult fails, return invalid login details
                 if (result.Succeeded)
                 {
                     try
                     {
                         var user =await _userManager.FindByNameAsync(LM.Email);
                         var userTask =  _userManager.FindByNameAsync(LM.Email);
-                        using (var context = _contextFactory.CreateDbContext())  //check if the use is Active
+
+                        using (var context = _contextFactory.CreateDbContext())  
                         {
                             var setting = context.userSettings.Include(m => m.user).ToList().Where(m => m.user.Id.ToString() == user.Id).FirstOrDefault();
+
+                            // check if the user is active. Return invalid login credentials if user is inactive
                             if (!setting.isActive)
                             {
                                 return RedirectToAction("Login", new { errorMsg = "Invalid Login infomation" });
                             }
                         }
                        
+                        // Once login details have passed, instantiate the Registered Customer instance
                         RegisteredCustomer rc = new RegisteredCustomer(_dbRepo) { Id = userTask.Result.Id, UserName = userTask.Result.UserName, Email = userTask.Result.Email };
 
-                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();//transfers the GuestCustomers Cart to registered customer
+                        // Transfer the Guest Customer's existing cart to the Registered Customer
+                        rc.cart = HttpContext.Session.GetString("Id") != null ? ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart : new Cart();
 
+                        // Pass the User ID into Session Data
                         HttpContext.Session.SetString("Id", userTask.Result.Id.ToString());
 
+                        // Add customer to Global List of customers
                         GlobalVar.customerList.Add(rc);
 
+                        // Set session variables
                         HttpContext.Session.SetString("LoggedIN", "true");
                         HttpContext.Session.SetString("Email", LM.Email);
+
+                        // Return to Home Page, Logged In
                         return RedirectToAction("Index", "Home");
 
                     }
@@ -104,6 +117,7 @@ namespace SDP.Controllers
                     return RedirectToAction("Login", new { errorMsg = "Invalid Login infomation" });
                 }
             }
+
             return View();
         }
 
@@ -112,6 +126,7 @@ namespace SDP.Controllers
         {
             return View(new SignupView());
         }
+
         //====================user to Signup==========================
         //using send grid API please read "https://app.sendgrid.com/guide/integrate/langs/csharp" to under stand the code
         [HttpPost]
@@ -122,23 +137,31 @@ namespace SDP.Controllers
             {
                 try
                 {
+                    // Create a new User
                     var newUser = new IdentityUser { UserName = user.Email, Email = user.Email };
                     var userSetting = new UserSettings(null, user.opIn, true);
                     var result = await _userManager.CreateAsync(newUser, user.Password);
 
+                    // Add the new User to the database
                     userSetting.user = await _userManager.FindByIdAsync(newUser.Id);
                     _db.userSettings.Add(userSetting);
                     await _db.SaveChangesAsync();
 
-                    if (result.Succeeded)//this part sends the confrimation email
+                    // If the user is created successfully, begin sending the confirmation email
+                    if (result.Succeeded)
                     {
+                        // Generate a confirmation token to the placed in the email
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+
+                        // Generate a confirmation link and pass the user and token in
                         var confirmationLink = Url.Action("ConfirmEmailNotif",
                             "Account", new { userId = newUser.Id, token = token }, Request.Scheme);
 
-                        if (await _emailSender.sendConfirmationEmailAsyncAsync(user.Email, newUser, confirmationLink))//below code add role to new users
+                        // Below code add role to new users
+                        if (await _emailSender.sendConfirmationEmailAsyncAsync(user.Email, newUser, confirmationLink))
                         {
                             var role = await _roleManager.FindByNameAsync("Customer");
+
                             if (role == null || newUser == null)
                             {
                                 return RedirectToAction("Error", "Account");
@@ -148,10 +171,11 @@ namespace SDP.Controllers
                             {
                                 var roleResult = await _userManager.AddToRoleAsync(newUser, role.Name);
                             }
+
                             return RedirectToAction("ConfirmEmailMsg", "Account"); 
                         }
 
-                            return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home");
                     }
                    
                     foreach (var e in result.Errors)
@@ -172,13 +196,19 @@ namespace SDP.Controllers
         {
             try
             {
+                // If no user or token is passed in for confirm email, redirect to sign up page
                 if (userId == null || token == null) return View("Signup");
+
                 var user = await _userManager.FindByIdAsync(userId);
+
+                // If the user doesnt exist, display invalid ID error
                 if (user == null)
                 {
                     ViewBag.ErrorMessage = userId + "invalid Id";
                     return RedirectToAction("Error", "Home");
                 }
+
+                // If token matches the one sent to the user, complete user confirmation
                 var result = await _userManager.ConfirmEmailAsync(user, token);
 
                 if (result.Succeeded)
@@ -201,11 +231,14 @@ namespace SDP.Controllers
         {
             try
             {
-                ViewService.DeleteCustomerFromList(HttpContext.Session.GetString("Id")); //deletes the user from temp access
+                // Deletes the user from session data
+                ViewService.DeleteCustomerFromList(HttpContext.Session.GetString("Id")); 
                 await _signInManager.SignOutAsync();
                 HttpContext.Session.SetString("LoggedIN", "false");
+
+                // Register a new guest customer
                 GuestCustomer gc = new GuestCustomer(_dbRepo);
-                GlobalVar.customerList.Add(gc);//register new guest customer
+                GlobalVar.customerList.Add(gc);
                 HttpContext.Session.SetString("Id", gc.Id.ToString());
             }
             catch (Exception ex)
@@ -234,7 +267,7 @@ namespace SDP.Controllers
             var _user = await _userManager.FindByIdAsync(Id);
 
 
-            //update Role of user
+            // Update Role of user
             if (searchToken == "true")
             {
                 var role = await _roleManager.FindByIdAsync(MRM.roleId);
@@ -254,21 +287,22 @@ namespace SDP.Controllers
             }
 
 
-            //get user by email
+            // Get user by email
             if (Email != null)
             {
                 user = await _userManager.FindByEmailAsync(Email);
 
-                if (user == null) return View(new ManageRoleModel());//return empty view if user not found
+                // Return empty view if user not found
+                if (user == null) return View(new ManageRoleModel()); 
             }
             var roles = _roleManager.Roles;
 
-            //populate role list
+            // Populate role list
             manageRoleModel.roleList = new List<SelectListItem>();
             manageRoleModel.currentRoleList = new List<IdentityRole>();
             foreach (var role in roles)
             {
-                //excluding super admin
+                // Excluding super admin
                 if (role.Name != "SuperAdmin")
                 {
                     manageRoleModel.roleList.Add(new SelectListItem { Text = role.Name, Value = role.Id });

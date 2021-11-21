@@ -18,21 +18,26 @@ namespace SDP.Controllers
         private readonly IDbRepo _dbRepo;
         private readonly IPromotionService _promotionService;
 
-
+        //=================== Constructor =======================
         public CartController(IDbRepo dbRepo, IPromotionService promotionService)
         {
             _dbRepo = dbRepo;
             _promotionService = promotionService;
         }
-        //===================Displays the cart page=======================
+
+        //=================== Displays the cart page =======================
         public IActionResult Index(string Msg)
         {
             ViewData["Error"] = Msg;
-            //checking for valid id in session data creates a new one if none exist
+
+            // Check for a valid ID in the session data, or create a new one if it doesn't exist.
             if (HttpContext.Session.GetString("Id") == null)
             {
+                // Create a Guest Customer
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
+
+                // Store Guest Customer ID in Session Data
                 string Id = guest.Id.ToString();
                 HttpContext.Session.SetString("Id", Id);
             }

@@ -57,6 +57,7 @@ namespace Microsoft.SDP.SDPCore.Models
         [StringLength(128, ErrorMessage = "Please enter a country with {0} digits or less.")]
         public string country { get; set; }
 
+        // Delivery status is an enum, stored globally in Consts.cs
         public DeliveryStatus deliverystatus { get; set; }
         public DateTime deliveryDate { get; set; }
 

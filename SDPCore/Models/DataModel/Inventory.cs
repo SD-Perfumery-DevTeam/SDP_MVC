@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Microsoft.SDP.SDPCore.Models
 {
+    // Inventory is a back-end instance of a product, containing a stock quantity level
     public class Inventory
     {
         // Default Constructor
         public Inventory() { }
 
-        // Constructor that provides a new Guid
+        // Constructor for a new Inventory that provides a new Guid
         public Inventory(Product product, int stockQty)
         {
             this.inventoryId = Guid.NewGuid();

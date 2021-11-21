@@ -42,7 +42,7 @@ namespace SDPWeb.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Problem in Idex action method in Article controller.");
+                _logger.LogError(ex, "Problem in Index action method in Article controller.");
                 return RedirectToAction("Error", "Home");
             }
 

@@ -31,7 +31,7 @@ namespace SDP.Controllers
             _imageService = imageService;
         }
 
-        //======================Product Catelog=========================
+        //====================== Product Catalog =========================
         [HttpPost]
         [HttpGet]
         public IActionResult Index(int pageNumber = 0)
@@ -40,6 +40,7 @@ namespace SDP.Controllers
             int totalPage;
             try
             {
+                // display the 20 products of the current page
                  products = _dbRepo.GetProductList().Where(m => m.isActive)
                           .Where(m => (_dbRepo.GetInventory(m.productId.ToString())>0))
                           .Skip(pageNumber * 20)
@@ -53,7 +54,7 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
            
-
+            // If there is no User ID in session, create a Guest Customer
             if (HttpContext.Session.GetString("Id") == null)
             {
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
@@ -61,8 +62,10 @@ namespace SDP.Controllers
                 string Id = guest.Id.ToString();
                 HttpContext.Session.SetString("Id", Id);
             }
+
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
+            // Return a list of the current page's Products to the page
             try
             {
                 var brands = _db.brand.ToList();
@@ -80,9 +83,10 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+
         [Route("Product/ProductDisplay/{key}")]
         [Route("Product/ProductDisplay")]
-        //===============single product display=========================
+        //=============== Single Product Display =========================
         public IActionResult ProductDisplay(string key)
         {
             try
@@ -96,10 +100,11 @@ namespace SDP.Controllers
                 }
                 ViewData["Id"] = HttpContext.Session.GetString("Id");
 
-                // Identify the product based on the string 'value passed in
+                // Identify the product based on the string value passed in
                 Product product = _dbRepo.getProduct(key);
                 var lProduct = _db.product.ToList();
 
+                // Return the Product page with the Product Details
                 HttpContext.Session.SetString("ProductID", key);
                 return View(new Catalog { product = product, brand = product.brand });
             }
@@ -109,7 +114,7 @@ namespace SDP.Controllers
             }
         }
 
-        //===============add product to cart=========================
+        //=============== Add Product to Cart =========================
         public IActionResult AddToCart(int quantity)
         {
             if (HttpContext.Session.GetString("Id") == null)
@@ -117,9 +122,9 @@ namespace SDP.Controllers
                 GuestCustomer guest = new GuestCustomer(_dbRepo);
                 GlobalVar.customerList.Add(guest);
                 string Id = guest.Id.ToString();
-
                 HttpContext.Session.SetString("Id", Id);
             }
+
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
             Product product = null;
@@ -131,10 +136,13 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            var list = GlobalVar.customerList;
-            ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart.addProductToCart(product, quantity); //add product to guest customer
 
-            try//increments cart count display
+            // Add product to guest customer's cart
+            var list = GlobalVar.customerList;
+            ViewService.getCustomerFromList(HttpContext.Session.GetString("Id")).cart.addProductToCart(product, quantity); 
+
+            // Increment the number displayed as the cart count
+            try
             {
                 if (HttpContext.Session.GetString("count") == null)
                 {
@@ -153,7 +161,7 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-        //======================Product CMS=========================
+        //====================== Product CMS =========================
         [HttpGet]
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult AddProduct()
@@ -196,13 +204,17 @@ namespace SDP.Controllers
         {
             if (ufile != null && ufile.Length > 0)
             {
+                // Check if the uploaded file is in an image format (JPG or PNG)
                 if (await _imageService.addImageToFileAsync(ufile, AP.product, _db.product.ToList()) == "Format Error") return RedirectToAction("Error", "Home");//adding image to file using image serive
             }
 
             try
             {
+                // Get selected item in list of Brands and Categories in the View Model
                 AP.product.category = _db.category.ToList().Where(a => a.categoryId == Guid.Parse(catID)).ToList().First();
                 AP.product.brand = _db.brand.ToList().Where(a => a.brandId == Guid.Parse(brandID)).ToList().First();
+
+                // Add New Product to Database
                 _db.product.Add(AP.product);
                 _db.inventory.Add(new Inventory(AP.product, AP.inventory.stockQty));
 
@@ -216,17 +228,21 @@ namespace SDP.Controllers
         }
 
 
-        //===================display all product in category========================
+        //=================== Display all Products by Category ========================
         public async Task<IActionResult> CategoryDisplay(string categoryId, int pageNumber = 0)
         {
             IEnumerable<Product> products;
             int totalPage;
             try
             {
+                // Get all products that match the selected category
                 products = _dbRepo.GetProductList().Where(m => m.isActive).Where(m => m.category.categoryId.ToString() == categoryId)
                          .Where(m => (_dbRepo.GetInventory(m.productId.ToString()) > 0))
+
+                // Go to current page number for category results
                          .Skip(pageNumber * 20)
                          .Take(20);
+
                 ViewData["Title"] = string.IsNullOrWhiteSpace(_dbRepo.GetCategory(categoryId).title)? "Our Products" : _dbRepo.GetCategory(categoryId).title;
                 totalPage = _db.product.Count() / 20;
             }
@@ -234,7 +250,6 @@ namespace SDP.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-
 
             if (HttpContext.Session.GetString("Id") == null)
             {
@@ -245,6 +260,7 @@ namespace SDP.Controllers
             }
             ViewData["Id"] = HttpContext.Session.GetString("Id");
 
+            // Return a new catalog containing Products with the selected Category
             try
             {
                 
