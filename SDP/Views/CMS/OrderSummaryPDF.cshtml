@@ -1,10 +1,39 @@
-﻿@* wkhtmltopdf does not support layouts / partial views, so the layout is declared null. *@
+﻿@{
+    ViewData["Title"] = "Order Summary Report";
+}
+
+@* wkhtmltopdf does not support layouts / partial views, so the layout is declared null. *@
 @{ Layout = null; }
-@model string
+@model IEnumerable<Order>
 
 <!DOCTYPE html>
 <html>
-    <body>
-        <h1>@Model</h1>
-    </body>
+<body>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Order No</th>
+                <th>User ID</th>
+                <th>Order Value</th>
+                <th>Payment Status</th>
+                <th>Payment Date</th>
+                <th>Order Status</th>
+                <th>Delivery Status</th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            var userId = item.user == null ? "guest user" : item.user.Id;
+            <tr>
+                <td>@item.orderNo</td>
+                <td>@userId</td>
+                <td>@item.totalPrice</td>
+                <td>@item.paymentStatus</td>
+                <td>@item.paymentDate</td>
+                <td>@item.orderStatus</td>
+                <td>@item.delivery.deliverystatus</td>
+            </tr>
+        }
+    </table>
+</body>
 </html>
