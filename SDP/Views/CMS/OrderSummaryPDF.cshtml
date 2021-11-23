@@ -23,15 +23,15 @@
         </thead>
         @foreach (var item in Model)
         {
-            var userId = item.user == null ? "guest user" : item.user.Id;
+            var userId = item.user == null ? "Guest User" : item.user.Id;
             <tr>
                 <td>@item.orderNo</td>
                 <td>@userId</td>
                 <td>@item.totalPrice</td>
                 <td>@item.paymentStatus</td>
                 <td>@item.paymentDate</td>
-                <td>@item.orderStatus</td>
-                <td>@item.delivery.deliverystatus</td>
+                <td>@item.orderStatus.GetDisplayName()</td>
+                <td>@item.delivery.deliverystatus.GetDisplayName()</td>
             </tr>
         }
     </table>
