@@ -19,11 +19,18 @@
     <PackageReference Include="SendGrid" Version="9.24.2" />
     <PackageReference Include="Stripe.net" Version="39.73.0" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
+    <PackageReference Include="Wkhtmltopdf.NetCore" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SDPCore\SDPCore.csproj" />
     <ProjectReference Include="..\SDPInfrastructure\SDPInfrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="wkhtmltopdf\Windows\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

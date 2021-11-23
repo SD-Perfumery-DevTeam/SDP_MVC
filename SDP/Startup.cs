@@ -12,6 +12,7 @@ using Microsoft.SDP.SDPInfrastructure.Services;
 using SDPInfrastructure.Services;
 using Stripe;
 using System;
+using Wkhtmltopdf.NetCore;
 
 namespace Global
 {
@@ -56,7 +57,8 @@ namespace Global
             //services.AddScoped<ICustomer, GuestCustomerService>(); //guest customers service
             services.AddSingleton<ImageService, ImageService>();//image storage service
             services.AddScoped<IPromotionService, PromotionService>();//promotion service
-
+            // Add the Wkhtmltopdf service.
+            services.AddWkhtmltopdf("wkhtmltopdf");
 
             services.Configure<IdentityOptions>(options =>
             {

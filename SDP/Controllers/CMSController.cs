@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using SDPWeb.ViewModels;
+using Wkhtmltopdf.NetCore;
+using Microsoft.Extensions.Logging;
 
 namespace SDP.Controllers
 {
@@ -20,13 +22,20 @@ namespace SDP.Controllers
         private IEmailSender _emailSender { get; }
         private IDbRepo _dbRepo;
         private readonly IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> _contextFactory;
+        // Declare the ILogger object.
+        private readonly ILogger<CMSController> _logger;
+        // Declare the IGeneratePdf object.
+        private readonly IGeneratePdf _generatePdf;
 
-        public CMSController(UserManager<IdentityUser> userManager, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory)
+        // ILogger and IGeneratePdf objects inserted into the constructor.
+        public CMSController(UserManager<IdentityUser> userManager, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory, ILogger<CMSController> logger, IGeneratePdf generatePdf)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _dbRepo = dbRepo;
             _contextFactory = contextFactory;
+            _logger = logger;
+            _generatePdf = generatePdf;
         }
 
 
@@ -120,6 +129,35 @@ namespace SDP.Controllers
                 return RedirectToAction("Error", "Home");
             }
             return RedirectToAction("ViewAllOrders");
+        }
+
+        // Generate a PDF report from order information =======================
+        // Code for this technique is based on an article by Scott Hanselman
+        // Reference: https://blog.elmah.io/generate-a-pdf-from-asp-net-core-for-free/
+        [HttpGet]
+        public async Task<IActionResult> OrderSummaryPDF()
+        {
+            /*
+            List<Order> list;
+            try
+            {
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                    list = await context.order.Include(m => m.delivery).ToListAsync();
+                    list = list.OrderByDescending(m => m.paymentDate).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                // If an exception is thrown, log the event.
+                _logger.LogError(ex, "Problem in GenerateOrdersReport action " +
+                    "method in Article controller.");
+                // Redirect to error page.
+                return RedirectToAction("Error", "Home");
+            }
+            return View(list);
+            */
+            return await _generatePdf.GetPdf("Views/CMS/OrderSummaryPDF.cshtml", "Hello World");
         }
     }
 }
