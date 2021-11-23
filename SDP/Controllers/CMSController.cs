@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.SDP.SDPCore.Interface;
 using Microsoft.SDP.SDPCore.Models;
-using Microsoft.SDP.SDPCore.Models.DbContexts;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,7 +14,6 @@ using Microsoft.Extensions.Logging;
 
 namespace SDP.Controllers
 {
-    [Authorize(Roles = "Admin, SuperAdmin")]
     public class CMSController : Controller
     {
         private UserManager<IdentityUser> _userManager { get; }
@@ -28,7 +26,11 @@ namespace SDP.Controllers
         private readonly IGeneratePdf _generatePdf;
 
         // ILogger and IGeneratePdf objects inserted into the constructor.
-        public CMSController(UserManager<IdentityUser> userManager, IEmailSender emailSender, IDbRepo dbRepo, IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory, ILogger<CMSController> logger, IGeneratePdf generatePdf)
+        public CMSController(UserManager<IdentityUser> userManager,
+            IEmailSender emailSender,
+            IDbRepo dbRepo,
+            IDbContextFactory<Microsoft.SDP.SDPCore.Models.DbContexts.SDPDbContext> contextFactory,
+            ILogger<CMSController> logger, IGeneratePdf generatePdf)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -38,12 +40,14 @@ namespace SDP.Controllers
             _generatePdf = generatePdf;
         }
 
-
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult Index(string Msg)
         {
             ViewData["Msg"] = Msg;
             return View();
         }
+
+        [Authorize(Roles = "Admin, SuperAdmin")]
         [HttpPost]
         public IActionResult SendEmailToCustomers(string promoId)
         {
@@ -64,6 +68,7 @@ namespace SDP.Controllers
             return RedirectToAction("Index", "CMS", new { Msg = "Promotions has been sent" });
         }
 
+        [Authorize(Roles = "Admin, SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> ViewAllOrdersAsync()
         {
@@ -83,6 +88,7 @@ namespace SDP.Controllers
             return View(list);
         }
 
+        [Authorize(Roles = "Admin, SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> ViewOrderAsync(string orderId)
         {
@@ -105,6 +111,7 @@ namespace SDP.Controllers
         }
 
         //============ update order and delivery=================
+        [Authorize(Roles = "Admin, SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> UpdateOrderAsync(string orderId, OrderView orderView)
         {
@@ -131,13 +138,13 @@ namespace SDP.Controllers
             return RedirectToAction("ViewAllOrders");
         }
 
-        // Generate a PDF report from order information =======================
+        // Generate a PDF report from order information. ======================
         // Code for this technique is based on an article by Scott Hanselman
         // Reference: https://blog.elmah.io/generate-a-pdf-from-asp-net-core-for-free/
+        [Authorize(Roles = "Admin, SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> OrderSummaryPDF()
         {
-            /*
             List<Order> list;
             try
             {
@@ -150,14 +157,13 @@ namespace SDP.Controllers
             catch (Exception ex)
             {
                 // If an exception is thrown, log the event.
-                _logger.LogError(ex, "Problem in GenerateOrdersReport action " +
-                    "method in Article controller.");
+                _logger.LogError(ex, "Problem in OrderSummaryPDF action method " +
+                    "in CMS controller.");
                 // Redirect to error page.
                 return RedirectToAction("Error", "Home");
             }
-            return View(list);
-            */
-            return await _generatePdf.GetPdf("Views/CMS/OrderSummaryPDF.cshtml", "Hello World");
+
+            return await _generatePdf.GetPdf("Views/CMS/OrderSummaryPDF.cshtml", list);
         }
     }
 }
