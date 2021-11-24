@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <table style="border:1px solid black;">
+    <table style="width: 100%; border:1px solid black;">
         <thead>
             <tr>
                 <th>Order No</th>
@@ -23,10 +23,10 @@
         </thead>
         @foreach (var item in Model)
         {
-            var userId = item.user == null ? "Guest User" : item.user.Id;
+            var username = item.user.UserName == null ? "Guest User" : item.user.UserName;
             <tr>
                 <td>@item.orderNo</td>
-                <td>@userId</td>
+                <td>@username</td>
                 <td>@item.totalPrice</td>
                 <td>@item.paymentStatus</td>
                 <td>@item.paymentDate</td>

@@ -138,12 +138,38 @@ namespace SDP.Controllers
             return RedirectToAction("ViewAllOrders");
         }
 
-        // Generate a PDF report from order information. ======================
+        // Request a PDF report of order information. HTTPGET==================
+        [Authorize(Roles = "Admin, SuperAdmin")]
+        [HttpGet]
+        public IActionResult RequestOrderSummary()
+        {
+            decimal totalPrice;
+            DateTime startDate; 
+            DateTime endDate;
+            string userId;
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                // If an exception is thrown, log the event.
+                _logger.LogError(ex, "Problem in RequestOrderSummary action method " +
+                    "in CMS controller.");
+                // Redirect to error page.
+                return RedirectToAction("Error", "Home");
+            }
+
+            return View();
+        }
+
+        // Generate a PDF report from order information. HTTPGET===============
         // Code for this technique is based on an article by Scott Hanselman
         // Reference: https://blog.elmah.io/generate-a-pdf-from-asp-net-core-for-free/
         [Authorize(Roles = "Admin, SuperAdmin")]
         [HttpGet]
-        public async Task<IActionResult> OrderSummaryPDF()
+        public async Task<IActionResult> OrderSummaryPdf(decimal ?totalPrice, DateTime ?startDate, DateTime? endDate, string? userId)
         {
             List<Order> list;
             try
