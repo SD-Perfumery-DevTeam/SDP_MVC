@@ -63,6 +63,10 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                // If an exception is thrown, log the event.
+                _logger.LogError(ex, "Problem in SendEmailToCustomers action method " +
+                    "in CMS controller.");
+                // Redirect to error page.
                 return RedirectToAction("Error", "Home");
             }
             return RedirectToAction("Index", "CMS", new { Msg = "Promotions has been sent" });
@@ -83,6 +87,10 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                // If an exception is thrown, log the event.
+                _logger.LogError(ex, "Problem in ViewAllOrdersAsync action method " +
+                    "in CMS controller.");
+                // Redirect to error page.
                 return RedirectToAction("Error", "Home");
             }
             return View(list);
@@ -105,6 +113,10 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
+                // If an exception is thrown, log the event.
+                _logger.LogError(ex, "Problem in ViewOrderAsync action method " +
+                    "in CMS controller.");
+                // Redirect to error page.
                 return RedirectToAction("Error", "Home");
             }
             return View(new OrderView { orderLineList = lineList, order = order });
@@ -117,22 +129,26 @@ namespace SDP.Controllers
         {
             Order order = null;
             Delivery delivery = null;
-            using (var context = _contextFactory.CreateDbContext())
-            {
-                order = context.order.Include(m => m.delivery).Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
-                order.orderStatus = orderView.orderStatus;
-                delivery = context.delivery.Where(m => m.deliveryId.ToString() == order.delivery.deliveryId.ToString()).FirstOrDefault();
-                delivery.deliverystatus = orderView.deliveryStatus;
-                context.order.Update(order);
-                context.delivery.Update(delivery);
-                await context.SaveChangesAsync();
-            }
           
             try
             {
+                using (var context = _contextFactory.CreateDbContext())
+                {
+                    order = context.order.Include(m => m.delivery).Where(m => m.orderId.ToString() == orderId).FirstOrDefault();
+                    order.orderStatus = orderView.orderStatus;
+                    delivery = context.delivery.Where(m => m.deliveryId.ToString() == order.delivery.deliveryId.ToString()).FirstOrDefault();
+                    delivery.deliverystatus = orderView.deliveryStatus;
+                    context.order.Update(order);
+                    context.delivery.Update(delivery);
+                    await context.SaveChangesAsync();
+                }
             }
             catch (Exception ex)
             {
+                // If an exception is thrown, log the event.
+                _logger.LogError(ex, "Problem in UpdateOrderAsync action method " +
+                    "in CMS controller.");
+                // Redirect to error page.
                 return RedirectToAction("ErrorOrderSummary", "CMS");
             }
             return RedirectToAction("ViewAllOrders");
@@ -157,7 +173,7 @@ namespace SDP.Controllers
                 // If an exception is thrown, log the event.
                 _logger.LogError(ex, "Problem in RequestOrderSummary action method " +
                     "in CMS controller.");
-                // Redirect to error page.
+                // Redirect to the specific error page.
                 return RedirectToAction("ErrorOrderSummary", "CMS");
             }
 
@@ -185,7 +201,7 @@ namespace SDP.Controllers
                 // If an exception is thrown, log the event.
                 _logger.LogError(ex, "Problem in OrderSummaryPDF action method " +
                     "in CMS controller.");
-                // Redirect to error page.
+                // Redirect to the specific error page.
                 return RedirectToAction("Error", "Home");
             }
 
