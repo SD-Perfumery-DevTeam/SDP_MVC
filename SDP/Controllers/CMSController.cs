@@ -133,7 +133,7 @@ namespace SDP.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("ErrorOrderSummary", "CMS");
             }
             return RedirectToAction("ViewAllOrders");
         }
@@ -158,7 +158,7 @@ namespace SDP.Controllers
                 _logger.LogError(ex, "Problem in RequestOrderSummary action method " +
                     "in CMS controller.");
                 // Redirect to error page.
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("ErrorOrderSummary", "CMS");
             }
 
             return View();
