@@ -67,6 +67,9 @@ namespace Global
                         "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ @._-";
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedEmail = true;
+                // Any changes to default password settings.
+                // Reference: https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration
+                options.Password.RequiredLength = 12;
             });
         }
 
